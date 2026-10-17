@@ -1,0 +1,77 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Monde, villes, carte (lot D) : la légende des paliers, les boîtes des
+   joueurs sur les villes, les chantiers à 390 px, et le grand écran.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* LegendePaliers : en plein écran, dézoomé, quand on n'est pas en route. */
+.carte-legende {
+  position: absolute; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 500;
+  display: none; align-items: center; gap: var(--e3, 12px); padding: 10px 14px; border-radius: var(--r-pilule, 99px);
+  background: rgba(18, 19, 23, 0.78); border: 1px solid var(--filet2); white-space: nowrap;
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  font-size: 11px; font-weight: 500; color: var(--texte); pointer-events: none;
+}
+.carte-legende span { display: inline-flex; align-items: center; gap: 5px; }
+.carte-legende i { display: block; width: var(--t); height: var(--t); border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3); }
+.carte-slot.plein[data-zoom="villes"] .carte-legende { display: flex; }
+
+/* Une ville où d'autres joueurs ont une boîte : la petite vitrine sur son point. */
+.mk-ville { position: relative; }
+.mk-boites {
+  position: absolute; top: 1px; right: 0; width: 13px; height: 13px; border-radius: 50%; display: grid; place-items: center;
+  color: #fff; background: var(--vente); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); pointer-events: none;
+}
+.mk-boites svg { width: 7px; height: 7px; }
+
+/* Les chantiers : les pilules de montant ne se tassent plus (« 100 0… » à 390 px). */
+[data-chantier] .petit { flex: none; }
+
+
+/* RNT-210 : « Avec qui ? » de la feuille du voyage (FicheCompagnon) : seul, ou un joueur de ta ville. */
+.mo-compagnons {
+  position: relative; display: flex; gap: var(--e3); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  margin: 0 calc(-1 * var(--e5)); padding: 6px max(var(--e5), calc(50% - 150px));
+}
+.mo-compagnons::-webkit-scrollbar { display: none; }
+.mo-compagnon {
+  --c: #3a3d45;
+  position: relative; flex: none; width: min(300px, 78vw); min-height: 158px; scroll-snap-align: center;
+  display: flex; flex-direction: column; padding: var(--e4); border-radius: var(--r-carte); text-align: left; color: #fff;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--c) 95%, transparent), color-mix(in srgb, var(--c) 45%, transparent) 55%, #16171b);
+  outline: 1px solid rgba(255, 255, 255, 0.08); outline-offset: -1px; transform: scale(0.94); opacity: 0.7;
+  transition: transform var(--d-court) var(--courbe-graphite), opacity var(--d-court);
+}
+.mo-compagnon[aria-pressed="true"] { transform: none; opacity: 1; outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 2px; }
+.mo-compagnon:disabled { opacity: 0.45; }
+.mo-compagnon-tete { align-items: flex-start; }
+.mo-compagnon-avatar {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-size: var(--t-entete); font-weight: var(--g-titre);
+  background: rgba(255, 255, 255, 0.16); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+}
+.mo-compagnon-avatar.seul { box-shadow: none; background: rgba(255, 255, 255, 0.12); }
+.mo-compagnon-genre {
+  font-size: var(--t-legende); font-weight: var(--g-libelle); color: rgba(255, 255, 255, 0.75);
+  padding: 4px 9px; border-radius: var(--r-pilule); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+.mo-compagnon-nom { margin-top: var(--e3); font-size: 24px; font-weight: var(--g-titre); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mo-compagnon-detail { margin-top: 6px; font-size: var(--t-legende); font-weight: var(--g-corps); color: rgba(255, 255, 255, 0.7); }
+.mo-crans { display: flex; align-items: center; gap: 3px; margin-top: 6px; }
+.mo-crans i { width: 10px; height: 4px; border-radius: var(--r-pilule); background: rgba(255, 255, 255, 0.18); }
+.mo-crans i.plein { background: #fff; }
+.mo-crans em { font-style: normal; margin-left: 4px; font-size: var(--t-micro); font-weight: var(--g-corps); color: rgba(255, 255, 255, 0.75); }
+.mo-compagnon-pied { margin-top: auto; padding-top: var(--e3); }
+.mo-compagnon-pied small { display: block; font-size: 10px; font-weight: var(--g-libelle); color: rgba(255, 255, 255, 0.6); }
+.mo-compagnon-pied b { font-size: 14px; font-weight: var(--g-libelle); letter-spacing: 0; }
+.mo-compagnon-pied .droite { text-align: right; }
+.mo-duo-note { display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center; font-size: var(--t-aide); }
+.mo-duo-note svg { width: 15px; height: 15px; flex: none; }
+
+/* Les feuilles du voyage et du trajet : l'en-tête, le palier de la ville, l'arrivée (RNT-210, sans style en ligne). */
+.mo-voyage-tete { text-align: center; margin-top: -8px; }
+.mo-voyage-palier { justify-content: center; gap: 6px; font-size: 12px; color: var(--texte2); }
+.mo-voyage-palier i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+.mo-voyage-enroute { text-align: center; padding: 12px 8px; }
+.mo-voyage-enroute > .or { display: grid; place-items: center; }
+.mo-voyage-arrivee { font-size: 17px; font-weight: 600; }
+.mo-voyage-legende { text-align: center; }
+#voyage-fiche { margin-top: 6px; }

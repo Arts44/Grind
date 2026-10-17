@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Grind</title>
+  <meta name="description" content="Ton argent avance quand tu te concentres. Le même jeu que sur iPhone, sur n'importe quel appareil.">
+  <meta name="theme-color" content="#09090b">
+  <meta name="color-scheme" content="dark">
+  <!-- D205 : installable partout ; sur l'écran d'accueil d'un iPhone, en plein écran sous la barre d'état. -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Grind">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icone.svg" type="image/svg+xml">
+  <link rel="icon" href="icones/icone-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icones/icone-180.png">
+  <!-- Lot A (docs/web-design.md) : les jetons, les composants ; les styles d'une zone (css/pages/<zone>.css) sont posés par app.js. -->
+  <link rel="preload" href="polices/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/jetons.css">
+  <link rel="stylesheet" href="css/composants.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <main id="app" aria-live="polite"></main>
+  <aside id="panneau" aria-live="polite"></aside>
+  <div id="toasts"></div>
+  <noscript><p class="vide">Grind a besoin de JavaScript.</p></noscript>
+</body>
+</html>

@@ -1,0 +1,23 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Manger et cuisiner (RNT-183, RNT-189), repris de css/anciens.css
+   (RNT-210) : l'assiette, le frigo, les denrées, les plats, le pas à pas.
+   Posé par manger.js (et cuisine.js) dès leur chargement, et déclaré par
+   les pages qui en ouvrent les feuilles (accueil, Banque, Monde).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.assiette { flex: none; display: block; }
+.frigo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.frigo .rail { margin-top: 6px; }
+.denrees { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.denree { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 99px; background: var(--puce); font-size: 12px; font-weight: 500; color: var(--texte); }
+.denree svg { color: var(--texte2); }
+.denree b { font-weight: 600; letter-spacing: 0; }
+.denree i { font-style: normal; color: var(--texte3); font-size: 11px; }
+.denree.bientot { background: color-mix(in srgb, var(--alerte) 14%, transparent); }
+.denree.bientot i { color: var(--alerte); }
+.ligne.plat .coche { width: 22px; height: 22px; flex: none; border-radius: 50%; border: 1.5px solid var(--filet2); display: grid; place-items: center; font-size: 12px; font-weight: 700; color: var(--fond); }
+.ligne.plat.choisi .coche { background: var(--texte); border-color: transparent; }
+.puce.local { background: color-mix(in srgb, var(--or) 16%, transparent); color: var(--or); font-size: 11px; padding: 2px 7px; vertical-align: 1px; }
+.pas { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+.pas .rond { width: 30px; height: 30px; font-size: 16px; }
+.pas b { min-width: 16px; text-align: center; }

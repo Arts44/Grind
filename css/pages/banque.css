@@ -1,0 +1,4 @@
+/* La Banque (lot A, l'exemple du grand écran ; docs/web-design.md). */
+/* Au palier moyen et large, la pile de cartes garde une taille de carte : elle ne s'étire pas à toute la colonne. */
+.page.ample .pile-cartes, #panneau .pile-cartes { max-width: 460px; }
+.page.ample .banque .bouton.secondaire { max-width: 460px; }

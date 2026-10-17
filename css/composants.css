@@ -1,0 +1,410 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Grind sur le web — les composants (lot A, docs/web-design.md).
+   L'équivalent de Rente/Design/Composants.swift, Feuilles.swift,
+   Navigation/BarrePerle.swift. Uniquement des jetons de css/jetons.css.
+   Les briques JS qui rendent ce HTML sont dans js/ui.js.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── La page ─────────────────────────────────────────────────────────── */
+#app {
+  max-width: 560px; margin: 0 auto; min-height: 100dvh;
+  padding: 0 max(var(--e-page), env(safe-area-inset-right)) 150px max(var(--e-page), env(safe-area-inset-left));
+}
+body.sans-barre #app { padding-bottom: max(40px, env(safe-area-inset-bottom)); }
+/* Une page qui arrive glisse de 18 px (de la gauche au retour) ; mise à jour en place, elle ne bouge plus. */
+.page.entre { animation: entree var(--d-geste) var(--courbe-graphite); }
+.page.entre.retour { animation-name: entree-retour; }
+@keyframes entree { from { opacity: 0; transform: translateX(18px); } }
+@keyframes entree-retour { from { opacity: 0; transform: translateX(-18px); } }
+.racine { padding-top: max(18px, env(safe-area-inset-top)); }
+.entete-racine { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--e3); padding: var(--e4) 0 14px; }
+.entete-racine .sous { font-size: var(--t-aide); color: var(--texte2); margin-top: 2px; }
+.entete-pousse {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 10px;
+  margin: 0 calc(-1 * var(--e-page)); padding: max(10px, env(safe-area-inset-top)) var(--e-page) 10px;
+  background: linear-gradient(var(--fond) 70%, transparent);
+}
+.entete-pousse h1 { font-size: var(--t-entete); font-weight: var(--g-libelle); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rond {
+  width: 36px; height: 36px; flex: none; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--filet2); color: var(--texte);
+  transition: border-color var(--d-court), background var(--d-court);
+}
+.rond svg { width: 18px; height: 18px; }
+.rond.aide-bouton { color: var(--texte2); }
+.rond.aide-bouton svg { width: 17px; height: 17px; }
+.pile { display: flex; flex-direction: column; gap: var(--e3); }
+.grille2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e3); }
+.grille3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.rangee { display: flex; align-items: center; gap: 10px; }
+.rangee.entre { justify-content: space-between; }
+.espace { flex: 1; }
+.bas-colle { position: sticky; bottom: 0; margin: 18px calc(-1 * var(--e-page)) 0; padding: 28px var(--e-page) var(--e4); background: linear-gradient(transparent, var(--fond) 38%); }
+
+/* ── Carte, filet, ligne de carte ────────────────────────────────────── */
+/* Plus de backdrop-filter : la carte est un voile et un filet (inventaire § 3.1, point 4). */
+.carte { background: var(--surface-carte); border: 1px solid var(--bord-carte); border-radius: var(--r-carte); }
+.carte.pad { padding: var(--e4); }
+.filet { height: 1px; background: var(--filet); }
+.ligne { display: flex; align-items: center; gap: var(--e3); padding: 14px var(--e4); min-height: 52px; width: 100%; }
+.ligne-corps { min-width: 0; flex: 1; }
+.carte > .ligne:not(:first-child) { border-top: 1px solid var(--filet); }
+.ligne .titre { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.ligne .detail { font-size: var(--t-aide); color: var(--texte2); margin-top: 1px; }
+.ligne .valeur { margin-left: auto; text-align: right; font-size: var(--t-libelle); font-weight: var(--g-corps); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ligne .chevron { color: var(--texte3); flex: none; width: 14px; height: 14px; }
+button.ligne:active, a.ligne:active { background: var(--surface-appui); }
+button.ligne[aria-current="true"] { background: var(--surface-survol); box-shadow: inset 3px 0 0 var(--accent); }
+
+/* Pastille d'icône à la teinte d'une catégorie */
+.pastille {
+  width: 32px; height: 32px; border-radius: var(--r-pastille); flex: none; display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, var(--c, var(--accent)), color-mix(in srgb, var(--c, var(--accent)) 72%, transparent));
+}
+.pastille svg { width: 17px; height: 17px; }
+.puce { display: inline-flex; align-items: center; gap: 5px; font-size: var(--t-legende); font-weight: var(--g-libelle); padding: var(--e1) 9px; border-radius: var(--r-pilule); background: var(--puce); color: var(--texte2); }
+
+/* ── Tuiles ──────────────────────────────────────────────────────────── */
+.tuile { display: flex; flex-direction: column; gap: 10px; padding: 14px; min-height: 150px; text-align: left; width: 100%; border-radius: var(--r-tuile); transition: transform 0.15s; }
+.tuile:active { transform: scale(0.98); }
+.tuile .objet { flex: 1; display: grid; place-items: center; min-height: 64px; }
+.tuile .t { font-size: var(--t-aide); color: var(--texte2); }
+.tuile .v { font-size: var(--t-libelle); font-weight: var(--g-libelle); line-height: 1.25; }
+
+/* ── Boutons (Composants.swift) ──────────────────────────────────────── */
+.bouton {
+  display: flex; align-items: center; justify-content: center; gap: var(--e2); width: 100%; min-height: 54px; padding: 0 22px;
+  border-radius: var(--r-pilule); font-size: 16px; font-weight: var(--g-libelle); color: var(--sur-accent);
+  background: linear-gradient(rgba(255, 255, 255, 0.22), transparent), var(--accent);
+  box-shadow: var(--ombre-bouton); transition: transform 0.15s ease, opacity 0.15s ease, filter var(--d-court);
+}
+.bouton:active:not(:disabled) { transform: scale(0.98); opacity: 0.85; }
+.bouton.teinte { color: #fff; background: linear-gradient(135deg, var(--c), color-mix(in srgb, var(--c) 72%, transparent)); box-shadow: 0 4px 12px color-mix(in srgb, var(--c) 35%, transparent); }
+.bouton.secondaire { min-height: 50px; font-size: var(--t-libelle); color: var(--texte); background: rgba(255, 255, 255, 0.07); border: 1px solid var(--filet2); box-shadow: none; }
+.bouton.discret { min-height: 44px; background: none; box-shadow: none; color: var(--texte2); font-weight: var(--g-corps); font-size: var(--t-libelle); }
+.bouton.discret.rouge { color: var(--danger); }
+.bouton.danger { background: rgba(255, 92, 92, 0.12); color: var(--danger); box-shadow: none; border: 1px solid rgba(255, 92, 92, 0.25); }
+.petit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 34px; padding: 0 14px;
+  border-radius: var(--r-pilule); font-size: 14px; font-weight: var(--g-libelle); border: 1px solid var(--filet2); white-space: nowrap;
+}
+.petit.plein { background: var(--texte); color: var(--fond); border-color: transparent; }
+.petit.teinte { background: var(--c); color: #fff; border-color: transparent; }
+
+/* ── Segment ─────────────────────────────────────────────────────────── */
+/* Défilant quand il déborde (Actifs à cinq choix à 390 px) : il ne coupe jamais un libellé. */
+.segment {
+  display: flex; padding: var(--e1); border-radius: var(--r-pilule); border: 1px solid var(--filet2);
+  overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; scroll-padding: 0 var(--e3);
+}
+.segment::-webkit-scrollbar { display: none; }
+.segment button {
+  flex: 1 0 auto; min-height: 40px; padding: 0 14px; border-radius: var(--r-pilule); font-size: 14px; font-weight: var(--g-libelle);
+  text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums; transition: background var(--d-perle) var(--courbe-graphite), color var(--d-perle);
+}
+.segment button[aria-pressed="true"] { background: var(--texte); color: var(--fond); }
+.segment.defilant { -webkit-mask: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); mask: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); }
+
+/* ── Pilules de filtre (une rangée qui défile) ──────────────────────── */
+.filtres { display: flex; gap: var(--e2); overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--e-page)); padding: 2px var(--e-page); }
+.filtres::-webkit-scrollbar { display: none; }
+.filtre { flex: none; min-height: 34px; padding: 0 14px; border-radius: var(--r-pilule); border: 1px solid var(--filet2); font-size: 14px; font-weight: var(--g-libelle); color: var(--texte2); white-space: nowrap; transition: background var(--d-court), color var(--d-court); }
+.filtre[aria-pressed="true"] { background: var(--texte); color: var(--fond); border-color: transparent; }
+
+/* ── Jauges ──────────────────────────────────────────────────────────── */
+.rail { height: var(--h, 8px); background: var(--puce2); border-radius: var(--r-pilule); overflow: hidden; }
+.rail > i { display: block; height: 100%; width: var(--part, 0%); border-radius: var(--r-pilule); background: var(--c, var(--accent)); transition: width 0.5s var(--courbe-graphite); }
+
+/* ── Champs ──────────────────────────────────────────────────────────── */
+.champ {
+  width: 100%; min-height: 52px; padding: 0 var(--e4); border-radius: var(--r-champ); background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--filet2); font-size: var(--t-titre); font-weight: var(--g-libelle); font-variant-numeric: tabular-nums;
+  transition: border-color var(--d-court);
+}
+.champ:focus { border-color: color-mix(in srgb, var(--accent) 55%, transparent); outline: none; }
+textarea.champ { padding: 14px var(--e4); min-height: 110px; resize: vertical; font-weight: var(--g-corps); line-height: 1.45; }
+select.champ { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--texte2) 50%), linear-gradient(135deg, var(--texte2) 50%, transparent 50%); background-position: calc(100% - 22px) 23px, calc(100% - 17px) 23px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 40px; }
+select.champ option { background: var(--feuille); color: var(--texte); }
+.champ::placeholder { color: var(--texte3); font-weight: var(--g-corps); }
+.etiquette { display: block; font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); margin: 0 var(--e1) 6px; }
+.choix { display: flex; flex-wrap: wrap; gap: var(--e2); }
+
+/* Champ fichier en français (remplace « Choose File / No file chosen ») */
+.champ-fichier { position: relative; display: flex; align-items: center; gap: var(--e3); width: 100%; min-height: 56px; padding: var(--e2) var(--e2) var(--e2) var(--e4);
+  border-radius: var(--r-champ); border: 1px dashed var(--filet2); background: rgba(255, 255, 255, 0.025); cursor: pointer; transition: border-color var(--d-court), background var(--d-court); }
+.champ-fichier:hover, .champ-fichier:focus-within { border-color: color-mix(in srgb, var(--accent) 50%, transparent); background: rgba(255, 255, 255, 0.04); }
+.champ-fichier input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+.champ-fichier .cf-icone { width: 36px; height: 36px; flex: none; border-radius: 11px; display: grid; place-items: center; background: var(--puce2); color: var(--texte2); }
+.champ-fichier .cf-icone svg { width: 18px; height: 18px; }
+.champ-fichier .cf-texte { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.champ-fichier .cf-nom { font-size: var(--t-libelle); font-weight: var(--g-libelle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.champ-fichier .cf-aide { font-size: var(--t-legende); color: var(--texte2); }
+.champ-fichier .cf-bouton { flex: none; pointer-events: none; }
+.champ-fichier.rempli { border-style: solid; }
+.champ-fichier.rempli .cf-icone { background: var(--accent-doux); color: var(--accent); }
+
+/* Interrupteur (Toggle) */
+.interrupteur { display: flex; align-items: center; gap: var(--e3); width: 100%; min-height: 52px; padding: 10px var(--e4); text-align: left; }
+.interrupteur .ligne-corps .titre { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.interrupteur .ligne-corps .detail { font-size: var(--t-aide); color: var(--texte2); margin-top: 1px; }
+.bascule { position: relative; flex: none; width: 51px; height: 31px; border-radius: var(--r-pilule); background: var(--puce2); transition: background var(--d-court) var(--courbe-graphite); }
+.bascule::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); transition: transform 0.3s var(--courbe-graphite); }
+.interrupteur[aria-checked="true"] .bascule { background: var(--accent); }
+.interrupteur[aria-checked="true"] .bascule::after { transform: translateX(20px); }
+.carte > .interrupteur:not(:first-child) { border-top: 1px solid var(--filet); }
+
+/* ── Le chiffre héros, le chiffre qui roule, les courbes ─────────────── */
+.heros-chiffre {
+  font-size: var(--taille, 38px); font-weight: var(--g-libelle); letter-spacing: -0.05em; font-variant-numeric: tabular-nums; line-height: 1.05;
+  background: linear-gradient(var(--texte), var(--heros-bas)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.heros-chiffre .cts { font-size: 0.43em; letter-spacing: -0.03em; }
+/* Chiffre qui roule (numericText) : chaque chiffre est une colonne 0–9 qui glisse à sa place. */
+/* Le vrai chiffre garde sa place (et reste le texte de la page) ; sa colonne 0–9 est peinte par-dessus. */
+.roule { display: inline-flex; white-space: nowrap; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.roule .rc, .roule .rs { display: inline-block; height: 1.1em; }
+.roule .rs { white-space: pre; }
+.roule .rc { position: relative; overflow: hidden; -webkit-text-fill-color: transparent; }
+.roule .rc::before {
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9"; white-space: pre; position: absolute; left: 0; right: 0; top: 0; text-align: center;
+  line-height: 1.1em; -webkit-text-fill-color: currentColor; transform: translateY(calc(var(--n, 0) * -1.1em)); transition: transform var(--d-chiffre) var(--courbe-graphite);
+}
+/* Dans le héros (texte en dégradé) : chaque colonne porte le dégradé d'une ligne. */
+.heros-chiffre .roule { color: var(--texte); }
+.heros-chiffre .roule .rc::before, .heros-chiffre .roule .rs { background: linear-gradient(var(--texte), var(--heros-bas)) 0 0 / 100% 1.1em repeat-y; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.heros-chiffre:has(.roule) { background: none; color: var(--texte); }
+.courbe-svg { width: 100%; display: block; height: var(--h, 70px); }
+
+/* ── Photo avec repli ────────────────────────────────────────────────── */
+.photo { position: relative; display: block; overflow: hidden; aspect-ratio: var(--ratio, 4 / 3); border-radius: var(--r-photo, var(--r-tuile)); background: radial-gradient(120% 90% at 30% 20%, rgba(255, 255, 255, 0.06), transparent 60%), var(--puce); }
+.photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: var(--ajuste, cover); opacity: 0; transition: opacity var(--d-court); }
+.photo.chargee > img { opacity: 1; }
+.photo.ratee > img { display: none; }
+.photo > .photo-repli { position: absolute; inset: 0; display: grid; place-items: center; color: var(--texte3); }
+.photo > .photo-repli svg { width: 38%; height: 38%; max-width: 72px; }
+.photo.chargee > .photo-repli { visibility: hidden; }
+
+/* ── Bandeaux, vide ──────────────────────────────────────────────────── */
+.bandeau {
+  display: flex; gap: 10px; align-items: flex-start; padding: 14px var(--e4); border-radius: var(--r-tuile); font-size: 14px; line-height: 1.45;
+  background: color-mix(in srgb, var(--c, var(--alerte)) 12%, transparent); border: 1px solid color-mix(in srgb, var(--c, var(--alerte)) 30%, transparent);
+}
+.bandeau b { color: var(--c, var(--alerte)); }
+.vide { text-align: center; padding: 36px var(--e5); color: var(--texte2); font-size: 14px; }
+
+/* ── Feuille (sheet), confirmation ───────────────────────────────────── */
+dialog.feuille {
+  margin: auto auto 0; width: 100%; max-width: 560px; max-height: 92dvh; padding: 0; border: 0; color: var(--texte);
+  background: var(--feuille); border-radius: var(--r-feuille) var(--r-feuille) 0 0; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); overflow: hidden;
+}
+dialog.feuille[open] { animation: monte 0.38s var(--courbe-graphite); display: flex; flex-direction: column; }
+dialog.feuille::backdrop, dialog.confirmation::backdrop { background: rgba(0, 0, 0, 0.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+@keyframes monte { from { transform: translateY(40px); opacity: 0; } }
+.feuille .poignee { width: 36px; height: 5px; border-radius: 3px; background: var(--filet2); margin: var(--e2) auto var(--e1); flex: none; }
+.feuille .tete { display: flex; align-items: center; gap: 10px; padding: var(--e2) var(--e5) var(--e3); flex: none; }
+.feuille .tete h2 { flex: 1; font-size: var(--t-entete); font-weight: var(--g-libelle); }
+.feuille .corps-feuille { overflow-y: auto; padding: var(--e1) var(--e5) max(var(--e6), env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; }
+
+/* FeuilleConfirmation : une question, deux boutons. Remplace confirm(). */
+dialog.confirmation {
+  margin: auto auto max(12px, env(safe-area-inset-bottom)); width: calc(100% - 24px); max-width: 420px; padding: var(--e6) var(--e5) var(--e5); border: 1px solid var(--filet2);
+  color: var(--texte); background: var(--feuille); border-radius: 28px; box-shadow: var(--ombre-flottant); text-align: center;
+}
+dialog.confirmation[open] { animation: monte 0.32s var(--courbe-graphite); }
+.confirmation .cf-symbole { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; color: var(--c, var(--accent)); background: color-mix(in srgb, var(--c, var(--accent)) 14%, transparent); }
+.confirmation .cf-symbole svg { width: 24px; height: 24px; }
+.confirmation h2 { font-size: var(--t-entete); font-weight: var(--g-titre); letter-spacing: -0.01em; line-height: 1.25; }
+.confirmation p { margin-top: var(--e2); font-size: 14px; color: var(--texte2); line-height: 1.45; }
+.confirmation .cf-boutons { display: grid; gap: var(--e2); margin-top: var(--e5); }
+.confirmation.danger { --c: var(--danger); }
+.confirmation.danger .bouton:not(.discret) { background: var(--danger); color: #fff; }
+
+/* ── Messages ────────────────────────────────────────────────────────── */
+#toasts { position: fixed; bottom: calc(max(10px, env(safe-area-inset-bottom)) + 104px); left: 50%; transform: translateX(-50%); z-index: 30; display: grid; gap: var(--e2); width: min(92vw, 440px); pointer-events: none; }
+.toast { padding: var(--e3) var(--e4); border-radius: var(--r-champ); font-size: 14px; font-weight: var(--g-libelle); background: #1e1e22; border: 1px solid var(--filet2); box-shadow: var(--ombre-flottant); animation: arrivee var(--d-court) ease; }
+.toast.refus { border-color: color-mix(in srgb, var(--perte) 50%, transparent); }
+.toast.gain { border-color: color-mix(in srgb, var(--gain) 50%, transparent); }
+@keyframes arrivee { from { opacity: 0; transform: translateY(8px); } }
+dialog.alerte-presence { margin: auto; max-width: min(92vw, 420px); width: 100%; padding: 22px; border-radius: 26px; background: var(--feuille); color: var(--texte); border: 1px solid var(--filet2); }
+dialog.alerte-presence::backdrop { background: rgba(0, 0, 0, 0.6); }
+dialog.alerte-presence h2 { font-size: 22px; font-weight: var(--g-titre); }
+dialog.alerte-presence .aide { margin: var(--e2) 0 var(--e4); }
+
+/* ── Chargement ──────────────────────────────────────────────────────── */
+.accueil-vide { min-height: 80dvh; display: grid; place-content: center; text-align: center; gap: 14px; }
+.logo { font-size: var(--t-grand); font-weight: 800; letter-spacing: -0.04em; }
+.logo span { color: var(--accent); }
+.squelette-page { display: flex; flex-direction: column; gap: var(--e3); margin-top: var(--e3); }
+.racine .squelette-page { margin-top: 70px; }
+.squelette { height: 120px; border-radius: var(--r-carte); background: linear-gradient(90deg, var(--puce) 0, var(--puce2) 50%, var(--puce) 100%); background-size: 200% 100%; animation: brille 1.2s infinite linear; }
+.squelette.bas { height: 80px; }
+@keyframes brille { to { background-position: -200% 0; } }
+
+/* ══ La barre perle (BarrePerle.swift) : dessinée une fois, la perle glisse ══ */
+nav.perle {
+  position: fixed; left: 50%; bottom: max(10px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+  width: var(--l-barre, 366px); height: 93px; z-index: 10; -webkit-tap-highlight-color: transparent; pointer-events: none;
+}
+nav.perle > * { pointer-events: auto; }
+nav.perle svg.perle-pilule { position: absolute; left: 0; bottom: 0; width: 100%; height: 58px; overflow: visible; filter: drop-shadow(0 8px 11px rgba(0, 0, 0, 0.38)); pointer-events: none; }
+nav.perle .onglets { position: absolute; left: 0; right: 0; bottom: 0; height: 58px; display: flex; padding: 0 var(--marge, 0px); }
+nav.perle .onglets button { flex: 1; display: grid; place-items: center; color: var(--texte2); transition: color var(--d-court); }
+nav.perle .onglets button svg { width: 22px; height: 22px; transition: opacity var(--d-court), transform var(--d-perle) var(--courbe-graphite); }
+nav.perle .onglets button .nom { grid-area: 1 / 1; font-size: var(--t-micro); font-weight: var(--g-libelle); color: var(--accent); margin-top: 22px; opacity: 0; transform: translateY(4px); transition: opacity var(--d-court), transform var(--d-perle) var(--courbe-graphite); }
+nav.perle .onglets button svg { grid-area: 1 / 1; }
+nav.perle .onglets button[aria-current="page"] svg { opacity: 0; transform: translateY(-14px); }
+nav.perle .onglets button[aria-current="page"] .nom { opacity: 1; transform: none; }
+nav.perle .perle-bouton {
+  position: absolute; top: 0; left: 0; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; color: var(--sur-accent);
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, #fff 35%, var(--accent)), var(--accent) 60%);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 45%, transparent), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transform: translateX(var(--x, 0px)); transition: transform var(--d-perle) var(--courbe-graphite); pointer-events: none;
+}
+nav.perle .perle-bouton svg { width: 22px; height: 22px; grid-area: 1 / 1; transition: opacity var(--d-court); }
+nav.perle .perle-bouton svg:not(.actif) { opacity: 0; }
+
+/* ── Le rail latéral (palier moyen : tablette, fenêtre réduite) ──────── */
+nav.rail-lateral {
+  position: fixed; top: 0; bottom: 0; left: 0; z-index: 10; width: var(--l-rail); display: flex; flex-direction: column; align-items: center; gap: var(--e6);
+  padding: max(var(--e6), env(safe-area-inset-top)) 0 var(--e6) env(safe-area-inset-left);
+  background: linear-gradient(#111114, #0b0b0d); border-right: 1px solid var(--filet);
+}
+nav.rail-lateral .logo-rail { font-size: 24px; font-weight: 800; letter-spacing: -0.04em; }
+nav.rail-lateral .logo-rail span { color: var(--accent); }
+nav.rail-lateral .rail-onglets { position: relative; display: flex; flex-direction: column; gap: var(--e3); }
+nav.rail-lateral .rail-onglets button, nav.rail-lateral .rail-raccourcis button { position: relative; z-index: 1; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: var(--texte2); transition: color var(--d-court), background var(--d-court); }
+nav.rail-lateral button svg { width: 22px; height: 22px; }
+nav.rail-lateral .rail-onglets button[aria-current="page"] { color: var(--sur-accent); }
+nav.rail-lateral .rail-raccourcis { margin-top: auto; display: flex; flex-direction: column; gap: var(--e1); padding-top: var(--e3); border-top: 1px solid var(--filet); }
+nav.rail-lateral .rail-raccourcis button { width: 44px; height: 44px; }
+nav.rail-lateral .rail-raccourcis button svg { width: 19px; height: 19px; }
+nav.rail-lateral .rail-raccourcis button[aria-current="page"] { color: var(--texte); background: var(--surface-survol); }
+.glisseur {
+  position: absolute; left: 0; top: 0; z-index: 0; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, #fff 35%, var(--accent)), var(--accent) 60%);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transform: translateY(var(--y, 0px)); transition: transform var(--d-perle) var(--courbe-graphite);
+}
+nav.rail-lateral .glisseur { width: 52px; height: 52px; }
+
+/* ── La colonne latérale (palier large : Mac, tablette couchée) ──────── */
+nav.colonne {
+  position: fixed; top: 0; bottom: 0; left: 0; z-index: 10; width: var(--l-colonne); display: flex; flex-direction: column; gap: 22px;
+  padding: max(28px, env(safe-area-inset-top)) var(--e4) var(--e6) max(var(--e4), env(safe-area-inset-left));
+  background: linear-gradient(#111114, #0b0b0d); border-right: 1px solid var(--filet);
+}
+nav.colonne .logo-colonne { font-size: 28px; font-weight: 800; letter-spacing: -0.04em; padding: 0 10px; }
+nav.colonne .logo-colonne span { color: var(--accent); }
+nav.colonne .colonne-onglets, nav.colonne .colonne-raccourcis { position: relative; display: flex; flex-direction: column; gap: var(--e1); }
+nav.colonne .colonne-raccourcis { margin-top: auto; padding-top: var(--e4); border-top: 1px solid var(--filet); }
+nav.colonne button { position: relative; z-index: 1; display: flex; align-items: center; gap: var(--e3); padding: var(--e2) 10px; border-radius: 14px; font-size: var(--t-libelle); font-weight: var(--g-libelle); color: var(--texte2); transition: background var(--d-court), color var(--d-court); }
+nav.colonne button:hover { background: var(--surface-survol); color: var(--texte); }
+nav.colonne button[aria-current="page"] { color: var(--texte); background: rgba(255, 255, 255, 0.05); }
+nav.colonne .colonne-perle, nav.colonne .colonne-icone { width: 36px; height: 36px; flex: none; border-radius: 50%; display: grid; place-items: center; transition: color var(--d-court); }
+nav.colonne .colonne-perle svg, nav.colonne .colonne-icone svg { width: 19px; height: 19px; }
+nav.colonne button[aria-current="page"] .colonne-perle { color: var(--sur-accent); }
+nav.colonne .glisseur { width: 36px; height: 36px; left: 10px; }
+nav.colonne .touche { margin-left: auto; font-size: var(--t-micro); font-weight: var(--g-libelle); color: var(--texte3); border: 1px solid var(--filet); border-radius: 6px; padding: 1px 6px; opacity: 0; transition: opacity var(--d-court); }
+nav.colonne button:hover .touche { opacity: 1; }
+
+/* ══ Les paliers (docs/web-design.md) : body[data-palier] posé par app.js ══ */
+@media (hover: hover) and (pointer: fine) {
+  button.ligne:hover, .interrupteur:hover { background: var(--surface-appui); }
+  .petit:hover:not(:disabled), .bouton.secondaire:hover:not(:disabled), .rond:hover, .filtre:hover { border-color: rgba(255, 255, 255, 0.22); }
+  .bouton:hover:not(:disabled) { filter: brightness(1.06); }
+  nav.rail-lateral .rail-onglets button:not([aria-current]):hover, nav.rail-lateral .rail-raccourcis button:hover { color: var(--texte); background: var(--surface-survol); }
+}
+@media (min-width: 700px) { dialog.feuille { margin: auto; border-radius: var(--r-feuille); } dialog.confirmation { margin: auto; } }
+
+/* Moyen : 700–1 099 px. Le rail à gauche ; une page poussée en colonne de lecture ; une racine en colonnes. */
+body[data-palier="moyen"] { --e-page: 24px; }
+body[data-palier="moyen"] #app { margin-left: var(--l-rail); margin-right: 0; max-width: none; padding-bottom: 64px; }
+body[data-palier="moyen"] #app > .page { max-width: var(--l-lecture); margin: 0 auto; }
+body[data-palier="moyen"] #app > .page.ample { max-width: var(--l-ample); }
+body[data-palier="moyen"] #toasts { bottom: 24px; left: calc(var(--l-rail) + (100vw - var(--l-rail)) / 2); }
+
+/* Large : ≥ 1 100 px. La colonne latérale ; la page au centre ; liste + détail quand une page de détail s'ouvre. */
+body[data-palier="large"] { --e-page: 32px; }
+body[data-palier="large"] #app { margin-left: var(--l-colonne); margin-right: 0; max-width: none; padding-bottom: 64px; }
+body[data-palier="large"] #app > .page { max-width: 760px; margin: 0 auto; }
+body[data-palier="large"] #app > .page.ample { max-width: var(--l-ample); }
+body[data-palier="large"] #toasts { bottom: 24px; left: calc(var(--l-colonne) + (100vw - var(--l-colonne)) / 2); }
+@media (min-width: 1000px) { dialog.feuille { max-width: 600px; } }
+
+/* Liste + détail : la liste garde sa place à gauche, le détail s'ouvre à droite (#panneau). */
+#panneau { display: none; }
+body.avec-panneau { --e-page: 24px; }
+body.avec-panneau #app { width: calc(var(--l-colonne) + var(--l-liste)); max-width: none; padding-left: calc(var(--l-colonne) + var(--e-page)); margin-left: 0; padding-right: var(--e-page); }
+body.avec-panneau #panneau { --e-page: 32px; }
+body.avec-panneau #app > .page { max-width: none; }
+body.avec-panneau #panneau {
+  display: block; position: fixed; top: 0; bottom: 0; right: 0; left: calc(var(--l-colonne) + var(--l-liste)); z-index: 4; overflow-y: auto; overscroll-behavior: contain;
+  padding: 0 var(--e-page) 64px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.015), transparent 30%), var(--fond); border-left: 1px solid var(--filet);
+  container: panneau / inline-size;
+}
+body.avec-panneau #panneau > .page { max-width: var(--l-lecture); margin: 0 auto; }
+body.avec-panneau #panneau .entete-pousse { margin: 0 calc(-1 * var(--e-page)); padding-left: var(--e-page); padding-right: var(--e-page); }
+body.avec-panneau #toasts { left: calc(var(--l-colonne) + var(--l-liste) + (100vw - var(--l-colonne) - var(--l-liste)) / 2); }
+/* Dans la liste, l'en-tête d'une page poussée garde son retour ; la ligne ouverte est marquée. */
+#panneau .page.entre { animation-name: panneau-entree; }
+/* Sans barre (début de saison, compte) : la page reste centrée, quel que soit le palier. */
+body.sans-barre[data-palier] #app { margin-left: auto; margin-right: auto; max-width: 640px; padding-left: var(--e-page); }
+@keyframes panneau-entree { from { opacity: 0; transform: translateX(14px); } }
+
+/* ── Les conteneurs : un composant s'adapte à sa colonne, pas à la fenêtre ── */
+/* `.ample` (une racine dessinée par renduLarge) et #panneau sont des conteneurs. Attention : un
+   descendant en position: fixed s'y place dans le conteneur ; un plein écran passe par <dialog>. */
+.page.ample { container: page / inline-size; }
+.colonnes { display: grid; gap: var(--e-section) var(--e6); align-items: start; }
+.colonnes > * { min-width: 0; }
+.colonne-pile { display: flex; flex-direction: column; gap: var(--e3); min-width: 0; }
+.grille-auto { display: grid; gap: var(--e3); grid-template-columns: 1fr; }
+@container page (min-width: 640px) {
+  .colonnes { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .colonnes.large-gauche { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+  .colonnes .pleine-largeur { grid-column: 1 / -1; }
+  .grille-auto { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container page (min-width: 1040px) {
+  .colonnes.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grille-auto { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@container panneau (min-width: 560px) { .grille-auto { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ── Repris de css/anciens.css (RNT-210) : ce qui sert à plusieurs zones ──
+   l'anneau du focus (accueil, focus, en ligne, repas), les fiches de profil (départ, saison, boîtes, villes),
+   les tuiles Faim et Train de vie et le bilan de la Banque (posées par l'accueil et la Banque), le réseau (social). */
+.anneau { position: relative; width: min(74vw, 290px); aspect-ratio: 1; margin: 6px auto 4px; }
+.anneau svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.anneau .centre { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.anneau .temps { font-size: clamp(46px, 14vw, 62px); font-weight: 600; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.anneau .gain-session { font-size: 17px; font-weight: 600; color: var(--gain); }
+.profil { text-align: left; width: 100%; display: block; }
+.profil .nom { font-size: 17px; font-weight: 650; }
+.profil.ferme { opacity: 0.45; }
+.profil.choisi { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.atout, .defaut { font-size: 14px; display: flex; gap: 8px; align-items: baseline; margin-top: 4px; }
+.atout::before { content: "+"; color: var(--gain); font-weight: 700; }
+.defaut::before { content: "−"; color: var(--perte); font-weight: 700; }
+.tuile-faim { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px 12px; padding: 14px 16px 12px; margin-top: 12px; }
+.tuile-faim .tf-corps { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.tuile-faim .tf-texte { display: grid; gap: 1px; min-width: 0; }
+.tuile-faim .t { font-size: 13px; color: var(--texte2); }
+.tuile-faim .v { font-size: 17px; font-weight: 600; color: var(--c); letter-spacing: -0.01em; }
+.tuile-faim .tf-pc { font-size: 15px; color: var(--texte2); margin-left: 4px; }
+.tuile-faim .tf-avant { font-size: 12px; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tuile-faim .tf-avant.alerte { color: var(--alerte); }
+.tuile-faim .tf-rail { grid-column: 1 / -1; }
+.tuile-vie { display: flex; align-items: center; gap: 14px; width: 100%; padding: 14px 16px; margin-top: 12px; text-align: left; }
+.tuile-vie .pastille { width: 46px; height: 46px; border-radius: 13px; }
+.tuile-vie .pastille svg { width: 22px; height: 22px; }
+.tuile-vie .tv-texte { display: grid; gap: 1px; min-width: 0; flex: 1; }
+.tuile-vie .t { font-size: 13px; color: var(--texte2); }
+.tuile-vie .v { font-size: 17px; font-weight: 600; }
+.tuile-vie .tv-sous { font-size: 13px; font-weight: 400; color: var(--texte2); }
+.tuile-vie .tv-lieu { font-size: 12px; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tuile-vie .tv-lieu.alerte { color: var(--alerte); }
+.bilan-vie { display: block; width: 100%; padding: 16px; text-align: left; }
+.bilan-vie .bv-ligne { font-size: 14px; padding: 2px 0; }
+.bilan-vie .bv-ligne .chiffres { font-size: 14px; letter-spacing: 0; }
+.carte.reseau.sans .titre { color: var(--alerte); }
