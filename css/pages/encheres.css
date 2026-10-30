@@ -1,0 +1,53 @@
+/* ══════════════════════════════════════════════════════════════════════
+   La salle des ventes unique (RNT-221) — EcranEncheres de l'iPhone :
+   le filtre par famille, les sections, une ligne par vente avec la photo
+   de son actif ; la feuille d'une vente et sa mise exacte.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ec-page { display: flex; flex-direction: column; gap: var(--e5); }
+.ec-section { display: flex; flex-direction: column; gap: var(--e2); }
+.ec-titre { margin: 0; padding-left: var(--e1); font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); }
+.ec-vide { padding: var(--e4); margin: 0; }
+
+/* Une vente : la vignette, le nom et la nature, le prix et le temps qui reste. */
+.ec-ligne { display: flex; align-items: center; gap: var(--e3); width: 100%; padding: var(--e3) 14px; text-align: left; min-width: 0; }
+.ec-ligne:active { background: var(--surface-appui); }
+@media (hover: hover) { .ec-ligne:hover { background: var(--surface-survol); } }
+.ec-vignette { flex: none; width: 52px; height: 52px; border-radius: var(--r-pastille); overflow: hidden; display: grid; }
+.ec-vignette > div { border-radius: var(--r-pastille); }
+.ec-symbole { display: grid; place-items: center; width: 100%; height: 100%; background: var(--puce); color: var(--texte2); }
+.ec-symbole svg { width: 22px; height: 22px; }
+.ec-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.ec-nom { font-size: var(--t-libelle); font-weight: var(--g-libelle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ec-detail { font-size: var(--t-aide); color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ec-statut { font-size: var(--t-legende); font-weight: var(--g-corps); }
+.ec-droite { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.ec-prix { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.ec-temps { font-size: var(--t-legende); font-weight: var(--g-corps); color: var(--texte2); }
+
+/* La feuille d'une vente. */
+.ec-feuille { display: flex; flex-direction: column; gap: 18px; }
+.ec-photo { border-radius: var(--r-tuile); overflow: hidden; }
+.ec-photo .ec-symbole { height: 190px; }
+.ec-photo .ec-symbole svg { width: 48px; height: 48px; }
+.ec-nom-grand { font-size: var(--t-entete); font-weight: var(--g-libelle); letter-spacing: -0.01em; }
+.ec-heros { display: flex; flex-direction: column; gap: 6px; }
+.ec-prix-grand { font-size: 40px; font-weight: var(--g-titre); line-height: 1.05; }
+.ec-qui { font-size: var(--t-libelle); font-weight: var(--g-libelle); color: var(--texte2); }
+.ec-qui .ec-temps { font-size: inherit; font-weight: inherit; color: inherit; }
+.ec-message { margin: 0; font-size: 14px; font-weight: var(--g-corps); }
+
+/* La mise : le montant exact, les pas, l'enchère automatique en option. */
+.ec-mise { padding: var(--e4); display: flex; flex-direction: column; gap: var(--e3); }
+.ec-ma-mise { display: flex; justify-content: space-between; gap: var(--e2); font-size: var(--t-aide); font-weight: var(--g-libelle); }
+.ec-ma-mise .chiffres { color: var(--texte2); font-weight: var(--g-corps); }
+.ec-libelle { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.ec-champ { display: flex; align-items: baseline; gap: 6px; padding: 0 var(--e4); min-height: 54px; border-radius: var(--r-champ);
+  background: var(--puce); border: 1px solid var(--filet); }
+.ec-champ:focus-within { border-color: var(--accent); }
+.ec-champ input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font-size: 28px; font-weight: var(--g-libelle); color: var(--texte); padding: 10px 0; }
+.ec-champ span { font-size: 20px; font-weight: var(--g-libelle); color: var(--texte2); }
+.ec-pas { display: flex; flex-wrap: wrap; gap: var(--e2); }
+.ec-resume { display: flex; flex-direction: column; gap: var(--e1); font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.ec-resume > div { display: flex; justify-content: space-between; }
+.ec-resume span { color: var(--texte2); }

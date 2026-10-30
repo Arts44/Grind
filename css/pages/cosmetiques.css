@@ -1,0 +1,322 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Les cosmétiques de fin de saison (RNT-231, D230) : le dessin des pièces
+   (miniatures), l'habillage de la carte de membre, les pseudos animés, le
+   thème, les ambiances de session, la vitrine, Personnaliser et le
+   dévoilement du bilan. Posé par js/cosmetiques.js.
+   Avec « réduire les animations », tout s'arrête : les durées viennent des
+   jetons, et les boucles sont coupées plus bas.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* MARK: Le thème */
+:root[data-theme-grind] body {
+  background:
+    radial-gradient(120% 60% at 50% -10%, color-mix(in srgb, var(--halo-theme) 16%, transparent), transparent 70%),
+    var(--fond);
+  background-attachment: fixed;
+}
+
+/* MARK: Une miniature */
+.cz-apercu {
+  position: relative; display: grid; place-items: center; overflow: hidden;
+  inline-size: 100%; aspect-ratio: 1.45; border-radius: var(--r-tuile);
+  background: var(--surface-carte); box-shadow: inset 0 0 0 1px var(--bord-carte);
+  color: var(--texte);
+}
+/* RNT-248 : tout ce qui est dessiné dedans suit la taille de la case (cqi : 1 % de sa largeur ; 145 px de référence),
+   pour tenir dans 40 px (les paliers) comme dans 190 px (la grille) : rien ne déborde, « Pseudo » n’est plus tronqué. */
+.cz-apercu { container-type: inline-size; }
+.cz-apercu.ferme > * { filter: grayscale(0.85); opacity: 0.38; }
+.cz-apercu svg { display: block; }
+
+/* Fond : une petite carte de membre */
+.cz-mini-carte {
+  position: relative; inline-size: 74%; aspect-ratio: 1.586; border-radius: 10px; overflow: hidden;
+  display: flex; align-items: flex-end; padding: 5.5cqi 6.9cqi; box-sizing: border-box;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+.cz-mini-carte b { font-size: 8.3cqi; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+.cz-mini-carte i { position: absolute; inset: 0; }
+.cz-m-grain .cz-mini-carte i {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 0.6px, transparent 0.8px);
+  background-size: 3px 3px;
+}
+.cz-m-lisere .cz-mini-carte i { inset: 4px; border: 1px solid var(--c3); border-radius: 7px; box-shadow: inset 0 0 0 2px transparent, inset 0 0 0 3px color-mix(in srgb, var(--c3) 55%, transparent); }
+
+/* Accent : un anneau et des lettres */
+.cz-s-accent .cz-rond, .cz-apercu.cz-s-accent .cz-rond {
+  inline-size: 38%; aspect-ratio: 1; border-radius: 50%;
+  background: conic-gradient(from 210deg, var(--c1), var(--c2), var(--c1));
+  -webkit-mask: radial-gradient(circle, transparent 54%, #000 56%); mask: radial-gradient(circle, transparent 54%, #000 56%);
+}
+.cz-apercu.cz-s-accent { grid-template-areas: "x"; }
+.cz-apercu.cz-s-accent > * { grid-area: x; }
+.cz-apercu.cz-s-accent b { font-size: 10.3cqi; font-weight: 800; background: linear-gradient(180deg, var(--c1), var(--c2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Pseudo animé */
+.cz-apercu.cz-s-pseudo b { white-space: nowrap; font-size: 13.8cqi; font-weight: 800; letter-spacing: -0.02em; }
+.cz-pseudo[data-pseudo="souffle"] { animation: cz-souffle 3.6s ease-in-out infinite; }
+.cz-pseudo[data-pseudo="reflet"], .cz-pseudo[data-pseudo="encre"] {
+  background: linear-gradient(100deg, currentColor 0 38%, var(--reflet, #E3C46B) 48%, #fff 50%, var(--reflet, #E3C46B) 52%, currentColor 62% 100%);
+  background-size: 260% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: cz-reflet 4.2s var(--courbe-graphite) infinite;
+}
+.cz-apercu .cz-pseudo[data-pseudo="reflet"], .cz-membre-pseudo.cz-pseudo[data-pseudo="reflet"] { --reflet: #E3C46B; background-color: transparent; }
+.cz-pseudo[data-pseudo="encre"] {
+  background: linear-gradient(100deg, #7A5A1E, #C99B3F 25%, #F4E3B0 45%, #C99B3F 60%, #7A5A1E 80%, #C99B3F);
+  background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: cz-reflet 6s linear infinite;
+}
+/* Le reflet part d'un pseudo blanc : la couleur courante reste celle du texte. */
+.cz-pseudo[data-pseudo="reflet"] { color: inherit; -webkit-text-fill-color: transparent; }
+@keyframes cz-souffle { 0%, 100% { opacity: 1; letter-spacing: -0.02em; } 50% { opacity: 0.72; letter-spacing: 0.01em; } }
+@keyframes cz-reflet { 0% { background-position: 100% 0; } 60%, 100% { background-position: 0% 0; } }
+
+/* Bannière */
+.cz-banniere-dessin, .cz-banniere { position: absolute; inset: 0; }
+.cz-apercu .cz-banniere-dessin { inset: 22% 8%; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
+.cz-m-horizon .cz-banniere-dessin, .cz-banniere.cz-m-horizon {
+  background:
+    radial-gradient(circle at 50% 78%, var(--c1, var(--b1)) 0 14%, transparent 15%),
+    linear-gradient(180deg, var(--c3, var(--b3)) 0%, var(--c2, var(--b2)) 62%, var(--c1, var(--b1)) 78%, #0d0d12 78.5%);
+}
+.cz-m-marbre .cz-banniere-dessin, .cz-banniere.cz-m-marbre {
+  background:
+    linear-gradient(118deg, transparent 30%, color-mix(in srgb, var(--c3, var(--b3)) 55%, transparent) 31%, transparent 33%),
+    linear-gradient(64deg, transparent 58%, color-mix(in srgb, var(--c3, var(--b3)) 40%, transparent) 59%, transparent 60.5%),
+    linear-gradient(150deg, transparent 72%, color-mix(in srgb, var(--c2, var(--b2)) 70%, transparent) 73%, transparent 76%),
+    linear-gradient(135deg, var(--c1, var(--b1)), var(--c2, var(--b2)));
+}
+.cz-m-aurore .cz-banniere-dessin, .cz-banniere.cz-m-aurore {
+  background:
+    radial-gradient(60% 90% at 20% 100%, color-mix(in srgb, var(--c1, var(--b1)) 70%, transparent), transparent 70%),
+    radial-gradient(50% 80% at 70% 100%, color-mix(in srgb, var(--c3, var(--b3)) 70%, transparent), transparent 70%),
+    radial-gradient(70% 70% at 50% 110%, color-mix(in srgb, var(--c2, var(--b2)) 60%, transparent), transparent 70%),
+    var(--c4, var(--b4));
+  background-size: 200% 100%, 200% 100%, 100% 100%, 100% 100%;
+  animation: cz-aurore 14s ease-in-out infinite alternate;
+}
+@keyframes cz-aurore { from { background-position: 0% 0, 100% 0, 0 0, 0 0; } to { background-position: 100% 0, 0% 0, 0 0, 0 0; } }
+
+/* Carte du monde */
+.cz-apercu.cz-s-trainee svg { inline-size: 76%; }
+.cz-apercu.cz-s-trainee, .cz-apercu.cz-s-marqueur, .cz-apercu.cz-s-couleurMarqueur {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 14px 14px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 14px 14px,
+    #12161c;
+}
+.cz-marqueur { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5)); }
+.cz-apercu .cz-marqueur { inline-size: 21cqi; block-size: auto; }
+.cz-apercu.grand .cz-marqueur { inline-size: 30cqi; }
+
+/* Patrimoine */
+.cz-apercu.cz-s-plaque svg { inline-size: 74%; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); }
+.cz-apercu.cz-s-facade svg { block-size: 78%; }
+.cz-apercu.cz-s-cadran svg { block-size: 74%; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5)); }
+.cz-carrosserie {
+  inline-size: 72%; aspect-ratio: 2.2; border-radius: 40% 46% 18% 18% / 70% 70% 30% 30%;
+  background: linear-gradient(170deg, var(--c1), var(--c2));
+  box-shadow: inset 0 -6px 10px rgba(0, 0, 0, 0.35), 0 8px 14px rgba(0, 0, 0, 0.4);
+}
+.cz-m-carbone .cz-carrosserie {
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 4px),
+    linear-gradient(170deg, var(--c1), var(--c2));
+}
+.cz-m-nacre .cz-carrosserie {
+  background: conic-gradient(from 200deg at 40% 30%, var(--c1), var(--c2), var(--c3), var(--c1));
+  animation: cz-nacre 8s linear infinite;
+}
+@keyframes cz-nacre { to { filter: hue-rotate(40deg); } }
+
+/* Interface */
+.cz-ecran {
+  inline-size: 30%; aspect-ratio: 0.55; border-radius: 6.2cqi; padding: 4.1cqi; box-sizing: border-box;
+  display: grid; gap: 2.76cqi; align-content: start;
+  background: radial-gradient(140% 50% at 50% 0, color-mix(in srgb, var(--c3) 30%, transparent), transparent 70%), var(--c1);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.18);
+}
+.cz-ecran i { block-size: 6.9cqi; border-radius: 3px; background: var(--c2); }
+.cz-ecran i:first-child { block-size: 11cqi; background: color-mix(in srgb, var(--c3) 45%, var(--c2)); }
+.cz-onde { display: flex; align-items: center; gap: 2.76cqi; block-size: 42%; max-inline-size: 84%; }
+.cz-onde i { flex: none; inline-size: 2.76cqi; block-size: var(--h); border-radius: 2px; background: var(--c1); }
+.cz-m-feutre .cz-onde i { border-radius: 4px; inline-size: 4.14cqi; opacity: 0.85; }
+.cz-ambiance-dessin { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(80% 60% at 50% 100%, color-mix(in srgb, var(--c1) 18%, transparent), transparent), #0b0d11; }
+.cz-ticket {
+  position: relative; inline-size: 32%; aspect-ratio: 0.64; border-radius: 4px; padding: 4.8cqi; box-sizing: border-box;
+  display: grid; gap: 4px; align-content: start; background: #F3F1EA;
+}
+.cz-ticket i { block-size: 2.1cqi; border-radius: 2px; background: #c9c6bb; }
+.cz-ticket u { position: absolute; }
+.cz-m-ruban .cz-ticket u { inset: 42% -12% auto -12%; block-size: 9px; background: linear-gradient(180deg, var(--c1), var(--c2)); transform: rotate(-12deg); }
+.cz-m-sceau .cz-ticket u { inline-size: 36%; aspect-ratio: 1; right: 10%; bottom: 10%; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #F4E3B0, var(--c1) 45%, var(--c2)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--c2) 60%, transparent); }
+
+/* MARK: Les ambiances de session (miniature et plein écran) */
+[data-ambiance] > i { position: absolute; top: -10%; left: var(--x); }
+[data-ambiance="pluie"] > i {
+  inline-size: 1px; block-size: 14%; background: linear-gradient(180deg, transparent, var(--c1, #9FB7CC));
+  opacity: 0.55; animation: cz-pluie var(--d) linear var(--r) infinite;
+}
+[data-ambiance="braises"] > i {
+  top: auto; bottom: -6%; inline-size: 3px; block-size: 3px; border-radius: 50%;
+  background: var(--c1, #FF9A4D); box-shadow: 0 0 6px var(--c1, #FF9A4D);
+  animation: cz-braise calc(var(--d) * 2) ease-in var(--r) infinite;
+}
+@keyframes cz-pluie { to { transform: translateY(130vh); } }
+.cz-apercu [data-ambiance="pluie"] > i { animation-name: cz-pluie-mini; }
+@keyframes cz-pluie-mini { to { transform: translateY(260%); } }
+@keyframes cz-braise { 0% { transform: translate(0, 0); opacity: 0; } 15% { opacity: 0.9; } 100% { transform: translate(12px, -110cqh); opacity: 0; } }
+.cz-apercu .cz-ambiance-dessin, .cz-ambiance-session { container-type: size; }
+.cz-ambiance-session { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.fp-immersive .fp-im-cadre { position: relative; z-index: 1; }
+
+/* MARK: Fin de session : le reçu habillé */
+.fp-ticket[data-fin="ruban"]::after {
+  content: ""; position: absolute; left: -14px; right: -14px; top: 34%; block-size: 16px;
+  background: linear-gradient(180deg, #E0475F, #8F2335); transform: rotate(-8deg); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25); pointer-events: none;
+}
+.fp-ticket[data-fin="sceau"]::after {
+  content: "G"; position: absolute; right: 16px; bottom: 54px; inline-size: 46px; block-size: 46px; border-radius: 50%;
+  display: grid; place-items: center; font: 900 20px Georgia, serif; color: rgba(60, 40, 10, 0.55);
+  background: radial-gradient(circle at 35% 35%, #F4E3B0, #E3C46B 45%, #8C6B2E); box-shadow: 0 0 0 3px rgba(140, 107, 46, 0.35); transform: rotate(-12deg);
+}
+.fp-ticket[data-fin] { position: relative; overflow: visible; }
+
+/* MARK: La carte de membre habillée */
+.cl-membre.cz-fond { background: linear-gradient(135deg, var(--f1), var(--f2)); }
+.cl-membre.cz-fond-grain::before { opacity: 1; background: radial-gradient(rgba(255, 255, 255, 0.09) 0.6px, transparent 0.8px) 0 0 / 3px 3px; }
+.cl-membre .cz-lisere { position: absolute; inset: 8px; z-index: -1; pointer-events: none; border-radius: calc(var(--r-carte) - 8px);
+  border: 1px solid color-mix(in srgb, var(--f3) 85%, transparent); box-shadow: inset 0 0 0 3px transparent, inset 0 0 0 4px color-mix(in srgb, var(--f3) 40%, transparent); }
+.cl-membre .cz-banniere { inset: 0 0 auto 0; block-size: 38%; z-index: -1; opacity: 0.92; pointer-events: none;
+  -webkit-mask: linear-gradient(180deg, #000 50%, transparent); mask: linear-gradient(180deg, #000 50%, transparent); }
+.cl-membre.cz-accent .cl-membre-pseudo, .cz-nom.cz-accent { color: var(--a1); }
+.cl-membre.cz-accent .cl-membre-pseudo.cz-pseudo[data-pseudo="reflet"] { color: var(--a1); }
+.cz-nom.cz-pseudo[data-pseudo="reflet"], .cz-nom.cz-pseudo[data-pseudo="encre"] { -webkit-text-fill-color: transparent; }
+
+/* MARK: Les rangs de rareté */
+.cz-rarete { font-size: var(--t-micro); font-weight: var(--g-titre); letter-spacing: 0.04em; text-transform: uppercase; color: var(--texte2); }
+.cz-rarete[data-r="2"] { color: #7FB2EC; }
+.cz-rarete[data-r="3"] { color: #B4A6FF; }
+.cz-rarete[data-r="4"] { color: var(--or); }
+.cz-rarete[data-r="5"] { background: linear-gradient(90deg, #F4E3B0, #FF8A9A, #9D8CFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* MARK: La vitrine */
+.cz-page { display: grid; gap: var(--e-section); }
+.cz-tete { display: grid; gap: var(--e3); padding: var(--e5); }
+.cz-tete-chiffres { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e3); }
+.cz-tete-chiffres .chiffres { font-size: var(--t-titre); font-weight: var(--g-titre); }
+/* RNT-248 : les familles défilent (quatre colonnes tronquaient « Carte du monde ») ; même rangée que l’iPhone. */
+.cz-familles { display: flex; gap: var(--e2); overflow-x: auto; scrollbar-width: none; padding: 1px 1px var(--e1); }
+.cz-familles::-webkit-scrollbar { display: none; }
+.cz-famille-pastille { flex: none; white-space: nowrap; display: grid; gap: 2px; padding: var(--e3); border-radius: var(--r-tuile); background: var(--surface-appui); text-align: left; }
+.cz-famille-pastille b { font-size: var(--t-legende); font-weight: var(--g-libelle); }
+.cz-famille-pastille span { font-size: var(--t-micro); color: var(--texte2); }
+.cz-famille-pastille[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.cz-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--e3); }
+.cz-tuile { display: grid; gap: var(--e2); padding: var(--e2); border-radius: calc(var(--r-tuile) + 4px); background: var(--surface-carte); box-shadow: inset 0 0 0 1px var(--bord-carte); text-align: left; color: inherit; }
+.cz-tuile[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
+.cz-tuile-texte { display: grid; gap: 1px; padding: 0 var(--e1) var(--e1); min-inline-size: 0; }
+.cz-tuile-texte b { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.cz-tuile-texte span { font-size: var(--t-legende); color: var(--texte2); }
+.cz-tuile-texte .cz-source { color: var(--texte3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; min-block-size: 2.6em; }
+.cz-tuile-texte b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cz-tuile.gagnee .cz-source { color: var(--gain); }
+
+/* Les paliers : une échelle */
+.cz-paliers { display: grid; }
+.cz-palier { display: grid; grid-template-columns: 28px 1fr auto; gap: var(--e3); align-items: center; padding: var(--e3) var(--e4); }
+.cz-palier + .cz-palier { border-top: 1px solid var(--filet); }
+.cz-palier-num { inline-size: 28px; block-size: 28px; border-radius: 50%; display: grid; place-items: center; font-size: var(--t-legende); font-weight: var(--g-titre); background: var(--puce); color: var(--texte2); }
+.cz-palier.atteint .cz-palier-num { background: color-mix(in srgb, var(--or) 22%, transparent); color: var(--or); }
+.cz-palier-pieces { display: flex; gap: 6px; }
+.cz-palier-pieces .cz-apercu { inline-size: 40px; border-radius: 9px; }
+.cz-palier-texte b { font-size: var(--t-libelle); font-weight: var(--g-libelle); display: block; }
+.cz-palier-texte span { font-size: var(--t-legende); color: var(--texte2); }
+
+/* Les défis de la saison */
+.cz-defis { display: grid; }
+.cz-defi { display: grid; grid-template-columns: 34px 1fr 56px; gap: var(--e3); align-items: center; padding: var(--e3) var(--e4); }
+.cz-defi + .cz-defi { border-top: 1px solid var(--filet); }
+.cz-defi-icone { inline-size: 34px; block-size: 34px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--c, var(--accent)) 16%, transparent); color: var(--c, var(--accent)); }
+.cz-defi-icone svg { inline-size: 18px; block-size: 18px; }
+.cz-defi-texte { display: grid; gap: 3px; min-inline-size: 0; }
+.cz-defi-texte b { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.cz-defi-texte span { font-size: var(--t-legende); color: var(--texte2); }
+.cz-defi-rail { block-size: 5px; border-radius: 3px; background: var(--puce2); overflow: hidden; }
+.cz-defi-rail i { display: block; block-size: 100%; inline-size: var(--part); border-radius: inherit; background: var(--c, var(--accent)); transition: inline-size var(--d-geste) var(--courbe-graphite); }
+.cz-defi.fait .cz-defi-rail i { background: var(--gain); }
+.cz-defi .cz-apercu { inline-size: 56px; border-radius: 11px; }
+
+/* La jauge de l'accueil */
+.cz-jauge { display: grid; grid-template-columns: 1fr auto; gap: var(--e2) var(--e4); align-items: center; padding: var(--e4); text-align: left; color: inherit; inline-size: 100%; }
+.cz-jauge-texte b { display: block; font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.cz-jauge-texte span { font-size: var(--t-legende); color: var(--texte2); }
+.cz-jauge .cz-apercu { inline-size: 64px; border-radius: 12px; }
+.cz-jauge-rail { grid-column: 1 / -1; block-size: 6px; border-radius: 3px; background: var(--puce2); overflow: hidden; }
+.cz-jauge-rail i { display: block; block-size: 100%; inline-size: var(--part); background: linear-gradient(90deg, color-mix(in srgb, var(--or) 60%, transparent), var(--or)); border-radius: inherit; transition: inline-size var(--d-chiffre) var(--courbe-graphite); }
+.cz-jauge-defis { grid-column: 1 / -1; display: flex; gap: var(--e2); flex-wrap: wrap; }
+.cz-jauge-defis span { display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-legende); color: var(--texte2); padding: 4px 10px; border-radius: var(--r-pilule); background: var(--puce); }
+.cz-jauge-defis span.fait { color: var(--gain); }
+
+/* MARK: Personnaliser */
+.cz-perso-apercu { display: grid; gap: var(--e3); padding: var(--e4); position: sticky; top: var(--e2); z-index: 2; }
+.cz-perso-rangee { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--e3); align-items: center; }
+.cz-perso-carte-monde { position: relative; aspect-ratio: 1.6; border-radius: var(--r-tuile); overflow: hidden; display: grid; place-items: center;
+  background: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 16px 16px, linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 16px 16px, #12161c; }
+.cz-perso-carte-monde .cz-trace { position: absolute; inset: 18% 22% 30% 12%; }
+.cz-perso-carte-monde .cz-trace svg { inline-size: 100%; block-size: 100%; }
+.cz-perso-carte-monde .cz-marqueur { position: absolute; right: 18%; top: 14%; }
+.cz-perso-objets { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: var(--e2); align-items: center; }
+.cz-perso-objets > * { display: grid; place-items: center; block-size: 64px; border-radius: 14px; background: var(--surface-appui); }
+.cz-perso-objets svg { max-block-size: 52px; max-inline-size: 90%; }
+.cz-choix { display: flex; gap: var(--e3); overflow-x: auto; padding: 2px 2px var(--e2); scroll-snap-type: x proximity; scrollbar-width: none; }
+.cz-choix::-webkit-scrollbar { display: none; }
+.cz-choix .cz-tuile { flex: 0 0 132px; scroll-snap-align: start; }
+.cz-base { aspect-ratio: 1.45; border-radius: var(--r-tuile); display: grid; place-items: center; background: var(--surface-appui); color: var(--texte2); font-size: var(--t-legende); font-weight: var(--g-libelle); }
+
+/* MARK: Le dévoilement du bilan */
+.cz-devoile { display: grid; gap: var(--e3); justify-items: center; text-align: center; padding: var(--e6) var(--e4); }
+.cz-devoile-scene { inline-size: min(260px, 70%); }
+.cz-devoile-scene .cz-apercu { box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px var(--bord-carte); }
+.cz-devoile-objet { animation: cz-entree var(--d-geste) var(--courbe-graphite) both; }
+.cz-devoile[data-rarete="4"] .cz-devoile-scene, .cz-devoile[data-rarete="5"] .cz-devoile-scene { position: relative; }
+.cz-devoile[data-rarete="4"] .cz-devoile-scene::before, .cz-devoile[data-rarete="5"] .cz-devoile-scene::before {
+  content: ""; position: absolute; inset: -18%; border-radius: 50%; z-index: -1;
+  background: radial-gradient(circle, color-mix(in srgb, var(--or) 30%, transparent), transparent 65%);
+  animation: cz-entree calc(var(--d-geste) * 2) var(--courbe-graphite) both;
+}
+.cz-devoile-texte b { display: block; font-size: var(--t-entete); font-weight: var(--g-titre); letter-spacing: -0.01em; }
+.cz-devoile-texte span { font-size: var(--t-aide); color: var(--texte2); }
+.cz-devoile-points { display: flex; gap: 6px; }
+.cz-devoile-points i { inline-size: 6px; block-size: 6px; border-radius: 50%; background: var(--puce2); }
+.cz-devoile-points i.vu { background: var(--texte2); }
+.cz-devoile-points i.ici { background: var(--accent); }
+.cz-devoile-boutons { display: flex; gap: var(--e2); justify-content: center; flex-wrap: wrap; }
+@keyframes cz-entree { from { opacity: 0; transform: translateY(10px) scale(0.96); } to { opacity: 1; transform: none; } }
+
+/* MARK: Réduire les animations : rien ne boucle */
+@media (prefers-reduced-motion: reduce) {
+  .cz-pseudo, .cz-banniere, .cz-banniere-dessin, .cz-carrosserie, [data-ambiance] > i, .cz-devoile-objet, .cz-devoile-scene::before { animation: none !important; }
+  [data-ambiance] > i { display: none; }
+}
+
+/* MARK: Les petites notes et les sortes */
+.cz-note { margin: var(--e2) var(--e1) 0; }
+.cz-sorte { display: grid; gap: var(--e2); margin-top: var(--e4); }
+.cz-sorte-nom { padding: 0 var(--e1); }
+.cz-badge .cz-mini-carte b { font-size: 11px; }
+
+/* MARK: Ses cosmétiques (le profil d'un autre joueur) */
+.cz-sienne { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e2); margin-top: var(--e3); }
+.cz-sienne-piece { display: grid; gap: 4px; inline-size: 72px; font-size: var(--t-micro); color: var(--texte2); text-align: center; }
+.cz-sienne-piece .cz-apercu { border-radius: 12px; }
+
+/* MARK: La finition d'un bien possédé (sa fiche) */
+.cz-finition { display: flex; align-items: center; gap: var(--e3); padding: var(--e3) var(--e4); margin-bottom: var(--e4); }
+.cz-finition-dessin svg { display: block; block-size: 40px; inline-size: auto; max-inline-size: 140px; }
+.cz-finition .cz-apercu { inline-size: 58px; border-radius: 10px; flex: none; }
+.cz-finition-texte { display: grid; gap: 2px; min-inline-size: 0; }
+.cz-finition-texte b { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.cz-finition-texte span { font-size: var(--t-legende); color: var(--texte2); }

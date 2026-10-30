@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"><defs><radialGradient id="fond" cx="512" cy="300" r="820" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#26262E"/><stop offset=".55" stop-color="#121216"/><stop offset="1" stop-color="#09090B"/></radialGradient><radialGradient id="halo" cx="512" cy="512" r="440" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9D8CFF" stop-opacity=".24"/><stop offset=".6" stop-color="#9D8CFF" stop-opacity=".06"/><stop offset="1" stop-color="#9D8CFF" stop-opacity="0"/></radialGradient><linearGradient id="metal" x1="230" y1="170" x2="800" y2="860" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FBEBC0"/><stop offset=".48" stop-color="#E3C46B"/><stop offset="1" stop-color="#9C7330"/></linearGradient><linearGradient id="details" x1="300" y1="220" x2="740" y2="820" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FBEBC0"/><stop offset=".48" stop-color="#E3C46B"/><stop offset="1" stop-color="#9C7330"/></linearGradient><linearGradient id="pierre" x1="470" y1="470" x2="554" y2="554" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C9BEFF"/><stop offset=".48" stop-color="#9D8CFF"/><stop offset="1" stop-color="#6A57E8"/></linearGradient></defs>
+<rect width="1024" height="1024" rx="229" fill="url(#fond)"/>
+<circle cx="512" cy="512" r="440" fill="url(#halo)"/>
+<circle cx="512" cy="512" r="318" fill="#0B0B0E" fill-opacity="0.92"/>
+<circle cx="512" cy="512" r="318" fill="none" stroke="url(#metal)" stroke-width="52"/>
+<path d="M491 250 L491 316" stroke="url(#details)" stroke-width="26"/>
+<path d="M533 250 L533 316" stroke="url(#details)" stroke-width="26"/>
+<circle cx="634" cy="300.69" r="14" fill="url(#details)"/>
+<circle cx="723.31" cy="390" r="14" fill="url(#details)"/>
+<path d="M774 512 L716 512" stroke="url(#details)" stroke-width="30"/>
+<circle cx="723.31" cy="634" r="14" fill="url(#details)"/>
+<circle cx="634" cy="723.31" r="14" fill="url(#details)"/>
+<path d="M512 774 L512 716" stroke="url(#details)" stroke-width="30"/>
+<circle cx="390" cy="723.31" r="14" fill="url(#details)"/>
+<circle cx="300.69" cy="634" r="14" fill="url(#details)"/>
+<path d="M250 512 L308 512" stroke="url(#details)" stroke-width="30"/>
+<circle cx="300.69" cy="390" r="14" fill="url(#details)"/>
+<circle cx="390" cy="300.69" r="14" fill="url(#details)"/>
+<path d="M366.14 420.85 L493.45 541.68 L530.66 523.66 L530.55 482.32 Z" fill="url(#details)"/>
+<path d="M700.79 403 L498.5 488.62 L492.95 523 L525.5 535.38 Z" fill="url(#details)"/>
+<circle cx="512" cy="512" r="34" fill="url(#pierre)"/>
+</svg>

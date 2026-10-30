@@ -1,0 +1,356 @@
+/* ── Repris de css/anciens.css (RNT-210) : le mode en ligne (D205, EcranEnLigne.swift, EcranInteractions.swift),
+   l'en-tête d'un monde (D215) ; aussi pour saison.js, mondes.js et joueurs.js, qui déclarent « enligne ». ── */
+.el-coupe { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.el-erreur { font-size: 13px; font-weight: 500; color: var(--perte); }
+.el-avatar { position: relative; flex: none; border-radius: 50%; display: grid; place-items: center; color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
+.el-avatar svg { width: 100%; height: auto; stroke-width: 2.2; }
+.el-cadre { position: absolute; border-radius: 50%; -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.el-bot { font-size: 11px; font-weight: 600; color: var(--texte2); padding: 2px 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); white-space: nowrap; }
+.el-nom-monde { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.el-code { font: 600 17px/1.2 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 3px; color: var(--texte2); user-select: all; }
+.el-code-saisi { font-size: 22px; letter-spacing: 4px; min-height: 56px; }
+.el-rang { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 16px; text-align: left; }
+.el-rang.moi { background: rgba(255, 255, 255, 0.04); }
+.el-rang .el-n { width: 26px; flex: none; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--texte3); text-align: center; }
+.el-rang .el-n.or { color: var(--or); }
+.el-menu select { appearance: none; background: none; border: 0; font: 600 15px var(--police); color: var(--texte); padding: 6px 22px 6px 0; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--texte2) 50%), linear-gradient(135deg, var(--texte2) 50%, transparent 50%);
+  background-position: calc(100% - 9px) 52%, calc(100% - 5px) 52%; background-size: 4px 4px; background-repeat: no-repeat; }
+.el-menu select option { background: var(--feuille); color: var(--texte); }
+.el-interrupteur { display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px 0; }
+.el-bascule { position: relative; flex: none; width: 51px; height: 31px; border-radius: 99px; background: var(--puce2); transition: background 0.25s var(--courbe-graphite); }
+.el-bascule::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); transition: transform 0.3s var(--courbe-graphite); }
+.el-interrupteur[aria-checked="true"] .el-bascule { background: var(--accent); }
+.el-interrupteur[aria-checked="true"] .el-bascule::after { transform: translateX(20px); }
+.el-pilules { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -2px; padding: 0 2px; }
+.el-pilules::-webkit-scrollbar { display: none; }
+.el-radio { width: 20px; height: 20px; flex: none; border-radius: 50%; border: 1.5px solid var(--filet2); transition: border 0.2s; }
+.el-radio.oui { border: 6px solid var(--accent); }
+.el-profil { display: flex; align-items: flex-start; gap: 12px; width: 100%; padding: 14px 16px; text-align: left; }
+.el-profil:disabled { opacity: 0.5; }
+.el-profil .el-radio { margin-top: 1px; }
+.el-ville { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 16px; text-align: left; }
+.el-ville[hidden] { display: none; }
+.el-ou { display: flex; align-items: center; gap: 14px; width: 100%; padding: 16px; text-align: left; }
+.el-bande { display: flex; }
+.el-bande > div { flex: 1; min-width: 0; padding: 14px 16px; }
+.el-bande > div + div { border-left: 1px solid var(--filet); }
+.el-grille3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 10px; padding: 16px; }
+.el-crans { display: inline-flex; gap: 3px; }
+.el-crans i { width: 12px; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.1); }
+.el-crans i.proche { background: var(--argent); } .el-crans i.moyen { background: var(--equipe); } .el-crans i.bas { background: var(--c-danger); }
+.el-avance { display: flex; align-items: center; }
+.el-avance b { width: 12px; height: 12px; flex: none; border-radius: 50%; border: 2px solid var(--c); background: var(--c); margin: 3px; }
+.el-avance b.attente { background: none; }
+.el-avance b.encours { box-shadow: 0 0 0 4px color-mix(in srgb, var(--or) 35%, transparent); }
+.el-avance i { flex: 1; height: 2px; }
+.el-avance-t { display: flex; justify-content: space-between; font-size: 11px; font-weight: 500; margin-top: -6px; }
+.el-avance-t .attente { color: var(--texte3); } .el-avance-t .echec { color: var(--c-danger); } .el-avance-t .encours { font-weight: 600; }
+.el-lien { font-size: 14px; font-weight: 500; color: var(--accent); text-align: left; }
+.el-curseur { width: 100%; accent-color: var(--accent); }
+.el-present { position: absolute; right: -2px; bottom: -2px; width: 9px; height: 9px; border-radius: 50%; background: var(--gain); box-shadow: 0 0 0 2px var(--feuille); }
+.el-pastille-n { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 99px; background: var(--or); color: var(--fond); font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+.el-fil { display: flex; flex-direction: column; gap: 6px; max-height: 340px; overflow-y: auto; }
+.el-bulle { align-self: flex-start; max-width: 82%; padding: 9px 13px; border-radius: 18px 18px 18px 6px; background: var(--puce2); font-size: 15px; line-height: 1.35; }
+.el-bulle.moi { align-self: flex-end; border-radius: 18px 18px 6px 18px; background: color-mix(in srgb, var(--accent) 24%, transparent); }
+.el-tete { overflow: hidden; }
+.el-tete .el-bande .aide { font-size: 12px; }
+.el-tete .petit svg { flex: none; }
+.el-tete-pastille { width: 46px; height: 46px; border-radius: 14px; }
+.el-tete-pastille svg { width: 22px; height: 22px; }
+.el-genre { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--texte2); letter-spacing: 0.01em; }
+.el-ici { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 99px; font-size: 12px; font-weight: 600; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.el-inviter { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; font-size: 15px; font-weight: 600; color: var(--accent); }
+.el-inviter:active { background: rgba(255, 255, 255, 0.03); }
+.el-ici::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.el-val { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.el-invite { padding: 18px 16px 16px; display: grid; gap: 6px; text-align: center; }
+.el-code-grand { font-size: 28px; letter-spacing: 6px; color: var(--texte); margin: 2px 0 12px; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   Le social en ligne (lot E) : Journal du dimanche, amis, défis, fiche
+   d'un ami, discussion, bourse du monde. Classes « so- ».
+
+   Les jetons du lot A (web/css/jetons.css) avec leur valeur de repli :
+   la page reste juste avant comme après les fondations. Les mises en page
+   larges suivent la largeur de la page (conteneur), pas celle de la
+   fenêtre : deux colonnes dès que la colonne de contenu a la place.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.so-page { container: social / inline-size; padding-top: var(--e1, 4px); }
+.so-pile { gap: var(--e4, 16px); }
+.so-pile-8 { gap: var(--e2, 8px); }
+.so-flex { flex: 1; min-width: 0; }
+.so-coupe { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.so-section { margin-top: 0; }
+.so-pied { margin: var(--e2, 8px) var(--e1, 4px) 0; }
+.so-titre-bloc { padding-left: var(--e1, 4px); }
+.so-ligne { gap: var(--e3, 12px); padding: var(--e3, 12px) var(--e4, 16px); }
+.so-vide-carte { padding: var(--e4, 16px); }
+.so-eteinte { opacity: 0.6; }
+.so-alerte { font-size: var(--t-aide, 13px); font-weight: 500; color: var(--alerte); }
+.so-lien { align-self: flex-start; font-size: 14px; font-weight: 500; color: var(--accent); padding: var(--e1, 4px) 0; }
+.so-lien:hover { text-decoration: underline; }
+.so-feuille { gap: var(--e4, 16px); }
+.so-grand-chiffre { font-size: 28px; }
+.so-coche { width: 18px; height: 18px; display: grid; color: var(--accent); flex: none; }
+.so-coche svg { width: 100%; height: 100%; }
+.so-bleu { color: var(--equipe); }
+.so-etat { display: inline-flex; align-items: center; gap: 5px; font-size: var(--t-aide, 13px); font-weight: 600; white-space: nowrap; }
+.so-etat svg { width: 14px; height: 14px; }
+
+/* Deux colonnes au large : la première porte ce qu'on fait, la seconde ce qu'on suit. */
+.so-deux { display: grid; gap: var(--e4, 16px); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@container social (min-width: 660px) {
+  .so-deux { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: var(--e6, 24px); }
+}
+
+/* ── Défis (CarteDefi) ─────────────────────────────────────────────── */
+.so-defi { display: flex; flex-direction: column; gap: var(--e3, 12px); }
+.so-defi-tete { align-items: baseline; }
+.so-defi-titre { display: inline-flex; align-items: center; gap: 7px; font-size: var(--t-libelle, 15px); font-weight: 600; min-width: 0; }
+.so-defi-titre svg { width: 16px; height: 16px; flex: none; color: var(--equipe); }
+.so-defi-titre span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.so-etiquette { flex: none; font-size: var(--t-legende, 12px); color: var(--c); padding: 4px 9px; border-radius: var(--r-pilule, 99px);
+  background: color-mix(in srgb, var(--c) 14%, transparent); letter-spacing: 0; }
+.so-barre { display: flex; flex-direction: column; gap: var(--e1, 4px); }
+.so-barre-tete { gap: 6px; font-size: var(--t-aide, 13px); font-weight: 500; }
+.so-barre-tete .fort { font-weight: 600; }
+.so-barre-tete .chiffres { font-size: var(--t-aide, 13px); letter-spacing: 0; }
+.so-couronne { width: 12px; height: 12px; color: var(--or); display: grid; }
+.so-couronne svg { width: 100%; height: 100%; }
+.so-rail { height: 8px; border-radius: var(--r-pilule, 99px); background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.so-rail.fin { height: 6px; }
+.so-rail i { display: block; height: 100%; width: calc(var(--part, 0) * 100%); min-width: 6px; border-radius: inherit; background: var(--c);
+  transition: width var(--d-geste, 0.44s) var(--courbe-graphite); }
+
+/* ── Classement des amis (ClassementAmis) ──────────────────────────── */
+.so-classe { display: flex; align-items: center; gap: var(--e3, 12px); padding: 11px var(--e4, 16px); }
+.so-classe-n { width: 20px; flex: none; text-align: center; font-size: var(--t-libelle, 15px); font-weight: 700; color: var(--texte3); letter-spacing: 0; }
+.so-classe-n.or { color: var(--or); }
+.so-classe-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.so-classe-tete { gap: 6px; font-size: var(--t-libelle, 15px); font-weight: 600; }
+.so-classe-tete .chiffres { font-size: 14px; letter-spacing: 0; }
+.so-toi { font-weight: 700; }
+.so-niv { font-size: 11px; font-weight: 600; color: var(--texte2); padding: 2px 6px; border-radius: var(--r-pilule, 99px); background: rgba(255, 255, 255, 0.06); }
+
+/* ── Amis ──────────────────────────────────────────────────────────── */
+.so-ajout { gap: 10px; }
+.so-ajout .rangee { gap: var(--e2, 8px); }
+.so-ajout .champ { min-height: 48px; }
+.so-pastille-ami { position: relative; }
+.so-present { position: absolute; right: -2px; bottom: -2px; width: 11px; height: 11px; border-radius: 50%; background: var(--gain); border: 2px solid var(--feuille); }
+.so-nouveau { font-size: var(--t-aide, 13px); font-weight: 600; color: var(--or); }
+.so-statut { display: inline-flex; align-items: center; gap: 5px; font-size: var(--t-aide, 13px); font-weight: 600; color: var(--gain); }
+.so-statut svg { width: 13px; height: 13px; }
+.so-defis { gap: 10px; }
+
+/* ── La fiche d'un ami (FicheAmi) ──────────────────────────────────── */
+.so-fiche { gap: 18px; container-type: inline-size; }
+.so-ami-tete { gap: 14px; padding-top: var(--e2, 8px); align-items: center; }
+.so-initiale { width: 64px; height: 64px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 26px; font-weight: 700;
+  background: color-mix(in srgb, var(--equipe) 25%, transparent); }
+.so-ami-nom { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; overflow: hidden; text-overflow: ellipsis; }
+.so-ami-titre { font-size: var(--t-aide, 13px); font-weight: 500; color: var(--or); margin-top: 2px; }
+.so-presence { gap: 6px; margin-top: var(--e1, 4px); }
+.so-presence i { width: 7px; height: 7px; border-radius: 50%; background: var(--texte3); flex: none; }
+.so-presence i.oui { background: var(--gain); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gain) 22%, transparent); }
+.so-puces { display: flex; gap: var(--e2, 8px); }
+.so-puce { flex: 1; min-width: 0; padding: 10px var(--e2, 8px) 10px var(--e3, 12px); border-radius: var(--r-pastille-liste, 14px); background: rgba(255, 255, 255, 0.04); }
+.so-puce .chiffres { font-size: clamp(12.5px, 3.6cqi, 15px); font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.so-puce > div:last-child { font-size: 11px; font-weight: 500; color: var(--texte2); }
+.so-stats { gap: var(--e3, 12px); }
+.so-chiffres { display: grid; grid-template-columns: 1fr 1fr; row-gap: var(--e3, 12px); }
+.so-chiffre .chiffres { font-size: var(--t-entete, 20px); }
+.so-gestes { gap: 10px; }
+.so-gestes .bouton { gap: var(--e2, 8px); }
+.so-gestes svg, .so-fiche .bouton.teinte svg { width: 17px; height: 17px; flex: none; }
+.so-discuter { flex: 1; }
+.so-pousser { flex: none; width: auto; padding: 0 var(--e5, 20px); }
+.so-fiche .bouton.teinte { gap: var(--e2, 8px); }
+.bouton.so-retirer { color: var(--danger); margin-top: 6px; }
+.so-panneau-discussion { display: none; }
+
+/* Au large : la discussion en panneau collé à côté de la fiche, sans bouton « Discuter ». */
+@container social (min-width: 660px) {
+  .so-ami .so-discuter { display: none; }
+  .so-ami .so-pousser { flex: 1; }
+  .so-panneau-discussion { display: flex; flex-direction: column; gap: var(--e2, 8px); position: sticky; top: var(--e4, 16px); }
+  .so-panneau-discussion .so-discussion { height: min(72dvh, 680px); border-radius: var(--r-carte, 22px); border: 1px solid var(--filet);
+    background: var(--surface-carte, rgba(255, 255, 255, 0.035)); overflow: hidden; }
+}
+
+/* ── La discussion (DiscussionAmi) ─────────────────────────────────── */
+.so-discussion { display: flex; flex-direction: column; min-height: 0; }
+.so-page-discussion .so-discussion { height: calc(100dvh - 150px); }
+.so-fil { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; scrollbar-width: none; }
+.so-fil::-webkit-scrollbar { display: none; }
+.so-fil > :first-child { margin-top: auto; }
+.so-jour { align-self: center; font-size: 11px; font-weight: 500; color: var(--texte3); padding-top: 10px; }
+.so-jour::first-letter { text-transform: uppercase; }
+.so-bulle-l { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding-right: 50px; }
+.so-bulle-l.moi { align-items: flex-end; padding-right: 0; padding-left: 50px; }
+.so-bulle { font-size: var(--t-libelle, 15px); line-height: 1.35; padding: 9px 13px; border-radius: 18px; background: rgba(255, 255, 255, 0.07);
+  white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.so-bulle-l.moi .so-bulle { background: var(--equipe); color: #fff; }
+.so-sous-bulle { font-size: 11px; color: var(--texte3); }
+.so-vide-discussion { margin: auto; display: grid; justify-items: center; gap: var(--e2, 8px); padding: 60px 0; color: var(--texte3); }
+.so-vide-discussion svg { width: 28px; height: 28px; }
+.so-saisie { display: flex; align-items: flex-end; gap: var(--e2, 8px); padding: var(--e2, 8px) var(--e3, 12px); border-top: 1px solid var(--filet);
+  background: var(--surface-verre, rgba(20, 20, 23, 0.72)); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.so-message { flex: 1; min-width: 0; resize: none; font-size: 16px; line-height: 1.35; padding: 10px 14px; min-height: 42px; max-height: 130px;
+  border-radius: 20px; border: 1px solid var(--filet2); background: rgba(255, 255, 255, 0.05); outline: none; }
+.so-message::placeholder { color: var(--texte2); }
+.so-message:focus { border-color: color-mix(in srgb, var(--equipe) 60%, var(--filet2)); }
+.so-envoyer { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--equipe); color: #fff;
+  transition: opacity var(--d-court, 0.25s), transform var(--d-court, 0.25s) var(--courbe-graphite); }
+.so-envoyer svg { width: 18px; height: 18px; stroke-width: 2.6; }
+.so-envoyer:disabled { opacity: 0.4; }
+.so-envoyer:active:not(:disabled) { transform: scale(0.92); }
+
+/* ── Bourse du monde (BarreListe, cartes en grille) ────────────────── */
+.so-barre-liste { display: flex; flex-direction: column; gap: 10px; }
+.so-barre-haut { gap: var(--e2, 8px); }
+.so-recherche { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 0 14px; min-height: 44px; }
+.so-recherche svg { width: 17px; height: 17px; flex: none; color: var(--texte2); }
+.so-recherche input { flex: 1; min-width: 0; border: 0; background: none; font-size: 16px; outline: none; }
+.so-recherche input::placeholder { color: var(--texte2); }
+.so-recherche input::-webkit-search-cancel-button { filter: invert(0.6); }
+.so-tri { display: inline-flex; align-items: center; gap: 5px; padding: 0 var(--e3, 12px); min-height: 44px; max-width: 46%; font-size: var(--t-aide, 13px); font-weight: 600; }
+.so-tri svg { width: 14px; height: 14px; flex: none; }
+.so-tri span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.so-defile { display: flex; gap: var(--e2, 8px); overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--e-page, 20px)); padding: 0 var(--e-page, 20px); }
+.so-defile::-webkit-scrollbar { display: none; }
+.so-filtre { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 14px; border-radius: var(--r-pilule, 99px);
+  border: 1px solid var(--filet2); font-size: 14px; font-weight: 600; transition: background var(--d-court, 0.25s), color var(--d-court, 0.25s); }
+.so-filtre svg { width: 13px; height: 13px; }
+.so-filtre[aria-pressed="true"] { background: var(--texte); color: var(--fond); border-color: transparent; }
+.so-compte { padding: 0 var(--e1, 4px); font-size: var(--t-legende, 12px); font-weight: 500; color: var(--texte2); }
+.so-compte .chiffres { font-weight: 500; letter-spacing: 0; }
+.so-compte button { font-size: var(--t-legende, 12px); font-weight: 600; color: var(--accent); }
+.so-grille { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e4, 16px); align-items: start; }
+@container social (min-width: 660px) { .so-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container social (min-width: 1040px) { .so-grille { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.so-grille > .aide { grid-column: 1 / -1; }
+.so-loyer { gap: 6px; margin-top: 6px; }
+
+/* ── Le journal du dimanche (CarteJournalDimanche, EcranJournalDimanche) ── */
+.so-papier {
+  --encre: #1d1c1a; --encre2: #6b675f; --papier: #f1eee7; --filet-papier: rgba(29, 28, 26, 0.12); --vert: #2f6b4e; --rouge: #9a2e2a;
+  --serif: "New York", "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
+  display: block; width: 100%; color: var(--encre); background: var(--papier); font-family: var(--serif); text-align: left;
+}
+.so-filet-double { display: flex; flex-direction: column; gap: 2px; }
+.so-filet-double i { display: block; height: 2px; background: var(--encre); }
+.so-filet-double i + i { height: 0.6px; min-height: 1px; transform: scaleY(0.6); }
+.so-filet-double.large { margin: 26px 0 16px; }
+
+/* La carte du Fil */
+.so-jc { display: flex; flex-direction: column; gap: 10px; padding: var(--e4, 16px); border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: transform var(--d-court, 0.25s) var(--courbe-graphite); }
+button.so-jc:hover { transform: translateY(-1px); }
+button.so-jc:active { transform: scale(0.985); }
+.so-jc-tete { display: flex; align-items: baseline; gap: var(--e2, 8px); }
+.so-jc-titre { flex: 1; font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
+.so-jc-num { font-size: var(--t-legende, 12px); color: var(--encre2); }
+.so-jc-date { font-size: var(--t-legende, 12px); font-style: italic; color: var(--encre2); }
+.so-jc-une { font-size: 17px; font-weight: 600; line-height: 1.3; }
+.so-jc-lire { display: inline-flex; align-items: center; gap: 6px; font: 600 13px/1 var(--police); }
+.so-jc-lire svg { width: 13px; height: 13px; stroke-width: 2.4; }
+.so-jc-vide { font-size: 14px; color: var(--encre2); line-height: 1.45; }
+
+/* La page du journal : une feuille, une autre feuille dessous */
+.so-journal-fond { position: relative; max-width: 640px; margin: var(--e2, 8px) auto var(--e6, 24px); }
+.so-journal-fond::before { content: ""; position: absolute; inset: 8px -6px -8px 6px; background: #dcd8cf; border-radius: 6px; transform: rotate(0.6deg); z-index: 0; }
+.so-journal { position: relative; z-index: 1; padding: 14px 22px 40px; border-radius: 6px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+.so-journal-tete { display: flex; flex-direction: column; gap: var(--e2, 8px); padding: 20px 0 22px; }
+.so-journal-meta { font-size: 11px; font-weight: 500; color: var(--encre2); gap: var(--e2, 8px); }
+.so-journal-meta.it { font-size: var(--t-legende, 12px); font-weight: 400; font-style: italic; }
+.so-journal-titre { font-size: clamp(24px, 8.5cqi, 44px); font-weight: 900; letter-spacing: -0.8px; text-align: center; line-height: 1.1; white-space: nowrap; padding: 2px 0; }
+.so-rubrique { display: flex; align-items: center; gap: var(--e2, 8px); font-size: var(--t-aide, 13px); font-weight: 600; font-style: italic; color: var(--encre2); }
+.so-rubrique i { width: 14px; height: 2px; background: var(--encre); flex: none; }
+.so-une { display: flex; flex-direction: column; gap: 10px; }
+.so-une h2 { font-size: 30px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.12; }
+.so-une-chiffre { font-size: 46px; font-weight: 300; letter-spacing: -1.2px; font-variant-numeric: tabular-nums; line-height: 1.05; white-space: nowrap; }
+.so-une p { font-size: 16px; line-height: 1.6; }
+.so-articles { display: flex; flex-direction: column; }
+.so-article { display: flex; gap: 14px; align-items: flex-start; padding: 18px 0; border-top: 1px solid var(--filet-papier); break-inside: avoid; }
+.so-articles:not(.apres-une) .so-article:first-child { border-top: 0; padding-top: 0; }
+.so-article-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.so-article h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; line-height: 1.2; }
+.so-article p { font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--encre) 88%, transparent); }
+.so-article-chiffre { flex: none; padding-top: 18px; font-size: 19px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.so-papier .vert { color: var(--vert); } .so-papier .rouge { color: var(--rouge); }
+.so-fortunes, .so-breves { display: flex; flex-direction: column; gap: 10px; }
+.so-fortunes h3, .so-breves h3 { font-size: 20px; font-weight: 600; font-style: italic; }
+.so-fortune { display: flex; align-items: baseline; gap: var(--e2, 8px); }
+.so-fortune b { width: 16px; flex: none; font-size: 14px; font-weight: 700; letter-spacing: 0; font-family: var(--serif); }
+.so-fortune-nom { font-size: var(--t-libelle, 15px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55%; }
+.so-pointilles { flex: 1; min-width: 12px; border-bottom: 1.5px dotted color-mix(in srgb, var(--encre2) 60%, transparent); transform: translateY(-4px); }
+.so-fortune-sem { font-size: var(--t-legende, 12px); font-variant-numeric: tabular-nums; }
+.so-fortune-val { font-size: var(--t-libelle, 15px); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.so-breve { display: flex; align-items: baseline; gap: 10px; }
+.so-breve i { width: 5px; height: 5px; flex: none; background: var(--encre); transform: translateY(-3px); }
+.so-breve p { font-size: 14.5px; line-height: 1.55; }
+.so-journal-pied { display: flex; flex-direction: column; gap: 10px; padding-top: 30px; }
+.so-journal-pied i { display: block; height: 2px; background: var(--encre); }
+.so-journal-pied p { font-size: var(--t-legende, 12px); font-style: italic; color: var(--encre2); text-align: center; }
+
+/* Au large, le journal s'ouvre : la une en tête, les articles en deux colonnes séparées d'un filet,
+   les fortunes et les brèves côte à côte. Comme une vraie page de journal. */
+@container social (min-width: 820px) {
+  .so-journal-fond { max-width: 940px; }
+  .so-journal { padding: 18px 44px 48px; }
+  .so-une h2 { font-size: 38px; }
+  .so-une { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); column-gap: 32px; row-gap: 10px; align-items: end; }
+  .so-une .so-rubrique, .so-une h2 { grid-column: 1 / -1; }
+  .so-une-chiffre { grid-column: 2; grid-row: 3; align-self: start; text-align: right; font-size: 58px; }
+  .so-une p { grid-column: 1; grid-row: 3; }
+  .so-articles { display: block; column-count: 2; column-gap: 40px; column-rule: 1px solid var(--filet-papier); margin-top: 18px; border-top: 1px solid var(--filet-papier); padding-top: 18px; }
+  .so-articles .so-article { border-top: 0; padding: 0 0 22px; }
+  .so-articles .so-article + .so-article { border-top: 1px solid var(--filet-papier); padding-top: 18px; }
+  .so-bas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; align-items: start; }
+  .so-bas > .so-filet-double { grid-row: 1; }
+  .so-bas > .so-filet-double:nth-of-type(2) { grid-column: 2; }
+  .so-bas > section:nth-of-type(1) { grid-row: 2; grid-column: 1; }
+  .so-bas > section:nth-of-type(2) { grid-row: 2; grid-column: 2; }
+  .so-bas > :only-of-type { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .so-rail i { transition: none; }
+}
+
+/* ── Le voyage à deux depuis le trajet (InvitationDuTrajet) ────────── */
+.so-trajet { gap: 10px; }
+.so-trajet-tete { gap: 10px; }
+.so-trajet[data-etat="fait"] .libelle { color: var(--gain); }
+.so-trajet[data-etat="echec"] .libelle { color: var(--texte2); }
+.so-coupee { text-align: center; padding: var(--e3, 12px) var(--e4, 16px); }
+
+/* Bourse du monde : parts de boîtes, offres, retrait (RNT-229) */
+.pile.el-pile6 { gap: 6px; }
+.pile.el-pile14 { gap: 14px; }
+.gain.el-gain13 { font-size: 13px; font-weight: 500; }
+.grille2.el-grille8 { gap: 8px; }
+.carte.el-case { padding: 10px 12px; }
+.chiffres.el-chiffre15 { font-size: 15px; }
+.chiffres.el-chiffre28 { font-size: 28px; }
+.rangee.el-offre { gap: 12px; }
+.el-offre-texte { flex: 1; min-width: 0; }
+.el-offre-titre { font-size: 14px; font-weight: 500; }
+
+/* RNT-259 : la cote du monde lisible (place, liste d'attente, regroupement par patron) ; la fiche d'une boîte */
+.rangee.el-cote { gap: 8px; }
+.pile.el-pile10 { gap: 10px; }
+.rangee.el-file { gap: 10px; align-items: baseline; }
+.el-file-rang { font-size: 15px; min-width: 1.2em; }
+.el-file-texte { flex: 1; font-size: 13px; font-weight: 600; }
+.alerte.el-refus { font-size: 13px; font-weight: 500; }
+.pile.el-groupes { gap: 18px; }
+.pile.el-groupe { gap: 10px; }
+.el-groupe-tete { gap: 10px; width: 100%; min-height: 44px; padding: 0 4px; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.el-chevron { display: inline-flex; width: 14px; color: var(--texte2); transition: transform .2s ease; transform: rotate(90deg); }
+.el-groupe-tete[aria-expanded="false"] .el-chevron { transform: none; }
+.el-chevron svg { width: 12px; height: 12px; }

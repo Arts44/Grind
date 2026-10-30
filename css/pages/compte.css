@@ -1,0 +1,82 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Ce qui est à toi (compte-local.js) : l'avatar, la carte de membre, les
+   choix de symbole, de teinte et d'accent — Réglages, Toi, Bienvenue. Lot C.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* AvatarJoueur : un symbole blanc sur sa teinte, dans un médaillon ; son cadre gagné autour. */
+.cl-avatar {
+  position: relative; flex: none; width: var(--taille, 36px); height: var(--taille, 36px); border-radius: 50%;
+  display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, var(--c), color-mix(in srgb, var(--c) 60%, transparent));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.cl-cadre {
+  position: absolute; inset: calc(var(--taille) * -0.09); border-radius: 50%; padding: max(2px, calc(var(--taille) * 0.07));
+  background: var(--cadre);
+  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+/* CarteMembre : acier sombre, guilloche, reflet, l'emblème et l'avatar. */
+.cl-membre {
+  position: relative; display: flex; flex-direction: column; width: 100%; height: 200px; padding: 20px; text-align: left; color: #fff;
+  border-radius: var(--r-carte, 22px); overflow: hidden; isolation: isolate;
+  background: linear-gradient(135deg, #2b2e36, #111215);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  transition: transform 0.2s var(--courbe-graphite, ease);
+}
+button.cl-membre:active { transform: scale(0.98); }
+.cl-membre::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0.6;
+  background: repeating-radial-gradient(circle at 85% 120%, rgba(255, 255, 255, 0.05) 0 0.8px, transparent 0.8px 9px),
+    repeating-radial-gradient(circle at 10% -20%, rgba(255, 255, 255, 0.04) 0 0.8px, transparent 0.8px 11px);
+}
+.cl-membre::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.08) 48%, transparent 62%);
+}
+.cl-membre-haut { display: flex; align-items: flex-start; gap: 8px; }
+.cl-membre-haut .cl-mot { font: 600 13px Georgia, "Times New Roman", serif; opacity: 0.7; margin-top: 5px; flex: 1; }
+.cl-membre-pseudo { margin-top: auto; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cl-membre-bas { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 14px; font-weight: 500; }
+.cl-membre-bas > span:first-child { opacity: 0.75; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cl-membre-bas .chiffres { font-size: 13px; letter-spacing: 0; opacity: 0.75; }
+.cl-membre-depuis { margin-top: 6px; font-size: 11px; opacity: 0.5; }
+
+/* Le choix de l'avatar : six symboles par ligne, puis les teintes. */
+.cl-symboles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; justify-items: center; }
+.cl-symboles button {
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: var(--texte);
+  background: rgba(255, 255, 255, 0.06); transition: background 0.25s var(--courbe-graphite, ease), color 0.25s, transform 0.15s;
+}
+.cl-symboles button:active { transform: scale(0.92); }
+.cl-symboles button[aria-pressed="true"] { background: var(--texte); color: var(--fond); }
+.cl-teintes { display: flex; margin-top: 6px; }
+.cl-teintes button { flex: 1; display: grid; place-items: center; height: 46px; }
+.cl-teintes button i {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px var(--fond), 0 0 0 4px transparent;
+  transition: box-shadow 0.25s var(--courbe-graphite, ease);
+}
+.cl-teintes button[aria-pressed="true"] i { box-shadow: 0 0 0 4px var(--fond), 0 0 0 6px var(--c); }
+
+/* Les accents (Couleur d'accent) : quatre par ligne, le nom dessous. */
+.cl-accents { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 8px; padding: 14px; }
+.cl-accents button { display: grid; justify-items: center; gap: 6px; font-size: var(--t-legende, 12px); font-weight: 500; color: var(--texte2); }
+.cl-accents button i {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px var(--feuille, #141417), 0 0 0 4px transparent;
+  transition: box-shadow 0.25s var(--courbe-graphite, ease);
+}
+.cl-accents button[aria-pressed="true"] { color: var(--texte); }
+.cl-accents button[aria-pressed="true"] i { box-shadow: 0 0 0 4px #0f1013, 0 0 0 6px var(--c); }
+
+/* Couleur de l'app (Bienvenue) : des pilules à faire défiler. */
+.cl-pilules { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 0; }
+.cl-pilules::-webkit-scrollbar { display: none; }
+.cl-pilules button {
+  flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 12px; border-radius: var(--r-pilule, 99px);
+  font-size: 14px; font-weight: 600; border: 1px solid var(--filet2); transition: background 0.25s var(--courbe-graphite, ease), color 0.25s;
+}
+.cl-pilules button i { width: 14px; height: 14px; border-radius: 50%; background: var(--c); }
+.cl-pilules button[aria-pressed="true"] { background: var(--texte); color: var(--fond); border-color: transparent; }
+
+/* RNT-261 : le mode économie, un segment dans sa carte. */
+.reglage-segment { padding: 14px; }

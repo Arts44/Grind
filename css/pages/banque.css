@@ -1,0 +1,41 @@
+/* La Banque (lot A, l'exemple du grand écran ; docs/web-design.md). */
+/* Au palier moyen et large, la pile de cartes garde une taille de carte : elle ne s'étire pas à toute la colonne. */
+.page.ample .pile-cartes, #panneau .pile-cartes { max-width: 460px; }
+.page.ample .banque .bouton.secondaire { max-width: 460px; }
+
+/* RNT-273 (D247) : Banque › Prélèvements (EcranPrelevements). Même ordre que les abonnements : le total,
+   les filtres, la liste par rubrique ; « Sélectionner » coche, la barre du bas change la carte du lot. */
+.bouton-texte { min-height: 44px; padding: 0 var(--e1); font-size: 15px; font-weight: var(--g-libelle); color: var(--accent); white-space: nowrap; }
+.bouton-texte:disabled { opacity: 0.4; }
+.entete-groupe-pv .bouton-texte, .barre-pv .bouton-texte { min-height: 32px; padding: 0; font-size: 13px; text-align: left; }
+.resume-pv .pastille-pv { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--puce); color: var(--texte2); }
+.resume-pv .pastille-pv svg { width: 17px; height: 17px; }
+.resume-pv .pastille-pv.risque { color: var(--alerte); }
+.page-pv { gap: 18px; padding-top: 10px; }
+.heros-pv { display: grid; gap: 4px; text-align: center; }
+.heros-pv .total-pv { font-size: 40px; line-height: 1.1; }
+.heros-pv .sous-pv { font-size: 14px; color: var(--texte2); }
+.heros-pv .risque-pv { font-size: 13px; font-weight: var(--g-libelle); }
+.filtres-pv { display: grid; gap: var(--e2); }
+.separateur-pv { flex: none; align-self: center; width: 1px; height: 20px; margin: 0 2px; background: var(--filet2); }
+.tri-pv { align-items: center; gap: var(--e3); }
+.tri-pv .segment { flex: 0 1 230px; }
+.tri-pv .segment button { min-height: 34px; }
+.groupe-pv { display: grid; gap: var(--e2); }
+.entete-groupe-pv { align-items: baseline; padding: 0 4px; }
+.entete-groupe-pv .sous-total-pv { font-size: 13px; letter-spacing: 0; }
+.page-pv .prelevement .carte-pv { display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 12px; font-weight: var(--g-libelle); color: var(--texte2); }
+.page-pv .prelevement .carte-pv svg { width: 12px; height: 12px; flex: none; }
+.page-pv .prelevement .carte-pv.alerte { color: var(--alerte); }
+.page-pv .montant-pv { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; }
+.page-pv .montant-pv .chiffres { font-size: 15px; letter-spacing: 0; }
+.badge-risque { font-size: 11px; font-weight: var(--g-libelle); color: var(--alerte); padding: 1px 7px; border-radius: var(--r-pilule); background: color-mix(in srgb, var(--alerte) 14%, transparent); }
+.case-pv { width: 22px; height: 22px; flex: none; border-radius: 50%; border: 1.5px solid var(--texte3); display: grid; place-items: center; color: var(--sur-accent); transition: background var(--d-court), border-color var(--d-court); }
+.case-pv svg { width: 13px; height: 13px; }
+.prelevement.coche .case-pv { background: var(--accent); border-color: var(--accent); }
+.vide-pv { text-align: center; padding: var(--e6) 0; }
+.note-pv { text-align: center; max-width: 320px; margin: 0 auto; }
+.barre-pv { display: flex; align-items: center; gap: var(--e3); padding: 12px 16px; border-radius: var(--r-carte); background: var(--surface-verre); border: 1px solid var(--filet); backdrop-filter: var(--flou-verre); -webkit-backdrop-filter: var(--flou-verre); box-shadow: var(--ombre-flottant); }
+.barre-pv .corps-ligne { display: grid; gap: 2px; }
+.barre-pv .titre { font-size: 15px; font-weight: var(--g-libelle); }
+.barre-pv .bouton { flex: none; width: auto; min-height: 44px; padding: 0 18px; font-size: 15px; }
