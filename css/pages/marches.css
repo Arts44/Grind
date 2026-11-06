@@ -1,0 +1,15 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Marchés (lot D) : la liste des titres allégée, et le grand écran
+   (la liste à gauche, la fiche du titre dans #panneau, lot A ; avant le choix : .ld, catalogues.css).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.m-titres { overflow: hidden; }
+/* Une ligne hors de l'écran ne se dessine pas (la liste reste longue, mais légère à faire défiler). */
+.m-ligne-titre { content-visibility: auto; contain-intrinsic-size: auto 62px; }
+.m-plus { display: flex; align-items: center; gap: 6px; margin: var(--e3, 12px) auto 0; }
+.m-plus .t2 { font-weight: 500; }
+
+/* Au grand écran, les bandes qui débordaient de la colonne du téléphone restent dans la leur. */
+body[data-palier="large"] :is(.ld[data-ld="marches"], body.avec-panneau #app) .m-bandeau { margin: 0; border-radius: var(--r-pastille, 9px); }
+body[data-palier="large"] :is(.ld[data-ld="marches"], body.avec-panneau #app) .m-defile { margin: 0; padding: 0; }
+body.avec-panneau #app .m-ligne-titre[aria-current="true"] { outline: 0; background: color-mix(in srgb, var(--accent) 9%, transparent); box-shadow: inset 3px 0 0 var(--accent); }

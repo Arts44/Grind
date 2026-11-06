@@ -1,0 +1,62 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Le « ? » de chaque onglet et sa feuille de fiches (Tutoriels.swift) — lot C.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ad-feuille { display: flex; flex-direction: column; gap: var(--e4, 16px); min-height: 0; }
+/* Les fiches défilent une par une, comme la TabView paginée de l'iPhone. */
+.ad-fiches {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+  scrollbar-width: none; outline: none;
+}
+.ad-fiches::-webkit-scrollbar { display: none; }
+.ad-fiches:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); border-radius: 18px; }
+.ad-fiche {
+  flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; gap: 14px;
+  padding: 4px 4px 8px; min-width: 0; overflow-x: clip;
+}
+.ad-symbole { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; color: var(--accent); background: rgba(255, 255, 255, 0.05); }
+.ad-fiche h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.ad-texte { font-size: 16px; line-height: 1.55; color: var(--texte2); }
+.ad-exemple {
+  display: flex; gap: 10px; align-items: flex-start; padding: 14px; border-radius: 16px;
+  font-size: var(--t-libelle, 15px); font-weight: 500; line-height: 1.45; background: color-mix(in srgb, var(--or) 8%, transparent);
+}
+.ad-ampoule { color: var(--or); display: grid; flex: none; margin-top: 1px; }
+
+.ad-points { display: flex; justify-content: center; gap: 2px; }
+.ad-points button { width: 18px; height: 18px; display: grid; place-items: center; }
+.ad-points button::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--texte3); transition: background 0.25s, transform 0.25s var(--courbe-graphite, ease); }
+.ad-points button[aria-selected="true"]::after { background: var(--texte); transform: scale(1.15); }
+.ad-guide { align-self: center; padding: 6px 10px 2px; font-size: 14px; font-weight: 600; color: var(--accent); }
+
+/* Les démos (« Essaie »). */
+.ad-demo {
+  display: grid; gap: 14px; padding: 16px; border-radius: 20px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--filet2);
+  --appel: 0%; --liquidation: 0%; --valeur: 50%;
+}
+.ad-essaie { display: flex; align-items: center; gap: 6px; font-size: var(--t-aide, 13px); font-weight: 600; color: var(--accent); }
+.ad-demo-corps { display: grid; gap: 14px; }
+.ad-squelette { height: 120px; }
+.ad-segment button { min-height: 36px; font-size: var(--t-aide, 13px); }
+.ad-ligne { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.ad-ligne b { font-size: 18px; }
+.ad-curseur { width: 100%; accent-color: var(--accent); height: 28px; }
+.ad-jauge { position: relative; height: 18px; border-radius: 99px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.ad-jauge i { position: absolute; left: 0; top: 0; bottom: 0; }
+.ad-appel { width: var(--appel); background: color-mix(in srgb, var(--c-danger, #e5534b) 18%, transparent); }
+.ad-liquidation { width: var(--liquidation); background: color-mix(in srgb, var(--c-danger, #e5534b) 40%, transparent); }
+.ad-valeur { top: 5px !important; bottom: 5px !important; width: var(--valeur); border-radius: 99px; background: var(--or); transition: width 0.3s var(--courbe-graphite, ease), background 0.3s; }
+.ad-demo[data-gagne="true"] .ad-valeur { background: var(--gain); }
+.ad-demo[data-etat="appelDeMarge"] .ad-valeur, .ad-demo[data-etat="liquidee"] .ad-valeur { background: var(--c-danger, #e5534b); }
+.ad-mise { left: 50% !important; width: 1.5px; background: color-mix(in srgb, var(--texte) 50%, transparent); }
+.ad-legende { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11px; color: var(--texte2); margin-top: -6px; }
+.ad-legende span { display: inline-flex; align-items: center; gap: 5px; }
+.ad-legende i { width: 10px; height: 10px; border-radius: 2px; }
+.ad-l-liq i { background: color-mix(in srgb, var(--c-danger, #e5534b) 40%, transparent); }
+.ad-l-appel i { background: color-mix(in srgb, var(--c-danger, #e5534b) 18%, transparent); }
+.ad-legende .ad-l-mise { background: color-mix(in srgb, var(--texte) 50%, transparent); }
+.ad-legende.sans-risque .ad-l-liq, .ad-legende.sans-risque .ad-l-appel { display: none; }
+.ad-verdict { font-size: 14px; font-weight: 500; color: var(--texte2); }
+.ad-demo[data-etat="appelDeMarge"] .ad-verdict, .ad-demo[data-etat="liquidee"] .ad-verdict { color: var(--danger); }
+
+@media (prefers-reduced-motion: reduce) { .ad-fiches { scroll-behavior: auto; } }

@@ -1,0 +1,66 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Les catalogues (lot D) : photos, grilles de cartes, liste + détail.
+   Les jetons du lot A (web/css/jetons.css) avec leur valeur en repli.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Les photos (PhotosVehicules, PhotosMontres) : par-dessus le dessin, qui reste en repli ── */
+.cat-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  pointer-events: none; user-select: none; -webkit-user-select: none;
+}
+.cat-photo.eteinte { filter: saturate(0.2); opacity: 0.55; }
+.cat-voile {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 35%; pointer-events: none;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.35));
+}
+/* La vitrine et la façade prennent leurs dimensions de variables (pas de style figé dans le HTML). */
+div.vitrine, div.facade { width: var(--l, 100%); height: var(--h, 110px); }
+.vitrine .rarete, .facade .rarete, .vitrine .badge-vitrine, .facade .badge-vitrine { z-index: 2; }
+
+/* ── Les grilles de cartes : une colonne sur téléphone, deux à trois dès que la colonne s'élargit ── */
+.cat-grille { container-type: inline-size; }
+.cat-grille > .cat-cartes { display: flex; flex-direction: column; gap: var(--e3, 12px); }
+@container (min-width: 540px) {
+  .cat-grille > .cat-cartes { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--e4, 16px) var(--e3, 12px); }
+  /* La ligne du téléphone (vignette à gauche) devient une carte (photo en haut). */
+  .cat-grille .cat-ligne { flex-direction: column; align-items: stretch; padding: 0; overflow: hidden; gap: 0; }
+  .cat-grille .cat-ligne > .vitrine, .cat-grille .cat-ligne > .facade { width: 100%; height: 150px; border-radius: 0; }
+  .cat-grille .cat-ligne > .vitrine::after, .cat-grille .cat-ligne > .facade::after { border-radius: 0; border-width: 0 0 1px; }
+  .cat-grille .cat-ligne > .cat-texte { padding: var(--e3, 12px) var(--e4, 14px) var(--e4, 14px); }
+  .cat-grille .cat-ligne > .rarete.en-ligne { position: absolute; top: 8px; left: 8px; }
+  .cat-grille .annonce > .vitrine, .cat-grille .annonce > .facade { height: 140px; }
+}
+.cat-ligne { position: relative; display: flex; align-items: center; gap: var(--e3, 12px); padding: 10px; width: 100%; text-align: left; }
+.cat-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.cat-nom { font-size: var(--t-libelle, 15px); font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cat-prix { font-size: 14px; letter-spacing: -0.02em; }
+.cat-detail { font-size: var(--t-legende, 12px); color: var(--texte2); }
+.cat-detail.alerte { color: var(--alerte); }
+.cat-detail.fort { font-weight: 600; }
+.cat-detail.coupe { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cat-ligne:active:not(:disabled) { transform: scale(0.985); }
+@media (hover: hover) and (pointer: fine) {
+  .cat-ligne, .cat-grille .annonce { transition: transform var(--d-court, 0.25s) var(--courbe-graphite, ease), border-color var(--d-court, 0.25s); }
+  .cat-ligne:hover { border-color: var(--filet2); }
+  .cat-grille .annonce:hover { transform: translateY(-2px); }
+}
+
+/* La ligne choisie dans la liste, quand son détail est ouvert à droite (aria-current posé par app.js). */
+body.avec-panneau #app [data-action="ouvrir"][aria-current="true"]:not(.ligne, .m-ligne-titre) { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ── Le grand écran, avant le premier choix (renduLarge, palier large) : la liste, et l'invitation à choisir ──
+   Un détail choisi s'ouvre dans #panneau (lot A) ; la liste passe alors dans sa colonne. */
+.ld {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: var(--e6, 24px); align-items: start;
+}
+.ld-liste { min-width: 0; }
+.ld-vide {
+  position: sticky; top: var(--e6, 24px); min-height: 60dvh; display: grid; place-items: center; text-align: center; padding: var(--e6, 24px);
+  border-left: 1px solid var(--filet, rgba(255, 255, 255, 0.07));
+  color: var(--texte2); font-size: var(--t-libelle, 15px);
+}
+.ld-vide .cat-vide-titre { font-size: var(--t-entete, 20px); font-weight: 600; color: var(--texte); margin-bottom: var(--e2, 8px); }
+
+/* RNT-253 : les deux offres de la concession (prix seul, livraison offerte comprise). */
+.vh-offres { gap: 8px; flex-wrap: wrap; }

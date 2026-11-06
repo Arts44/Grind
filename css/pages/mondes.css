@@ -1,0 +1,43 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Mes mondes, créer et rejoindre un monde (D215, RNT-201), repris de
+   css/anciens.css (RNT-210). Posé par mondes.js et par la page Profil
+   (« Tu joues dans »).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.mm-liste { overflow: hidden; }
+.mm-ici { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0 12px; padding: 16px; overflow: hidden;
+  border-color: color-mix(in srgb, var(--accent) 28%, rgba(255, 255, 255, 0.09));
+  background: radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%), rgba(255, 255, 255, 0.035); }
+.mm-ici-corps { display: flex; align-items: center; gap: 14px; min-width: 0; text-align: left; }
+.mm-ici-pied { grid-column: 1 / -1; margin: 14px -16px -16px; padding: 10px 16px; border-top: 1px solid var(--filet); font-size: 12px; color: var(--texte2); }
+.mm-pastille { width: 46px; height: 46px; border-radius: 14px; }
+.mm-pastille svg { width: 22px; height: 22px; }
+.mm-surtitre { display: block; font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.01em; }
+.mm-titre { display: block; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; }
+.mm-partie { display: flex; align-items: stretch; }
+.mm-partie.ouverte { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.mm-choisir { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 13px 4px 13px 14px; text-align: left; }
+.mm-choisir:active { background: rgba(255, 255, 255, 0.03); }
+.mm-choisir .titre { font-size: 15px; font-weight: 600; }
+.mm-choisir .detail { font-size: 13px; color: var(--texte2); margin-top: 1px; }
+.mm-coche { width: 22px; height: 22px; flex: none; border-radius: 50%; border: 1.5px solid var(--filet2); display: grid; place-items: center; color: var(--sur-accent); transition: background 0.25s var(--courbe-graphite); }
+.mm-partie.ouverte .mm-coche { background: var(--accent); border-color: transparent; }
+.mm-tu { color: var(--accent); font-weight: 600; }
+.mm-valeur { font-size: 15px; white-space: nowrap; padding-left: 6px; }
+.mm-voir { flex: none; width: 44px; display: grid; place-items: center; color: var(--texte3); border-left: 1px solid var(--filet); margin: 12px 0; }
+.mm-voir svg { width: 14px; height: 14px; }
+.mm-voir:hover, .mm-voir:focus-visible { color: var(--texte); }
+.mm-tuiles { gap: 12px; }
+.mm-tuile { display: flex; flex-direction: column; gap: 14px; padding: 16px; text-align: left; transition: transform 0.15s; }
+.mm-tuile:active:not(:disabled) { transform: scale(0.98); }
+.mm-badge { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 99px; background: var(--or); color: var(--sur-accent); font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+.mm-etapes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 4px; }
+.mm-etapes i { height: 4px; border-radius: 99px; background: var(--puce2); transition: background 0.35s var(--courbe-graphite); }
+.mm-etapes i.fait { background: var(--accent); }
+.mm-etape-nom { margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--texte2); letter-spacing: 0.01em; }
+.mm-question { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 2px; }
+.mm-champ { font-size: 19px; font-weight: 600; min-height: 56px; }
+.mm-option { display: flex; align-items: flex-start; gap: 14px; width: 100%; padding: 16px; text-align: left; transition: border-color 0.25s, background 0.25s; }
+.mm-option .el-radio { margin-top: 2px; }
+.mm-option.choisie { border-color: color-mix(in srgb, var(--accent) 45%, transparent); background: color-mix(in srgb, var(--accent) 7%, rgba(255, 255, 255, 0.035)); }
+.mm-modifier { font-size: 13px; font-weight: 600; color: var(--accent); flex: none; }

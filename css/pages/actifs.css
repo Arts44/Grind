@@ -1,0 +1,50 @@
+/* ══════════════════════════════════════════════════════════════════════
+   L'onglet Actifs (EcranActifs) — lot C : la valeur, les cinq parts.
+   Le contenu de chaque part vient de sa zone (lot D).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.at-page { container: actifs / inline-size; }
+.at-entete { align-items: center; padding-top: 12px; }
+.at-corps { display: grid; gap: 18px; }
+.at-corps > div { min-width: 0; }
+.at-resume { display: grid; gap: 18px; align-content: start; }
+
+/* « Tes actifs valent » : le chiffre à 44 (--t-grand). */
+.at-total { display: grid; gap: 4px; }
+.at-total-titre { font-size: var(--t-libelle, 15px); color: var(--texte2); }
+.at-total-v { font-size: var(--t-grand, 44px); line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Les cinq parts, à égalité, sur la largeur d'un iPhone (RNT-188). */
+.at-parts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; }
+.at-part {
+  container-type: inline-size; display: grid; justify-items: start; gap: 8px; padding: 10px; min-width: 0; text-align: left;
+  border-radius: var(--r-tuile, 18px); background: var(--puce); border: 1px solid transparent;
+  transition: background 0.3s var(--courbe-graphite, ease), border-color 0.3s, transform 0.2s var(--courbe-graphite, ease);
+}
+.at-part:active { transform: scale(0.97); }
+@media (hover: hover) { .at-part:hover { background: color-mix(in srgb, var(--puce2) 70%, var(--puce)); } }
+.at-part[aria-selected="true"] { background: var(--puce2); border-color: var(--filet2); }
+.at-objet {
+  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: var(--texte); background: var(--puce2);
+  transition: background 0.3s var(--courbe-graphite, ease), color 0.3s;
+}
+.at-part[aria-selected="true"] .at-objet { background: var(--texte); color: var(--fond); }
+.at-nom, .at-valeur { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.at-nom { font-size: clamp(10px, 17cqi, 13px); font-weight: 600; letter-spacing: -0.01em; }
+.at-valeur { font-size: clamp(10px, 17cqi, 13px); font-weight: 500; color: var(--texte2); letter-spacing: -0.02em; }
+
+/* Grand écran (D89 en paysage) : la valeur et les parts à gauche, le contenu à droite.
+   La page a toute la largeur au palier moyen et large (renduLarge : .page.ample, lot A). */
+
+@container actifs (min-width: 720px) {
+  .at-corps { grid-template-columns: minmax(250px, 300px) minmax(0, 1fr); column-gap: 28px; align-items: start; }
+  .at-resume { position: sticky; top: 16px; }
+  .at-total-v { font-size: min(var(--t-grand, 44px), 13cqi); }
+  .at-parts { grid-template-columns: 1fr; gap: 8px; }
+  .at-part { grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; column-gap: 12px; padding: 10px 14px 10px 10px; }
+  .at-nom { font-size: var(--t-libelle, 15px); }
+  .at-valeur { font-size: 14px; }
+}
+@container actifs (min-width: 1000px) {
+  .at-corps { grid-template-columns: 320px minmax(0, 1fr); column-gap: 36px; }
+}

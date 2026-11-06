@@ -1,0 +1,24 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Administration (ConsoleAdmin.swift, RNT-293) : cinq sections, des cartes
+   de lignes, des résultats de recherche qui se mettent à jour en tapant.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.adm-page { display: flex; flex-direction: column; gap: var(--e4, 16px); padding: var(--e1, 6px) 0 var(--e6, 24px); max-width: 640px; margin: 0 auto; }
+.adm-verrou { align-items: stretch; gap: var(--e3, 12px); max-width: 360px; }
+.adm-bloc { display: grid; gap: var(--e2, 8px); }
+.adm-carte { display: grid; gap: var(--e2, 8px); }
+.adm-ligne { display: flex; align-items: center; gap: var(--e3, 12px); min-height: 44px; width: 100%; text-align: left; background: none; border: 0; padding: 0; color: inherit; font: inherit; }
+.adm-choix { cursor: pointer; border-bottom: 1px solid var(--filet, rgba(255, 255, 255, 0.08)); }
+.adm-choix:last-child { border-bottom: 0; }
+.adm-texte { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.adm-titre { font-weight: 600; overflow-wrap: anywhere; }
+.adm-detail { font-size: var(--t-aide, 13px); color: var(--texte2); overflow-wrap: anywhere; }
+.adm-actions, .adm-rangee { display: flex; flex-wrap: wrap; gap: var(--e2, 8px); }
+.adm-actions { justify-content: flex-end; flex-shrink: 0; }
+.adm-resultats { display: grid; }
+.adm-pastille { min-width: 22px; padding: 2px 7px; border-radius: 999px; background: var(--alerte); color: #fff; font-size: 12px; font-weight: 700; text-align: center; }
+.adm-coche { display: flex; align-items: center; gap: var(--e2, 8px); min-height: 36px; }
+.adm-json { min-height: 160px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; white-space: pre; }
+.adm-ok, .adm-refus { margin: 0; padding: var(--e3, 12px); border-radius: 14px; font-weight: 500; }
+.adm-ok { color: var(--gain); background: color-mix(in srgb, var(--gain) 12%, transparent); }
+.adm-refus { color: var(--perte); background: color-mix(in srgb, var(--perte) 12%, transparent); }

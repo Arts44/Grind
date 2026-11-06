@@ -1,0 +1,342 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Onglet Focus (lot B) — EcranFocus, SessionImmersive, FeuilleExamens,
+   ObjetsFocus de l'iPhone. Jetons du lot A (web/css/jetons.css) avec une
+   valeur de repli : la page tient aussi sans eux.
+   ══════════════════════════════════════════════════════════════════════ */
+@property --part { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+/* ── La page ────────────────────────────────────────────────────────── */
+.fp { container: fp / inline-size; display: flex; flex-direction: column; gap: var(--e-section, 22px); }
+.fp > .entete-racine { padding-bottom: 0; }
+.fp .filet { margin: 0; }
+.fp-centre { text-align: center; }
+.fp-entre { display: flex; justify-content: space-between; align-items: baseline; gap: var(--e3, 12px); }
+.fp-pad { padding: var(--e4, 16px); }
+.fp-fort { font-size: var(--t-libelle, 15px) !important; }
+.fp-note { display: flex; gap: var(--e2, 8px); align-items: flex-start; font-size: var(--t-aide, 13px); font-weight: 600; line-height: 1.4; }
+.fp-note svg { width: 15px; height: 15px; flex: none; margin-top: 1px; }
+.fp-note.t2 { font-weight: 500; }
+.fp-pastille svg { width: 17px; height: 17px; }
+
+/* Une colonne sur téléphone (l'ordre de l'iPhone : type, anneau, durées, aperçu…), deux au-delà. */
+.fp-grille { display: flex; flex-direction: column; gap: var(--e-section, 22px); }
+.fp-col-cadran, .fp-col-reglages { display: contents; }
+.fp-types { order: -1; }
+
+/* ── Les types (tuiles égales) ──────────────────────────────────────── */
+.fp-types { display: flex; flex-direction: column; gap: 10px; }
+.fp-tuiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--e2, 8px); }
+.fp-tuile {
+  display: flex; flex-direction: column; align-items: center; gap: var(--e2, 8px); padding: var(--e3, 12px) var(--e1, 4px); min-width: 0;
+  border-radius: var(--r-tuile, 18px); background: rgba(255, 255, 255, 0.025); border: 1px solid var(--filet);
+  transition: background var(--d-court, 0.25s) var(--courbe-graphite), border-color var(--d-court, 0.25s), transform 0.15s;
+}
+.fp-tuile:active { transform: scale(0.97); }
+.fp-tuile.choisie { background: rgba(255, 255, 255, 0.07); border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.fp-tuile-icone {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--puce); color: var(--texte);
+  transition: background var(--d-court, 0.25s) var(--courbe-graphite), color var(--d-court, 0.25s);
+}
+.fp-tuile.choisie .fp-tuile-icone { background: var(--accent); color: var(--sur-accent); box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 35%, transparent); }
+.fp-tuile-icone svg { width: 19px; height: 19px; }
+.fp-tuile-nom { font-size: var(--t-legende, 12px); font-weight: 600; color: var(--texte2); max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fp-tuile.choisie .fp-tuile-nom { color: var(--texte); }
+
+/* ── L'anneau de la durée (AnneauDuree) ─────────────────────────────── */
+.fp-cadran {
+  --piste: #1a1a1d;
+  position: relative; width: min(100%, 270px); aspect-ratio: 1; margin: 0 auto; border-radius: 50%;
+  container-type: inline-size; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab;
+  transition: --part 0.42s var(--courbe-graphite);
+}
+.fp-cadran.glisse { cursor: grabbing; transition: none; }
+.fp-cadran.sans-transition { transition: none; }
+.fp-cadran:focus-visible { outline-offset: 4px; border-radius: 50%; }
+.fp-cadran svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fp-graduations rect { fill: rgba(255, 255, 255, 0.14); }
+.fp-graduations rect.h { fill: rgba(255, 255, 255, 0.35); }
+/* L'arc : un dégradé angulaire de l'accent, découpé en anneau ; son départ arrondi à midi. */
+.fp-arc {
+  position: absolute; inset: 1.333%; border-radius: 50%;
+  background: conic-gradient(color-mix(in srgb, var(--accent) 55%, var(--piste)) 0turn, var(--accent) calc(var(--part) * 1turn), transparent 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(89.04% - 0.6px), #000 89.04%);
+  mask: radial-gradient(farthest-side, transparent calc(89.04% - 0.6px), #000 89.04%);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 35%, transparent));
+}
+.fp-arc-debut { position: absolute; left: 47.333%; top: 1.333%; width: 5.333%; aspect-ratio: 1; border-radius: 50%; background: color-mix(in srgb, var(--accent) 55%, var(--piste)); }
+.fp-bras { position: absolute; inset: 0; transform: rotate(calc(var(--part) * 1turn)); pointer-events: none; }
+.fp-poignee {
+  position: absolute; left: 50%; top: 4%; width: 8.667%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+  background: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); display: grid; place-items: center; transition: width 0.15s var(--courbe-graphite);
+}
+.fp-poignee::after { content: ""; width: 31%; aspect-ratio: 1; border-radius: 50%; background: var(--accent); }
+.fp-cadran.glisse .fp-poignee { width: 10%; }
+.fp-centre-cadran { position: absolute; inset: 22%; display: grid; place-content: center; gap: 0.6cqi; text-align: center; pointer-events: none; }
+.fp-duree { font: 700 11.1cqi/1.1 ui-rounded, "SF Pro Rounded", var(--police); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.fp-gain-prevu { font-size: 6.3cqi; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fp-tour { font-size: 4.1cqi; color: var(--texte2); }
+
+/* ── Les durées : − pilules + ───────────────────────────────────────── */
+.fp-durees { display: flex; align-items: center; gap: 6px; }
+.fp-pilules {
+  flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; justify-content: safe center;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 10px, #000 calc(100% - 10px), transparent);
+  mask: linear-gradient(90deg, transparent, #000 10px, #000 calc(100% - 10px), transparent); padding: 0 6px;
+}
+.fp-pilules::-webkit-scrollbar { display: none; }
+.fp-pilules .petit { font-variant-numeric: tabular-nums; transition: background var(--d-court, 0.25s) var(--courbe-graphite), color var(--d-court, 0.25s); }
+.fp-rond { width: 34px; padding: 0; flex: none; border-radius: 50%; }
+.fp-rond svg { width: 16px; height: 16px; }
+
+/* ── L'aperçu : bonus, humeur, maîtrise ─────────────────────────────── */
+.fp-apercu, .fp-sanctions, .fp-regles { overflow: hidden; }
+.fp-ligne { display: flex; align-items: center; gap: var(--e3, 12px); padding: var(--e3, 12px) var(--e4, 16px); }
+.fp-ligne.fp-haut { align-items: flex-start; }
+.fp-ligne-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fp-valeur { font-size: var(--t-libelle, 15px); font-weight: 600; white-space: nowrap; letter-spacing: -0.01em; }
+.fp-rail { height: 6px; margin: 4px 0; }
+.fp-rail > i { width: calc(var(--part) * 100%); background: var(--gain); }
+
+/* ── Les règles, repliées ───────────────────────────────────────────── */
+.fp-regles { interpolate-size: allow-keywords; }
+.fp-regles > summary { list-style: none; cursor: pointer; padding: 14px; }
+.fp-regles > summary::-webkit-details-marker { display: none; }
+.fp-chevron { color: var(--texte2); display: grid; transition: transform var(--d-court, 0.25s) var(--courbe-graphite); }
+.fp-chevron svg { width: 16px; height: 16px; }
+.fp-regles[open] .fp-chevron { transform: rotate(180deg); }
+.fp-regles::details-content { block-size: 0; overflow: hidden; transition: block-size 0.35s var(--courbe-graphite), content-visibility 0.35s allow-discrete; }
+.fp-regles[open]::details-content { block-size: auto; }
+.fp-regles-corps { padding: 0 10px 10px; }
+.fp-regles-corps .carte { background: rgba(255, 255, 255, 0.02); }
+
+/* Les cartons d'arbitre (CartonsEchecs) */
+.fp-cartons { display: flex; gap: 10px; flex: none; }
+.fp-cartons i {
+  width: 26px; height: 36px; border-radius: 4px; background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--filet2);
+  transition: transform 0.35s var(--courbe-graphite), background 0.35s;
+}
+.fp-cartons i.retourne { border: 1px solid rgba(255, 255, 255, 0.25); transform: rotate(calc(var(--i) * 6deg)); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35); }
+.fp-cartons i.retourne:nth-child(1) { background: linear-gradient(#f2c94c, color-mix(in srgb, #f2c94c 75%, transparent)); }
+.fp-cartons i.retourne:nth-child(2) { background: linear-gradient(#f2994a, color-mix(in srgb, #f2994a 75%, transparent)); }
+.fp-cartons i.retourne:nth-child(3) { background: linear-gradient(#eb5757, color-mix(in srgb, #eb5757 75%, transparent)); }
+
+/* ── Le bouton, collé en bas (au-dessus de la barre perle) ──────────── */
+.fp-lancer {
+  position: sticky; z-index: 4; bottom: calc(max(10px, env(safe-area-inset-bottom)) + 88px);
+  display: flex; flex-direction: column; gap: 10px; margin: calc(-1 * var(--e2, 8px)) -20px 0; padding: var(--e3, 12px) 20px var(--e2, 8px);
+  background: linear-gradient(color-mix(in srgb, var(--fond) 0%, transparent), color-mix(in srgb, var(--fond) 92%, transparent) 38%, var(--fond));
+}
+body:has(.fp-lancer):not(.large) #toasts { bottom: calc(max(10px, env(safe-area-inset-bottom)) + 176px); }
+body.large .fp-lancer { bottom: 0; padding-bottom: var(--e6, 24px); }
+body.large:has(.fp-lancer) #toasts { bottom: 108px; }
+
+/* ── La session réduite, les examens ────────────────────────────────── */
+.fp-reduite { display: flex; align-items: center; gap: 14px; padding: var(--e4, 16px); width: 100%; text-align: left; transition: transform 0.15s; }
+.fp-reduite:active { transform: scale(0.99); }
+.fp-reduite-icone { width: 44px; height: 44px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--sur-accent); }
+.fp-reduite-icone svg { width: 19px; height: 19px; }
+.fp-reduite-temps { font-size: var(--t-libelle, 15px); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.fp-reduite-temps.gain { color: var(--gain); }
+.fp-reduite-revenir { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--texte2); }
+.fp-reduite-revenir svg { width: 14px; height: 14px; }
+.fp-pendant > .fp-sanctions { margin-top: calc(-1 * var(--e2, 8px)); }
+
+.fp-examens-bandeau { display: flex; align-items: flex-start; gap: var(--e3, 12px); padding: var(--e4, 16px); }
+.fp-examens-bandeau .fp-reduite-icone { width: 40px; height: 40px; }
+.fp-examens-bandeau .fp-ligne-corps { gap: 3px; }
+.fp-examens { display: flex; flex-direction: column; gap: 10px; }
+.fp-examens-titre { display: flex; align-items: center; gap: var(--e2, 8px); }
+.fp-examens-titre svg { width: 18px; height: 18px; color: var(--texte2); }
+.fp-refus { font-size: var(--t-aide, 13px); font-weight: 500; color: var(--texte2); }
+
+/* La feuille de déclaration */
+.fp-feuille-examens { display: flex; flex-direction: column; gap: 18px; }
+.fp-pile-petite { display: flex; flex-direction: column; gap: 10px; }
+.fp-pile { display: flex; flex-direction: column; gap: 14px; }
+.fp-effet { display: flex; gap: var(--e3, 12px); align-items: flex-start; }
+.fp-effet-icone { width: 32px; height: 32px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--puce); }
+.fp-effet-icone svg { width: 16px; height: 16px; }
+
+/* ── Grand écran : l'anneau à gauche, le reste à droite (comme le paysage D89) ── */
+/* La largeur vient de .page.ample (renduLarge, lot A) ; pendant une session, la colonne de lecture. */
+#app > .page.ample:has(> .fp-pendant) { max-width: var(--l-lecture); }
+@container fp (min-width: 640px) {
+  .fp-grille { display: grid; grid-template-columns: minmax(300px, 0.92fr) 1fr; gap: 28px 36px; align-items: start; }
+  .fp-col-cadran, .fp-col-reglages { display: flex; flex-direction: column; gap: var(--e-section, 22px); min-width: 0; }
+  .fp-col-cadran { position: sticky; top: var(--e6, 24px); padding-top: var(--e2, 8px); }
+  .fp-cadran { width: min(100%, 340px); }
+  .fp-types { order: 0; }
+  .fp-lancer { margin: 0; padding: var(--e4, 16px) 0 var(--e2, 8px); }
+  .fp-pilules { flex-wrap: wrap; justify-content: center; row-gap: var(--e2, 8px); overflow: visible; -webkit-mask: none; mask: none; }
+}
+@container fp (min-width: 900px) {
+  .fp-cadran { width: min(100%, 400px); }
+  .fp-grille { grid-template-columns: minmax(360px, 1fr) minmax(420px, 1.1fr); gap: 32px 56px; }
+}
+
+/* ── Tenir : la session en plein écran ──────────────────────────────── */
+body.fp-plein-ecran { overflow: hidden; }
+.fp-immersive {
+  position: fixed; inset: 0; z-index: 25; background: #000; color: var(--texte); display: flex; justify-content: center;
+  overflow-y: auto; overscroll-behavior: contain; animation: fp-entre var(--d-geste, 0.44s) var(--courbe-graphite);
+}
+.fp-immersive.sort { animation: fp-sort 0.26s ease forwards; }
+@keyframes fp-entre { from { opacity: 0; transform: translateY(28px); } }
+@keyframes fp-sort { to { opacity: 0; transform: translateY(28px); } }
+@keyframes fp-fondu { from { opacity: 0; } }
+.fp-im-cadre {
+  width: 100%; max-width: 560px; min-height: 100%; display: flex; flex-direction: column;
+  padding: max(14px, env(safe-area-inset-top)) 24px max(12px, env(safe-area-inset-bottom));
+}
+.fp-im-tete { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; }
+.fp-im-type { display: flex; align-items: center; gap: var(--e2, 8px); font-size: var(--t-libelle, 15px); font-weight: 600; color: var(--texte2); }
+.fp-im-type svg { width: 17px; height: 17px; }
+.fp-im-boutons { display: flex; gap: 10px; }
+.fp-im-rond { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--puce); color: var(--texte); transition: background 0.2s; }
+.fp-im-rond:hover { background: var(--puce2); }
+.fp-im-rond svg { width: 17px; height: 17px; }
+.fp-im-corps { flex: 1; display: flex; flex-direction: column; gap: var(--e6, 24px); padding-top: var(--e6, 24px); }
+.fp-im-chrono { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: auto 0; }
+.fp-im-temps {
+  font: 600 clamp(56px, 19vw, 76px)/1 ui-rounded, "SF Pro Rounded", var(--police); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.fp-im-gain { font-size: 22px; color: var(--gain); display: inline-block; }
+.fp-im-gain.roule { animation: fp-roule 0.45s var(--courbe-graphite); }
+@keyframes fp-roule { from { transform: translateY(45%); opacity: 0.15; filter: blur(2px); } }
+.fp-im-barre { align-self: stretch; margin: 6px 40px 0; height: 4px; border-radius: 99px; background: var(--puce2); overflow: hidden; }
+.fp-im-barre i { display: block; height: 100%; width: max(4px, calc(var(--part, 0) * 100%)); border-radius: 99px; background: var(--accent); transition: width 1s linear; }
+
+/* Les piles de pièces : six colonnes, une pièce vue de profil par minute payée. */
+.fp-piles { --l: 38px; --e: 6px; height: 150px; flex: none; display: flex; justify-content: center; align-items: stretch; gap: 10px; }
+.fp-colonne { width: var(--l); display: flex; flex-direction: column-reverse; perspective: 420px; }
+.fp-piece {
+  display: block; flex: none; width: 100%; height: calc(var(--e) + 2px); margin-top: -2px; border-radius: 99px;
+  background: linear-gradient(#f4e3b0, #c99a45 55%, #8c6526);
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+.fp-piece.tombe { animation: fp-tombe 0.62s cubic-bezier(0.3, 1.45, 0.55, 1) both; }
+@keyframes fp-tombe { from { transform: translateY(-180px) rotateX(300deg) scale(1.25); opacity: 0.4; } }
+
+.fp-im-bas { display: flex; flex-direction: column; gap: 14px; }
+.fp-im-alerte {
+  display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 16px; font-size: var(--t-libelle, 15px); font-weight: 600;
+  color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent);
+}
+.fp-im-alerte svg { width: 17px; height: 17px; flex: none; }
+.fp-im-alerte span:nth-of-type(1) { flex: 1; }
+.fp-im-bonus { font-size: 14px; font-weight: 500; color: var(--texte2); text-align: center; text-wrap: balance; }
+.fp-im-bonus svg { width: 16px; height: 16px; display: inline-block; vertical-align: -3px; margin-right: 6px; }
+.fp-im-pied { font-size: var(--t-legende, 12px); color: var(--texte3); text-align: center; padding-top: var(--e3, 12px); }
+
+/* Tablette debout : tout un peu plus grand. */
+@media (min-width: 700px) {
+  .fp-im-temps { font-size: 112px; }
+  .fp-im-gain { font-size: 26px; }
+  .fp-piles { --l: 48px; --e: 8px; height: 220px; gap: 12px; }
+}
+/* Écran large ou téléphone couché : le chrono et les boutons à gauche, les piles à droite ;
+   le chrono se lit de loin (Grind dans une fenêtre à côté du travail). */
+@media (min-width: 900px) and (min-aspect-ratio: 5/4), (orientation: landscape) and (max-height: 520px) {
+  .fp-im-cadre { max-width: 1180px; padding-left: max(32px, env(safe-area-inset-left)); padding-right: max(32px, env(safe-area-inset-right)); }
+  .fp-im-corps { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: 1fr auto; gap: 20px 64px; align-items: center; padding-bottom: 8px; }
+  .fp-im-chrono { grid-column: 1; grid-row: 1; }
+  .fp-im-bas { grid-column: 1; grid-row: 2; width: 100%; max-width: 440px; justify-self: center; }
+  .fp-piles {
+    grid-column: 2; grid-row: 1 / span 2; align-self: center; height: min(52vh, 340px); --l: 64px; --e: 10px; gap: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  /* Une pile pleine monte jusqu'en haut : la pièce s'épaissit un peu quand il y en a peu par colonne. */
+  .fp-piece { height: min(calc(var(--e) * 1.6), max(calc(var(--e) + 2px), calc(100% / var(--par-colonne) + 2px))); }
+  .fp-im-temps { font-size: clamp(64px, 11vw, 176px); }
+  .fp-im-gain { font-size: clamp(22px, 2.4vw, 34px); }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .fp-piles { height: 170px; --l: 38px; --e: 6px; gap: 10px; }
+  .fp-im-temps { font-size: 64px; }
+}
+
+/* « Toujours là ? » (AlertePresence) : en haut, sur du verre, avec le temps qui reste. */
+dialog.fp-presence-dialogue {
+  margin: max(60px, calc(env(safe-area-inset-top) + 24px)) auto auto; width: calc(100% - 40px); max-width: 440px; padding: 14px 14px 12px;
+  border-radius: 20px; background: rgba(30, 30, 34, 0.82); -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--filet2); color: var(--texte);
+}
+dialog.fp-presence-dialogue[open] { animation: fp-descend 0.38s var(--courbe-graphite); }
+dialog.fp-presence-dialogue::backdrop { background: rgba(0, 0, 0, 0.35); }
+@keyframes fp-descend { from { opacity: 0; transform: translateY(-24px); } }
+.fp-presence { display: flex; align-items: center; gap: 12px; }
+.fp-presence > .or svg { width: 21px; height: 21px; display: block; }
+.fp-presence-titre { font-size: 16px; font-weight: 600; color: #fff; }
+.fp-presence-reste { font-size: var(--t-aide, 13px); font-weight: 500; color: rgba(255, 255, 255, 0.7); letter-spacing: 0; }
+.fp-presence-dialogue .aide { margin: 10px 2px 0; }
+
+
+/* ── Encaisser : le reçu (TicketSession) et l'éclat ─────────────────── */
+dialog.fp-recu {
+  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
+  background: #000; color: var(--texte);
+}
+dialog.fp-recu[open] { display: flex; justify-content: center; animation: fp-fondu 0.3s ease; }
+dialog.fp-recu::backdrop { background: #000; }
+dialog.fp-recu.sort { animation: fp-sort 0.22s ease forwards; }
+/* RNT-233 : le cadre tient dans la fenêtre ; le ticket défile dedans, « Encaisser » reste en bas. */
+.fp-recu-cadre {
+  width: 100%; max-width: 520px; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: var(--e3, 12px);
+  padding: max(var(--e4, 16px), env(safe-area-inset-top)) var(--e6, 24px) max(var(--e4, 16px), env(safe-area-inset-bottom)); overflow: hidden;
+}
+.fp-recu-defile { margin: 0 calc(-1 * var(--e6, 24px)); padding: var(--e3, 12px) var(--e4, 16px) var(--e6, 24px); }
+.fp-recu-cadre > .bouton { flex: none; }
+.fp-recu-scene { position: relative; display: grid; place-items: center; padding: var(--e3, 12px) var(--e2, 8px); }
+.fp-ticket-ombre {
+  width: 100%; filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.5)); transform: rotate(-1.2deg);
+  transition: transform 0.55s cubic-bezier(0.3, 1.3, 0.5, 1), opacity 0.45s ease; animation: fp-imprime 0.7s var(--courbe-graphite);
+}
+@keyframes fp-imprime { from { transform: translateY(-36px) rotate(-1.2deg); opacity: 0; } }
+.fp-ticket {
+  --d: 8px; background: #f7f5f0; color: #2a2621; padding: 26px 22px 34px; display: flex; flex-direction: column; gap: 14px;
+  font: 14px/1.3 ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--d)) 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--d)) 100%;
+}
+.fp-t-tete { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.fp-t-tete b { font-size: 15px; font-weight: 800; letter-spacing: 4px; padding-left: 4px; }
+.fp-t-date { font-size: 12px; color: #7a7268; }
+.fp-ticket hr { border: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(122, 114, 104, 0.6) 0 3px, transparent 3px 6px); }
+.fp-t-ligne { display: flex; justify-content: space-between; gap: 12px; }
+.fp-t-ligne span:last-child { white-space: nowrap; text-align: right; }
+.fp-t-total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.fp-t-total b:first-child { font-size: 15px; font-weight: 800; }
+.fp-t-total b:last-child { font-size: 22px; font-weight: 700; white-space: nowrap; }
+.fp-t-merci { font-size: 12px; color: #7a7268; padding-top: 4px; }
+.fp-embleme {
+  position: relative; width: 34px; height: 34px; flex: none; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(135deg, #f4e3b0, #b78a3b); color: rgba(0, 0, 0, 0.55); font: 900 18px/1 Georgia, "Times New Roman", serif;
+  box-shadow: inset 0 0 0 1.5px rgba(0, 0, 0, 0.16), 0 1px 1.5px rgba(0, 0, 0, 0.3);
+}
+.fp-embleme::after { content: ""; position: absolute; inset: 13%; border-radius: 50%; border: 0.8px solid rgba(255, 255, 255, 0.5); }
+
+.fp-eclat { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; visibility: hidden; }
+.fp-eclat > * { grid-area: 1 / 1; }
+.fp-eclat b {
+  font: 700 44px/1 ui-rounded, "SF Pro Rounded", var(--police); font-variant-numeric: tabular-nums; color: var(--gain);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--gain) 40%, transparent); transform: scale(0.6); opacity: 0;
+}
+.fp-eclat .fp-embleme { width: 22px; height: 22px; font-size: 11px; opacity: 0; }
+.encaisse .fp-eclat { visibility: visible; }
+.encaisse .fp-eclat b { animation: fp-eclat-texte 0.8s ease-out forwards; }
+.encaisse .fp-eclat .fp-embleme { animation: fp-gerbe 0.8s ease-out forwards; }
+.encaisse .fp-ticket-ombre { transform: translateY(-80px) scale(0.55) rotate(-1.2deg); opacity: 0; }
+@keyframes fp-gerbe {
+  from { opacity: 1; transform: rotate(var(--a)) translateX(0) rotate(0deg); }
+  to { opacity: 0; transform: rotate(var(--a)) translateX(130px) rotate(200deg); }
+}
+@keyframes fp-eclat-texte { 30% { opacity: 1; } to { transform: scale(1); opacity: 1; } }
+
+/* ── Moins de mouvement ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fp-cadran, .fp-bras, .fp-poignee { transition: none; }
+  .fp-piece.tombe, .fp-im-gain.roule, .fp-ticket-ombre, .fp-immersive, dialog.fp-presence-dialogue[open] { animation: none; }
+  .encaisse .fp-eclat .fp-embleme { animation: none; opacity: 0; }
+  .encaisse .fp-ticket-ombre { transform: rotate(-1.2deg); transition: opacity 0.2s; }
+}

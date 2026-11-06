@@ -1,0 +1,102 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Échanges entre joueurs (RNT-251) — EcranEchanges de l'iPhone :
+   les raccourcis, une carte par offre (deux colonnes « Je donne /
+   Je reçois », l'écart au milieu, les conditions dessous), le composeur
+   et ses feuilles (familles, cases à cocher, curseur de part).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ech-page { display: flex; flex-direction: column; gap: var(--e5); }
+.ech-section { display: flex; flex-direction: column; gap: var(--e2); }
+.ech-titre { margin: 0; padding-left: var(--e1); font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); }
+.ech-note { margin: 0; padding-left: var(--e1); font-size: var(--t-aide); color: var(--texte2); }
+.ech-cartes { display: flex; flex-direction: column; gap: var(--e3); }
+
+/* Virement, Prêt, Troc. */
+.ech-raccourcis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--e2); }
+.ech-raccourci { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: var(--e3); border-radius: var(--r-tuile);
+  background: var(--surface-carte); border: 1px solid var(--bord-carte); text-align: left; min-width: 0; }
+.ech-raccourci:active { background: var(--surface-appui); }
+@media (hover: hover) { .ech-raccourci:hover { background: var(--surface-survol); } }
+.ech-raccourci-icone { display: grid; place-items: center; width: 30px; height: 30px; border-radius: var(--r-pastille); background: var(--puce); color: var(--or); }
+.ech-raccourci-icone svg { width: 16px; height: 16px; }
+.ech-raccourci-titre { font-size: var(--t-libelle); font-weight: var(--g-libelle); margin-top: 4px; }
+.ech-raccourci-detail { font-size: var(--t-legende); color: var(--texte2); line-height: 1.3; }
+
+/* Une offre. */
+.ech-carte { display: flex; flex-direction: column; gap: var(--e3); padding: var(--e4); }
+.ech-tete { display: flex; align-items: center; gap: var(--e3); min-width: 0; }
+.ech-tete-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ech-pseudo { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.ech-tete-note { font-size: var(--t-legende); color: var(--texte3); }
+.ech-etat { flex: none; font-size: var(--t-legende); font-weight: var(--g-libelle); color: var(--or); text-align: right; max-width: 45%; }
+
+/* Les deux colonnes, l'écart au milieu. */
+.ech-colonnes { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--e3); align-items: start; }
+.ech-colonne { display: flex; flex-direction: column; gap: var(--e2); min-width: 0; }
+.ech-colonne-titre { font-size: var(--t-micro); font-weight: var(--g-libelle); letter-spacing: .06em; text-transform: uppercase; color: var(--texte3); }
+.ech-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--e2); }
+.ech-rien { font-size: var(--t-aide); color: var(--texte3); }
+.ech-actif { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--e2); row-gap: 2px; align-items: start; }
+.ech-actif.gage { opacity: .8; }
+.ech-actif-icone { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: var(--puce); color: var(--texte2); }
+.ech-actif-icone svg { width: 14px; height: 14px; }
+.ech-actif-corps { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ech-actif-nom { font-size: var(--t-aide); font-weight: var(--g-libelle); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ech-actif-detail { font-size: var(--t-legende); color: var(--texte2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ech-actif-valeur { grid-column: 2; font-size: var(--t-legende); color: var(--texte2); }
+.ech-actif-gestes { grid-column: 2; display: flex; gap: 6px; }
+.ech-ecart { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 22px; width: 76px; text-align: center; }
+.ech-ecart-fleche { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--filet2); color: var(--texte2); }
+.ech-ecart-fleche svg { width: 16px; height: 16px; }
+.ech-ecart-texte { font-size: var(--t-legende); font-weight: var(--g-libelle); color: var(--texte2); line-height: 1.25; }
+.ech-ecart.gain .ech-ecart-texte { color: var(--gain); }
+.ech-ecart.perte .ech-ecart-texte { color: var(--perte); }
+@media (max-width: 380px) {
+  .ech-colonnes { grid-template-columns: minmax(0, 1fr); }
+  .ech-ecart { flex-direction: row; width: auto; padding-top: 0; }
+}
+
+.ech-conditions { margin: 0; padding: var(--e3) 0 0; border-top: 1px solid var(--filet); list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.ech-conditions li { font-size: var(--t-aide); color: var(--texte2); }
+.ech-conditions li::before { content: "·"; margin-right: 6px; color: var(--texte3); }
+.ech-ligne-aide, .ech-message { margin: 0; font-size: var(--t-aide); color: var(--texte2); }
+.ech-message { font-style: italic; }
+.ech-pied { display: flex; align-items: center; flex-wrap: wrap; gap: var(--e2); }
+.ech-expire { font-size: var(--t-legende); color: var(--texte3); }
+.ech-lien { padding: 0; font-size: var(--t-legende); font-weight: var(--g-libelle); color: var(--texte2); text-decoration: underline; text-underline-offset: 3px; }
+.ech-versions { margin: 0; padding-left: var(--e5); display: flex; flex-direction: column; gap: var(--e2); font-size: var(--t-aide); }
+
+.ech-loyer { display: flex; flex-direction: column; gap: 2px; padding: var(--e3) var(--e4); }
+.ech-loyer-nom { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.ech-loyer-detail { font-size: var(--t-aide); color: var(--texte2); }
+
+/* Le composeur. */
+.ech-ajouter { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 7px 12px; border-radius: var(--r-pilule);
+  border: 1px dashed var(--filet2); font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); }
+.ech-ajouter svg { width: 14px; height: 14px; }
+.ech-mini { padding: 3px 8px; border-radius: var(--r-pilule); border: 1px solid var(--filet2); font-size: var(--t-micro); color: var(--texte2); display: inline-grid; place-items: center; }
+.ech-mini svg { width: 11px; height: 11px; }
+.ech-mini[aria-pressed="true"] { border-color: var(--or); color: var(--or); }
+.ech-actif .champ-euros, .ech-actif input { max-width: 100%; }
+.ech-conditions-form { display: flex; flex-direction: column; gap: var(--e3); }
+.ech-sous { font-size: var(--t-legende); font-weight: var(--g-libelle); color: var(--texte3); }
+.ech-champ { display: flex; align-items: center; justify-content: space-between; gap: var(--e3); font-size: var(--t-aide); color: var(--texte2); }
+.ech-champ input { flex: 1; max-width: 220px; padding: 8px 10px; border-radius: var(--r-champ); border: 1px solid var(--filet2); background: var(--puce); color: var(--texte); font: inherit; }
+.ech-verdict { display: flex; flex-direction: column; gap: 6px; padding: 0 var(--e1); }
+.ech-refus { margin: 0; font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--danger); }
+.ech-avis { margin: 0; font-size: var(--t-aide); color: var(--or); }
+.ech-frais { margin: 0; font-size: var(--t-legende); color: var(--texte3); }
+
+/* Les feuilles : avec qui, les familles, les cases. */
+.ech-feuille { display: flex; flex-direction: column; gap: var(--e4); }
+.ech-joueur, .ech-famille { display: flex; align-items: center; gap: var(--e3); width: 100%; padding: var(--e3) var(--e4); text-align: left; }
+.ech-joueur:active, .ech-famille:active { background: var(--surface-appui); }
+.ech-famille svg { width: 18px; height: 18px; color: var(--texte2); }
+.ech-joueur-nom, .ech-famille-nom { flex: 1; min-width: 0; font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.ech-famille-n { font-size: var(--t-aide); color: var(--texte3); }
+.ech-coche { display: flex; align-items: center; gap: var(--e3); padding: var(--e3) var(--e4); cursor: pointer; }
+.ech-coche.desactive { opacity: .45; cursor: default; }
+.ech-coche input { width: 18px; height: 18px; accent-color: var(--or); flex: none; }
+.ech-coche-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ech-curseur { display: flex; align-items: center; gap: var(--e3); padding: 0 var(--e4) var(--e3); font-size: var(--t-aide); }
+.ech-curseur input { flex: 1; accent-color: var(--or); }
