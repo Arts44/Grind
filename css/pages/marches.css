@@ -1,0 +1,102 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Marchés (lot D) : la liste des titres allégée, et le grand écran
+   (la liste à gauche, la fiche du titre dans #panneau, lot A ; avant le choix : .ld, catalogues.css).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.m-titres { overflow: hidden; }
+/* Une ligne hors de l'écran ne se dessine pas (la liste reste longue, mais légère à faire défiler). */
+.m-ligne-titre { content-visibility: auto; contain-intrinsic-size: auto 62px; }
+.m-plus { display: flex; align-items: center; gap: 6px; margin: var(--e3, 12px) auto 0; }
+.m-plus .t2 { font-weight: 500; }
+
+/* Au grand écran, les bandes qui débordaient de la colonne du téléphone restent dans la leur. */
+body[data-palier="large"] :is(.ld[data-ld="marches"], body.avec-panneau #app) .m-bandeau { margin: 0; border-radius: var(--r-pastille, 9px); }
+body[data-palier="large"] :is(.ld[data-ld="marches"], body.avec-panneau #app) .m-defile { margin: 0; padding: 0; }
+body.avec-panneau #app .m-ligne-titre[aria-current="true"] { outline: 0; background: color-mix(in srgb, var(--accent) 9%, transparent); box-shadow: inset 3px 0 0 var(--accent); }
+
+/* D358 (1.18.16) : les styles en ligne de marches.js sortis en classes (tailles en jetons --t-*). */
+.mk-x1 { flex: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,.35)); }
+.mk-x2 { color: #E6A443; }
+.mk-x3 { color: #BDE6F7; }
+.mk-x4 { color: #6FAEFF; }
+.mk-x5 { font-size: var(--t-legende); margin-top: 2px; }
+.mk-x6 { flex: none; }
+.mk-x7 { flex: 1; min-width: 0; }
+.mk-x8 { min-width: 72px; text-align: right; flex: none; }
+.mk-x9 { font-size: var(--t-libelle); }
+.mk-x10 { font-size: var(--t-legende); font-weight: 600; color: var(--accent); }
+.mk-x11 { font-size: var(--t-legende); font-weight: 500; color: var(--texte2); }
+.mk-x12 { padding: 8px 0; }
+.mk-x13 { display: flex; flex-direction: column; gap: 10px; }
+.mk-x14 { padding: 0 4px; min-height: 18px; }
+.mk-x15 { font-size: var(--t-aide); font-weight: 700; }
+.mk-x16 { font-size: var(--t-aide); font-weight: 500; color: var(--texte2); }
+.mk-x17 { font-size: 14px; font-weight: 600; }
+.mk-x18 { opacity: .7; }
+.mk-x19 { flex: 1; min-height: 12px; }
+.mk-x20 { font-size: 40px; line-height: 1.1; white-space: nowrap; }
+.mk-x21 { gap: 6px; margin-top: 2px; }
+.mk-x22 { font-size: var(--t-aide); font-weight: 500; opacity: .7; }
+.mk-x23 { font-size: var(--t-legende); font-weight: 500; opacity: .6; }
+.mk-x24 { gap: 5px; }
+.mk-x25 { display: block; font-size: var(--t-legende); }
+.mk-x26 { text-align: right; flex: none; }
+.mk-x27 { display: block; font-size: var(--t-libelle); font-weight: 700; }
+.mk-x28 { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.mk-x29 { font-size: var(--t-micro); font-weight: 600; }
+.mk-x30 { font-size: var(--t-legende); }
+.mk-x31 { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.mk-x32 { padding: 4px 0; }
+.mk-x33 { padding: 0 14px; min-height: 44px; }
+.mk-x34 { flex: 1; font-size: 14px; font-weight: 500; }
+.mk-x35 { color: var(--texte2); display: grid; }
+.mk-x36 { padding: 16px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.3); display: flex; flex-direction: column; gap: 10px; }
+.mk-x37 { gap: 12px; }
+.mk-x38 { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(29,28,26,.08); flex: none; }
+.mk-x39 { font-size: var(--t-libelle); font-weight: 600; }
+.mk-x40 { text-align: right; }
+.mk-x41 { font-size: 18px; }
+.mk-x42 { gap: 8px; }
+.mk-x43 { font-size: var(--t-legende); font-weight: 500; }
+.mk-x44 { display: flex; flex-direction: column; gap: 4px; }
+.mk-x45 { font-weight: 700; }
+.mk-x46 { display: flex; flex-direction: column; gap: 12px; }
+.mk-x47 { font-size: var(--t-libelle); font-weight: 600; line-height: 1.3; }
+.mk-x48 { gap: 8px; font-size: var(--t-aide); font-weight: 500; color: var(--texte2); }
+.mk-x49 { display: flex; flex-direction: column; gap: 8px; }
+.mk-x50 { overflow: hidden; }
+.mk-x51 { flex: 1; }
+.mk-x52 { color: var(--accent); font-weight: 700; }
+.mk-x53 { padding: 4px 0 24px; }
+.mk-x54 { font-size: var(--t-titre); font-weight: 600; }
+.mk-x55 { font-size: var(--t-legende); font-weight: 500; opacity: .7; }
+.mk-x56 { font-size: var(--t-micro); font-weight: 600; padding: 4px 8px; border-radius: 99px; background: rgba(255,255,255,.12); }
+.mk-x57 { font-size: 44px; line-height: 1.1; margin-top: 18px; white-space: nowrap; }
+.mk-x58 { margin: 10px -20px 0; }
+.mk-x59 { position: relative; height: 10px; border-radius: 99px; background: rgba(255,255,255,.08); }
+.mk-x60 { gap: 6px; font-size: 14px; font-weight: 600; }
+.mk-x61 { font-size: var(--t-legende); font-weight: 600; }
+.mk-x62 { font-size: 24px; font-weight: 700; line-height: 1.15; }
+.mk-x63 { align-self: flex-start; }
+.mk-x64 { gap: 8px; flex-wrap: wrap; }
+.mk-x65 { padding: 14px; }
+.mk-x66 { gap: 10px; }
+.mk-x67 { font-size: 14px; font-weight: 500; color: var(--texte2); flex: none; }
+.mk-x68 { font-size: 26px; }
+.mk-x69 { font-size: var(--t-micro); font-weight: 500; opacity: .7; }
+.mk-x70 { font-size: 28px; }
+.mk-x71 { align-items: flex-start; }
+.mk-x72 { text-align: center; }
+.mk-x73 { position: relative; height: 36px; margin-top: 6px; }
+.mk-x74 { position: absolute; left: 0; right: 0; top: 12px; height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); }
+.mk-x75 { position: absolute; left: calc(50% - 7px); top: 8px; width: 14px; height: 14px; border-radius: 50%; background: var(--texte); }
+.mk-x76 { margin: 0 -16px; padding: 0 16px; }
+.mk-x77 { font-size: var(--t-micro); font-weight: 500; color: var(--texte2); }
+.mk-x78 { display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+.mk-x79 { gap: 12px; width: 100%; }
+.mk-x80 { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgba(238,238,240,.08); flex: none; }
+.mk-x81 { width: 14px; display: grid; }
+.mk-x82 { width: 100%; }
+.mk-x83 { font-size: 40px; line-height: 1.1; }
+.mk-x84 { gap: 8px; font-size: var(--t-libelle); font-weight: 600; }
+.mk-x85 { display: none; }

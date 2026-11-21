@@ -1,0 +1,81 @@
+/* ══════════════════════════════════════════════════════════════════════
+   D450 « Le code » : l'entraînement, les questions, la correction
+   (pages/code.js, EcransCode.swift). Jetons de jetons.css seulement.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.cd-page { gap: var(--e3); }
+.cd-bloc { display: flex; flex-direction: column; gap: var(--e2); }
+.cd-bloc .aide { margin: 0; }
+/* D460 : « Règles de la mer · Royaume-Uni » et « Balisage IALA A » passent à la ligne plutôt que de déborder à 390 px. */
+.cd-entete { flex-wrap: wrap; row-gap: 2px; }
+
+/* ── Les séries ─────────────────────────────────────────────────────── */
+.cd-series { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e2); }
+.cd-serie {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: var(--e3) var(--e4); border-radius: var(--r-tuile);
+  background: var(--surface-carte); border: 1px solid var(--bord-carte);
+  color: var(--texte); font: inherit; text-align: left; cursor: pointer;
+  transition: background var(--d-court) var(--courbe-graphite);
+}
+.cd-serie b { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.cd-serie:hover { background: var(--surface-survol); }
+.cd-serie.ferme { opacity: 0.45; cursor: default; }
+.cd-faible { display: flex; justify-content: space-between; gap: var(--e3); font-size: var(--t-libelle); }
+
+/* ── Une question ───────────────────────────────────────────────────── */
+.cd-progres { display: flex; justify-content: space-between; align-items: baseline; gap: var(--e3); font-size: var(--t-aide); }
+.cd-progres .aide { text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cd-rail { height: 4px; border-radius: var(--r-pilule); background: var(--puce2); overflow: hidden; }
+.cd-rail i { display: block; height: 100%; width: var(--p, 0%); background: var(--accent); border-radius: inherit; transition: width var(--d-court) var(--courbe-graphite); }
+.cd-image { display: flex; justify-content: center; margin-bottom: var(--e3); }
+.cd-dessin { width: 132px; height: 132px; }
+.cd-image.petite .cd-dessin { width: 72px; height: 72px; }
+.cd-question { margin: 0; font-size: var(--t-titre); font-weight: var(--g-libelle); line-height: var(--interligne); }
+.cd-question.petite { font-size: var(--t-libelle); }
+.cd-reponses { display: flex; flex-direction: column; gap: var(--e2); }
+.cd-reponse {
+  display: flex; align-items: center; gap: var(--e3); width: 100%;
+  padding: var(--e3) var(--e4); min-height: 52px; border-radius: var(--r-tuile);
+  background: var(--surface-carte); border: 1px solid var(--bord-carte);
+  color: var(--texte); font: inherit; font-size: var(--t-libelle); text-align: left; cursor: pointer;
+  transition: background var(--d-court) var(--courbe-graphite), border-color var(--d-court) var(--courbe-graphite);
+}
+.cd-reponse:hover { background: var(--surface-survol); }
+.cd-reponse[aria-checked="true"] { border-color: var(--accent); background: var(--accent-doux); }
+.cd-lettre {
+  flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--r-pilule);
+  background: var(--puce2); font-size: var(--t-aide); font-weight: var(--g-titre);
+}
+.cd-reponse[aria-checked="true"] .cd-lettre { background: var(--accent); color: var(--sur-accent); }
+.cd-nav { display: flex; gap: var(--e2); }
+.cd-nav > * { flex: 1; }
+
+/* ── La correction ──────────────────────────────────────────────────── */
+.cd-verdict { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--e2); }
+.cd-verdict p { margin: 0; font-size: var(--t-libelle); line-height: var(--interligne); }
+.cd-score { font-size: var(--t-grand); font-weight: var(--g-titre); line-height: 1; }
+.cd-score span { font-size: var(--t-titre); color: var(--texte2); }
+.cd-verdict.oui .cd-score { color: var(--gain); }
+.cd-verdict.non .cd-score { color: var(--alerte); }
+.cd-pastilles { display: flex; gap: var(--e2); }
+.cd-pastille { padding: 3px 10px; border-radius: var(--r-pilule); font-size: var(--t-legende); font-weight: var(--g-libelle); }
+.cd-pastille.oui { background: color-mix(in srgb, var(--gain) 16%, transparent); color: var(--gain); }
+.cd-pastille.non { background: color-mix(in srgb, var(--perte) 16%, transparent); color: var(--perte); }
+.cd-titre { margin: var(--e2) var(--e1) 0; }
+.cd-item { display: flex; flex-direction: column; gap: var(--e2); padding: var(--e2) 0; }
+.cd-item .aide { margin: 0; }
+.cd-item-tete { display: flex; gap: var(--e2); align-items: center; }
+.cd-grave { margin-left: auto; padding: 1px 8px; border-radius: var(--r-pilule); font-size: var(--t-micro); font-weight: var(--g-libelle);
+  background: color-mix(in srgb, var(--danger) 16%, transparent); color: var(--danger); }
+.cd-rep { display: flex; gap: var(--e2); align-items: baseline; font-size: var(--t-libelle); line-height: var(--interligne); }
+.cd-rep.juste { color: var(--gain); }
+.cd-rep.faux { color: var(--perte); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--perte) 50%, transparent); }
+.cd-marque { flex: none; font-weight: var(--g-titre); }
+.cd-justes summary { cursor: pointer; list-style-position: inside; }
+.cd-justes[open] summary { margin-bottom: var(--e2); }
+
+/* ── Sur la page Permis (vehicules.js) ──────────────────────────────── */
+.pm-code { display: flex; flex-direction: column; gap: var(--e2); }
+.pm-code .aide { margin: 0; }
+.pm-boutons { display: flex; flex-direction: column; gap: var(--e2); }

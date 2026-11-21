@@ -1,0 +1,192 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Les tables de cartes du casino (D337) : le tapis vert, les cartes, les
+   plaques. Un drap vert profond, une lumière douce au-dessus de la table,
+   un liseré or : pas de néon. Les cartes glissent depuis le sabot à leur
+   arrivée (une carte posée ne bouge plus) ; mouvement réduit : elles
+   apparaissent.
+   ══════════════════════════════════════════════════════════════════════ */
+#zone-table {
+  --drap: #0f4a33;
+  --drap-sombre: #0a3626;
+  --drap-encre: rgba(236, 226, 196, 0.55);
+  --bord-table: #24160d;
+  --papier: #f6f3ea;
+  --encre-noire: #1d1d22;
+  --encre-rouge: #b4262c;
+  --dos: #6b1f2a;
+}
+
+.tapis {
+  position: relative;
+  border-radius: 28px;
+  padding: 18px 14px 20px;
+  /* La lumière au-dessus de la table, et la trame du drap. */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 38%, rgba(255, 255, 255, 0.09), transparent 70%),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.035) 0 2px, transparent 2px 4px),
+    radial-gradient(ellipse at 50% 120%, var(--drap-sombre), var(--drap) 70%);
+  border: 6px solid var(--bord-table);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--or) 55%, transparent), inset 0 10px 40px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--papier);
+  overflow: hidden;
+}
+.tapis-haut { width: 100%; display: flex; justify-content: space-between; align-items: center; min-height: 26px; }
+.tapis-role { font-size: var(--t-legende); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--drap-encre); }
+.tapis-devise {
+  margin: 4px 0;
+  padding: 6px 14px;
+  border-top: 1px solid color-mix(in srgb, var(--or) 35%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--or) 35%, transparent);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: color-mix(in srgb, var(--or) 80%, var(--papier));
+  opacity: 0.85;
+}
+.tapis-mains, .tapis-camps { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; width: 100%; }
+.tapis-main, .tapis-camp { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 14px; transition: background var(--d-court); }
+.tapis-main.active { background: rgba(255, 255, 255, 0.07); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--or) 45%, transparent); }
+.tapis-camp.gagnant { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--or) 60%, transparent); background: rgba(255, 255, 255, 0.05); }
+.tapis-total {
+  min-width: 34px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.32);
+  font-size: var(--t-aide);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.tapis-main.gain .tapis-total { color: var(--gain); }
+.tapis-main.perte .tapis-total { color: var(--perte); }
+.tapis-issue { font-size: var(--t-legende); color: var(--drap-encre); }
+.tapis-message { min-height: 18px; font-size: var(--t-aide); color: var(--drap-encre); text-align: center; }
+.tapis-resultat { font-size: var(--t-titre); font-weight: 700; font-variant-numeric: tabular-nums; animation: monte var(--d-geste) ease-out both; }
+.tapis-resultat.gain { color: var(--gain); }
+.tapis-resultat.perte { color: var(--perte); }
+.tapis-resultat.egal { color: var(--papier); }
+.tapis-board { padding: 8px 0 2px; }
+/* Le tableau du poker : cinq cartes côte à côte, pas en éventail. */
+.tapis-board .cj-rangee .cj + .cj { margin-left: 4px; }
+
+/* Le sabot : sa hauteur dit ce qui reste. */
+.tapis-sabot { display: flex; align-items: center; gap: 6px; }
+.tapis-sabot em { font-style: normal; font-size: var(--t-legende); color: var(--drap-encre); }
+.sabot-reste { display: block; width: 34px; height: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.35); overflow: hidden; }
+.sabot-reste span { display: block; height: 100%; width: var(--reste); background: color-mix(in srgb, var(--or) 55%, var(--papier)); opacity: 0.7; }
+
+/* Les cartes */
+.cj-rangee { display: flex; justify-content: center; min-height: 86px; }
+.cj-rangee .cj + .cj { margin-left: -22px; }
+.cj {
+  position: relative;
+  flex: none;
+  width: 60px;
+  height: 84px;
+  border-radius: 7px;
+  background: var(--papier);
+  color: var(--encre-noire);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  font-weight: 700;
+  /* Les couleurs en signes typographiques, jamais en émojis. */
+  font-family: var(--police);
+  font-variant-emoji: text;
+  animation: glisse var(--d-geste) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--r, 0) * 0.12s);
+}
+.cj.rouge { color: var(--encre-rouge); }
+.cj-coin { position: absolute; top: 4px; left: 5px; display: flex; flex-direction: column; align-items: center; font-size: 14px; line-height: 1; }
+.cj-coin i { font-style: normal; font-size: 12px; }
+.cj-coin.bas { top: auto; left: auto; bottom: 4px; right: 5px; transform: rotate(180deg); }
+.cj-centre { position: absolute; inset: 0; display: grid; place-items: center; font-size: 28px; }
+.cj.dos { background: var(--dos); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 0 0 3px var(--papier); }
+.cj-motif {
+  position: absolute;
+  inset: 6px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 6px), repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 6px);
+}
+.cj.place { animation: none; background: transparent; box-shadow: inset 0 0 0 1px rgba(236, 226, 196, 0.22); }
+.vide-tapis .cj + .cj { margin-left: 8px; }
+
+/* Une carte posée face cachée se retourne : le tournant, puis la rivière, puis le jeu du croupier (rue par rue). */
+.cj.retournee { animation: retourne 0.32s ease-out both; animation-delay: calc(var(--v, 0) * 0.45s); }
+@keyframes retourne {
+  from { transform: rotateY(90deg); }
+  to { transform: none; }
+}
+@keyframes glisse {
+  from { opacity: 0; transform: translate(70px, -90px) rotate(8deg); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes monte { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .cj, .cj.retournee, .tapis-resultat { animation: none; }
+}
+:root.economie .cj, :root.economie .cj.retournee, :root.economie .tapis-resultat { animation: none; }
+
+/* La mise mise : une plaque sur le tapis. */
+.plaque-mise {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--feuille);
+  border: 2px dashed color-mix(in srgb, var(--or) 70%, transparent);
+  font-size: var(--t-legende);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--texte);
+}
+
+/* Les gestes et la mise, sous la table */
+.table-gestes { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.table-mise { display: flex; flex-direction: column; gap: 10px; }
+.plaques { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.plaque {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px dashed color-mix(in srgb, var(--or) 75%, transparent);
+  background: radial-gradient(circle, var(--feuille) 55%, color-mix(in srgb, var(--accent) 30%, var(--feuille)) 56%);
+  color: var(--texte);
+  font: 700 var(--t-legende) var(--police);
+  font-variant-numeric: tabular-nums;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--d-court);
+}
+.plaque:active { transform: scale(0.94); }
+.table-mise-ligne { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.table-mise-ligne strong { font-size: var(--t-titre); }
+.table-jetons { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: var(--t-aide); color: var(--texte2); }
+.table-jetons strong { color: var(--texte); }
+
+/* Le comptage */
+.comptage-chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+.comptage-chiffres em { display: block; font-style: normal; font-size: var(--t-legende); color: var(--texte2); }
+.comptage-chiffres strong { font-size: var(--t-titre); font-variant-numeric: tabular-nums; }
+.surveillance { margin-top: 10px; }
+.surveillance-titre { display: flex; justify-content: space-between; font-size: var(--t-aide); font-weight: 600; }
+.surveillance-rail { display: block; height: 6px; margin: 6px 0; border-radius: 3px; background: var(--puce2); overflow: hidden; }
+.surveillance-rail span { display: block; height: 100%; width: var(--veille); background: var(--texte2); transition: width var(--d-chiffre); }
+.surveillance.moyenne .surveillance-rail span { background: var(--alerte); }
+.surveillance.haute .surveillance-rail span { background: var(--danger); }
+.explication-comptage summary { cursor: pointer; font-weight: 600; }
+.explication-comptage ol, .regles-table { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: var(--t-aide); color: var(--texte2); }
+
+/* La salle : les tables de l'écran Casino */
+.salle-tables .bientot { opacity: 0.55; }
+
+@media (min-width: 560px) {
+  .cj { width: 70px; height: 98px; }
+  .cj-rangee { min-height: 100px; }
+  .cj-centre { font-size: 32px; }
+}

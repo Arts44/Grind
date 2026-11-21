@@ -1,0 +1,159 @@
+/* ══════════════════════════════════════════════════════════════════════
+   La table de roulette (D338, 1.17.47) — TableRoulette.swift.
+   Un vrai tapis : feutre vert, filets crème, numéros sur leur pastille
+   rouge ou noire, jetons aux couleurs des casinos ; la roue en bois et
+   laiton. Une lumière douce sur le feutre, rien de plus.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.rl-page {
+  --feutre: #1d5f3e;
+  --feutre-sombre: #123d28;
+  --filet-feutre: rgba(236, 226, 196, 0.5);
+  --creme: #efe7d2;
+  --rouge-table: #9e2229;
+  --noir-table: #18181b;
+  --laiton: #c2a056;
+  --h: 34px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── La roue et ce qu'elle a donné ───────────────────────────────────── */
+.rl-haut { display: flex; gap: 14px; align-items: center; }
+.rl-roue { flex: 0 0 auto; width: min(46%, 230px); height: auto; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55)); }
+.rl-bois { fill: #3a2416; stroke: #6e4b2c; stroke-width: 3; }
+.rl-piste { fill: #24160d; stroke: rgba(194, 160, 86, 0.45); stroke-width: 1; }
+.rl-plateau, .rl-orbite { transform-box: view-box; transform-origin: 0 0; }
+.rl-plateau { transform: rotate(var(--a)); }
+.rl-case { stroke: rgba(214, 186, 120, 0.75); stroke-width: 0.6; }
+.rl-case.rouge { fill: var(--rouge-table); }
+.rl-case.noir { fill: var(--noir-table); }
+.rl-case.vert { fill: #1f6b43; }
+.rl-num { fill: var(--creme); font: 700 7.4px var(--police); text-anchor: middle; dominant-baseline: central; }
+.rl-cone { fill: #4e321e; stroke: var(--laiton); stroke-width: 1.2; }
+.rl-rayon { stroke: var(--laiton); stroke-width: 2.4; stroke-linecap: round; }
+.rl-moyeu { fill: var(--laiton); stroke: #8a6d33; stroke-width: 1; }
+.rl-bille { fill: #f6f3ec; stroke: rgba(0, 0, 0, 0.35); stroke-width: 0.6; }
+
+.rl-cote { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.rl-resultat { display: flex; align-items: center; gap: 10px; min-height: 48px; }
+.rl-resultat > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.rl-resultat b { font-size: var(--t-titre); }
+.rl-resultat .gain { color: var(--gain); font-weight: 700; }
+.rl-pastille {
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  width: 24px; height: 24px; border-radius: 50%; color: var(--creme);
+  font: 700 11px var(--police); font-variant-numeric: tabular-nums;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.rl-pastille.rouge { background: var(--rouge-table); }
+.rl-pastille.noir { background: var(--noir-table); }
+.rl-pastille.vert { background: #1f6b43; }
+.rl-resultat .rl-pastille { width: 46px; height: 46px; font-size: 19px; }
+.rl-histo { display: flex; flex-wrap: wrap; gap: 4px; }
+.rl-histo .rl-pastille:first-child { box-shadow: 0 0 0 2px var(--laiton); }
+.rl-solde { display: flex; flex-direction: column; gap: 1px; font-size: 13px; }
+.rl-solde b { font-size: 20px; }
+
+/* ── Le tapis ────────────────────────────────────────────────────────── */
+.rl-tapis {
+  display: grid;
+  grid-template-columns: 15% 13% 1fr;
+  padding: 10px;
+  border-radius: 14px;
+  color: var(--creme);
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 28%, rgba(255, 255, 255, 0.07), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23f)'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, var(--feutre), var(--feutre-sombre));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 14px 40px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.04);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.rl-tapis button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.rl-simples, .rl-douzaines { display: flex; flex-direction: column; padding-top: var(--h); }
+.rl-ext {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--filet-feutre) !important; margin: 0 -1px -1px 0;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.rl-ext span { writing-mode: vertical-rl; transform: rotate(180deg); }
+.rl-simple { height: calc(2 * var(--h)); }
+.rl-douz { height: calc(4 * var(--h)); }
+.rl-douz sup { font-size: 0.7em; text-transform: none; }
+.rl-losange { display: block; width: 18px; height: 30px; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.rl-losange.rouge { background: var(--rouge-table); }
+.rl-losange.noir { background: var(--noir-table); box-shadow: inset 0 0 0 1px var(--creme); }
+.rl-ext .rl-jeton { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+
+.rl-nums { position: relative; height: calc(13 * var(--h)); border-right: 1px solid var(--filet-feutre); border-top: 1px solid var(--filet-feutre); }
+.rl-n {
+  position: absolute; display: flex; align-items: center; justify-content: center;
+  left: calc((var(--x) - 0.5) / 3 * 100%); top: calc((var(--y) - 0.5) * var(--h));
+  width: calc(100% / 3); height: var(--h);
+  border-left: 1px solid var(--filet-feutre) !important; border-bottom: 1px solid var(--filet-feutre) !important;
+}
+.rl-n[data-cle="n:0"] { left: 0; width: 100%; }
+.rl-n span {
+  min-width: 28px; padding: 2px 6px; border-radius: 6px; text-align: center;
+  font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.rl-n.rouge span { background: var(--rouge-table); }
+.rl-n.noir span { background: var(--noir-table); }
+.rl-n.vert span { background: #1f6b43; box-shadow: inset 0 0 0 1px var(--filet-feutre); }
+.rl-n:hover, .rl-ext:hover { background: rgba(255, 255, 255, 0.05) !important; }
+
+/* Les bords et les coins : cheval, carré, transversale, sixain. */
+.rl-bord {
+  position: absolute; z-index: 2; border-radius: 8px;
+  left: calc(var(--x) / 3 * 100%); top: calc(var(--y) * var(--h));
+  transform: translate(-50%, -50%);
+}
+.rl-bord.v { width: 18px; height: calc(0.62 * var(--h)); }
+.rl-bord.h { width: calc(100% / 3 * 0.55); height: 14px; }
+.rl-bord.coin { width: 20px; height: 20px; border-radius: 50%; }
+.rl-bord:hover { background: rgba(239, 231, 210, 0.16) !important; }
+.rl-pose, .rl-marque {
+  position: absolute; z-index: 3; pointer-events: none;
+  left: calc(var(--x) / 3 * 100%); top: calc(var(--y) * var(--h));
+  transform: translate(-50%, -50%);
+}
+.rl-marque {
+  z-index: 4; width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fffdf6, #d9d2c2 70%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  left: calc(var(--x) / 3 * 100% + 22px);
+}
+.rl-cols { grid-column: 3; display: grid; grid-template-columns: repeat(3, 1fr); }
+.rl-col { height: var(--h); margin: 0 -1px 0 0; border-top: 0 !important; }
+.rl-col span { writing-mode: horizontal-tb; transform: none; }
+
+/* ── Les jetons ──────────────────────────────────────────────────────── */
+.rl-jeton {
+  --taille: 26px;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--taille); height: var(--taille); border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--j) 0 54%, rgba(255, 255, 255, 0.9) 55% 58%, transparent 59%),
+    repeating-conic-gradient(var(--j) 0 22.5deg, #f3eee2 22.5deg 45deg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+}
+.rl-jeton b { color: #fff; font-size: 9px; font-weight: 800; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6); }
+.rl-jeton.gagne { box-shadow: 0 0 0 2px var(--laiton), 0 1px 2px rgba(0, 0, 0, 0.55); }
+.rl-rack { display: flex; justify-content: center; gap: 10px; padding: 6px 0 2px; }
+.rl-choix { background: none; border: 0; padding: 0; cursor: pointer; border-radius: 50%; transition: transform var(--d-court, 0.15s) ease; }
+.rl-choix .rl-jeton { --taille: 42px; }
+.rl-choix .rl-jeton b { font-size: 12px; }
+.rl-choix.choisi { transform: translateY(-4px); }
+.rl-choix.choisi .rl-jeton { box-shadow: 0 0 0 2px var(--laiton), 0 6px 10px rgba(0, 0, 0, 0.5); }
+.rl-gestes { justify-content: center; }
+
+.rl-paiements { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.rl-paiements > div { display: flex; justify-content: space-between; gap: 10px; }
+.rl-paiements b { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 380px) {
+  .rl-page { --h: 31px; }
+  .rl-n span { min-width: 24px; font-size: 13px; padding: 1px 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .rl-choix { transition: none; } }

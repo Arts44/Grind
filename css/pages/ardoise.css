@@ -1,0 +1,151 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Les Nouveautés au tableau noir (D336, 1.17.43) — EcranNouveautes.swift.
+   Une ardoise noire, sans cadre : poussière de craie et traces d'effaçage
+   à peine visibles, écriture blanc craie. Titres en Caveat, dates et
+   lignes en Kalam (SIL Open Font License 1.1, polices/OFL-Caveat.txt et
+   OFL-Kalam.txt). Chaque tableau a sa hauteur et défile seul ; étroit, ils
+   sont l'un sous l'autre, large, côte à côte.
+   ══════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../../polices/caveat-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../polices/kalam-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../../polices/kalam-700.woff2") format("woff2");
+}
+
+.ard-cadre {
+  --ardoise: #1b1c1d;
+  --craie: #ecebe6;
+  --craie2: rgba(236, 235, 230, 0.62);
+  --craie-trace: rgba(236, 235, 230, 0.13);
+  --police-titre: "Caveat", "Bradley Hand", "Segoe Print", cursive;
+  --police-craie: "Kalam", "Bradley Hand", "Segoe Print", cursive;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--e3);
+}
+
+/* Les deux tableaux l'un sous l'autre, leur nom écrit à la craie au-dessus. */
+.ard-pile { display: flex; flex-direction: column; gap: var(--e6); }
+.ard-bloc { display: flex; flex-direction: column; gap: var(--e2); min-width: 0; }
+.ard-nom { margin: 0; padding: 0 var(--e1); font: 700 1.6rem/1.1 var(--police-titre); color: var(--craie); }
+
+.ardoise {
+  box-sizing: border-box;
+  height: max(340px, calc(100dvh - 300px));
+  overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: none;
+  padding: var(--e5) var(--e5) var(--e6);
+  border-radius: 18px;
+  color: var(--craie);
+  font: 400 1.0625rem/1.5 var(--police-craie);
+  /* L'ardoise : de la poussière de craie, deux traces d'effaçage, un bord à peine plus sombre. */
+  background-color: var(--ardoise);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+    radial-gradient(55% 20% at 28% 22%, rgba(236, 235, 230, 0.045), transparent 70%),
+    radial-gradient(42% 15% at 74% 68%, rgba(236, 235, 230, 0.035), transparent 70%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035), inset 0 0 48px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 0 1px rgba(236, 235, 230, 0.5), 0 0 7px rgba(236, 235, 230, 0.09);
+}
+.ardoise::-webkit-scrollbar { display: none; }
+.ardoise:focus-visible { outline: 2px solid var(--craie2); outline-offset: 2px; }
+
+/* Large : côte à côte. */
+@container (min-width: 720px) {
+  .ard-pile { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e3); }
+  .ardoise { height: max(420px, calc(100dvh - 210px)); }
+}
+
+.ard-version + .ard-version {
+  margin-top: var(--e6); padding-top: var(--e5);
+  /* Un trait de craie, irrégulier, entre deux versions. */
+  background-image: linear-gradient(90deg, transparent, rgba(236, 235, 230, 0.22) 12%, rgba(236, 235, 230, 0.12) 55%, rgba(236, 235, 230, 0.2) 85%, transparent);
+  background-repeat: no-repeat; background-size: 100% 1.5px;
+}
+.ard-titre {
+  margin: 0; font: 700 2rem/1.05 var(--police-titre); letter-spacing: 0.005em;
+  display: flex; align-items: baseline; gap: var(--e3); flex-wrap: wrap;
+}
+.ard-tienne {
+  font: 400 0.85rem/1 var(--police-craie); color: var(--craie2);
+  padding: 2px 8px 3px; border: 1.5px solid rgba(236, 235, 230, 0.38); border-radius: 46% 54% 50% 50% / 60% 48% 52% 40%;
+  transform: rotate(-3deg);
+}
+.ard-date { margin: 4px 0 var(--e3); font: 400 0.875rem/1.3 var(--police-craie); color: var(--craie2); }
+[data-avenir] .ard-date { margin: 0 0 2px; letter-spacing: 0.04em; }
+[data-avenir] .ard-titre { margin-bottom: var(--e3); }
+/* D451 : Caveat penche sa dernière lettre hors de sa boîte : un peu d'air à droite pour ne pas la rogner. */
+.ard-titre, .ard-nom, .ard-sous { padding-inline-end: 0.18em; }
+.ard-sous { margin: var(--e4) 0 var(--e2); font: 700 1.35rem/1 var(--police-titre); color: var(--craie2); }
+
+.ard-lignes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.ard-lignes li { position: relative; padding-left: 1.15em; }
+.ard-lignes li::before { content: "–"; position: absolute; left: 0; color: var(--craie2); }
+.ard-lignes.corr li { color: rgba(236, 235, 230, 0.8); }
+
+/* Les mots effacés, du plus lisible au plus effacé. */
+.ard-eff1, .ard-eff2, .ard-eff3 { white-space: nowrap; }
+.ard-eff1 {
+  color: rgba(236, 235, 230, 0.34);
+  text-shadow: 0 0 3px rgba(236, 235, 230, 0.3);
+  background: radial-gradient(closest-side, rgba(236, 235, 230, 0.07), transparent);
+}
+.ard-eff2 { color: rgba(236, 235, 230, 0.82); }
+/* Les lettres effacées : une bande de craie étalée, continue d'une lettre à l'autre. */
+.ard-trou {
+  color: transparent; text-shadow: none;
+  background: linear-gradient(transparent 30%, var(--craie-trace) 52%, rgba(236, 235, 230, 0.1) 70%, transparent 88%);
+}
+.ard-eff3 {
+  display: inline-block; vertical-align: -0.12em;
+  width: calc(var(--l, 4) * 0.5em); height: 0.95em;
+  border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%;
+  background:
+    repeating-linear-gradient(104deg, rgba(236, 235, 230, 0.05) 0 2px, transparent 2px 6px),
+    radial-gradient(ellipse at 50% 55%, rgba(236, 235, 230, 0.2), rgba(236, 235, 230, 0.07) 58%, transparent 76%);
+  filter: blur(0.8px);
+}
+
+.ard-note { margin: var(--e6) 0 0; font: 400 0.9rem/1.4 var(--police-craie); color: var(--craie2); }
+
+/* À venir : les lignes s'écrivent l'une après l'autre, une fois. */
+.ard-ecrit li { animation: ard-ecrire 420ms var(--courbe-graphite) both; animation-delay: calc(var(--i, 0) * 45ms); }
+@keyframes ard-ecrire { from { opacity: 0; transform: translateX(-4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .ard-ecrit li { animation: none; }
+}
+
+/* La feuille « Quoi de neuf » (D336) : une ardoise par version, à la hauteur de ce qu'elle porte,
+   qui s'écrit une fois à l'ouverture (FeuilleNouveautes sur l'iPhone). */
+.nv-feuille { gap: var(--e4); }
+.nv-tete { padding: 0 var(--e1); display: flex; flex-direction: column; gap: 4px; text-shadow: 0 0 1px rgba(236, 235, 230, 0.5), 0 0 7px rgba(236, 235, 230, 0.09); }
+.nv-feuille .nv-titre { font-size: 2.25rem; }
+.nv-tete .ard-date { margin: 0; font-size: 0.9375rem; }
+.ardoise.ard-libre { height: auto; overflow: visible; animation: ard-ecrire 420ms var(--courbe-graphite) both; animation-delay: calc(var(--i, 0) * 80ms); }
+.nv-pied {
+  position: sticky; bottom: calc(-1 * max(24px, env(safe-area-inset-bottom)));
+  display: flex; flex-direction: column; gap: 10px; text-align: center;
+  margin-top: -8px; padding: 22px 0 max(24px, env(safe-area-inset-bottom));
+  background: linear-gradient(rgba(20, 20, 23, 0), var(--feuille) 22px);
+}
+.nv-pied .ard-note { margin: 0; font-size: 0.875rem; }
+@media (prefers-reduced-motion: reduce) {
+  .ardoise.ard-libre { animation: none; }
+}

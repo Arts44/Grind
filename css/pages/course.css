@@ -1,0 +1,75 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Course (D445) : le pilote, rouler ici, les séries, les résultats.
+   Sobre : les chronos en chiffres, l'accent pour le meilleur tour et « toi ».
+   ══════════════════════════════════════════════════════════════════════ */
+.co-page { gap: 14px; padding-top: 8px; }
+.co-pilote { display: flex; gap: 14px; align-items: center; }
+.co-niveau { display: grid; justify-items: center; min-width: 56px; }
+.co-niveau .chiffres { font-size: 30px; font-weight: 700; color: var(--texte); line-height: 1; }
+.co-pilote-corps { display: grid; gap: 6px; flex: 1; min-width: 0; }
+.co-licence { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--filet); }
+.co-section, .co-serie, .co-journee { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.co-tours { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: 14px; color: var(--texte2); }
+.co-meilleur { color: var(--accent); font-weight: 650; }
+.co-serie-tete { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.co-disc { font-size: 12px; font-weight: 600; color: var(--texte2); padding: 2px 8px; border-radius: var(--r-pilule); background: var(--puce); white-space: nowrap; }
+.co-manche, .co-classe { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--texte); }
+.co-manche span:first-child, .co-classe span:first-child { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.co-manche .aide { white-space: nowrap; }
+.co-classement { display: grid; gap: 4px; padding-top: 8px; border-top: 1px solid var(--filet); }
+.co-moi { color: var(--accent); font-weight: 650; }
+.co-finale { font-weight: 650; color: var(--accent); }
+.co-refus { color: var(--alerte); }
+/* Les pilules dans une carte : elles défilent dans la carte, sans déborder sur la gouttière de la page. */
+.co-page .carte .filtres { margin: 0; padding: 2px 0; }
+/* D446 : l'écurie (une ligne : nom et détail à gauche, le bouton à droite). */
+.co-ecurie-ligne { display: flex; align-items: center; gap: 8px; }
+.co-ecurie-corps { flex: 1; min-width: 0; }
+.co-ecurie-corps .aide { overflow-wrap: anywhere; }
+
+/* D446 : cinq onglets tiennent sans défiler à 390 px (« Rouler » n'est plus coupé au premier affichage). */
+.co-page .segment:not(.defilant) button { font-size: 13px; padding-inline: 4px; min-width: 0; white-space: nowrap; }
+
+/* D452 : la session en direct (les chiffres en grand, le dernier tour souligné), et les gestes d'un véhicule à amener. */
+.co-chiffres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.co-chiffres > div { display: grid; justify-items: center; gap: 2px; padding: 8px 4px; border-radius: 12px; background: var(--puce); min-width: 0; }
+.co-chiffres .chiffres { font-size: 22px; font-weight: 700; color: var(--texte); line-height: 1.1; white-space: nowrap; }
+.co-vif { color: var(--accent); }
+.co-dernier { text-decoration: underline; text-underline-offset: 3px; }
+.co-record { color: var(--accent); font-weight: 650; }
+.co-ici { color: var(--gain, var(--accent)); font-weight: 600; }
+.co-gestes { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: 58%; }
+.co-gestes .petit { white-space: nowrap; }
+
+/* D452 (docs/recherches/course.md) : la chose à faire en haut ; les sessions en liste (prix, tours estimés) ;
+   le direct à quatre chiffres ; les podiums lisibles ; les records. */
+.co-afaire-titre { font-size: 17px; }
+.co-pret { color: var(--gain, var(--accent)); }
+.co-jour { font-weight: 500; }
+.co-sessions { display: grid; gap: 6px; }
+.co-session { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 12px; border: 1px solid transparent; border-radius: 12px;
+  background: var(--puce); color: var(--texte); text-align: left; font: inherit; cursor: pointer; }
+.co-session[aria-checked="true"] { border-color: var(--accent); background: var(--puce2, var(--puce)); }
+.co-session-corps { display: grid; gap: 1px; flex: 1; min-width: 0; }
+.co-session-prix { font-weight: 650; white-space: nowrap; }
+.co-chiffres-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.co-chiffres-4 .chiffres { font-size: 18px; }
+.co-place { min-width: 40px; padding: 4px 8px; border-radius: var(--r-pilule); background: var(--puce); color: var(--texte2); font-weight: 700; text-align: center; }
+.co-p1 { background: var(--or); color: #1D1C1A; }
+.co-p2 { background: #C9CDD3; color: #1D1C1A; }
+.co-p3 { background: #C98A5B; color: #1D1C1A; }
+.co-record-ligne { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; }
+.co-fort { font-weight: 650; color: var(--texte); }
+
+/* D461 : la météo (en ce moment, les jours qui viennent), les réglages (quatre curseurs, l'avis du mécano), deux boutons qui
+   passent l'un sous l'autre quand ils ne tiennent pas côte à côte (jamais de mot coupé). */
+.co-meteo { display: grid; gap: 2px; }
+.co-mouillee .co-fort { color: var(--texte); }
+.co-avis { font-size: 14px; color: var(--texte); overflow-wrap: anywhere; }
+.co-curseurs { gap: 14px; }
+.co-curseur { display: grid; gap: 4px; padding-top: 12px; border-top: 1px solid var(--filet); }
+.co-curseur:first-child { padding-top: 0; border-top: 0; }
+.co-curseur .co-manche.aide span { flex: 0 1 auto; }
+.co-glissiere { width: 100%; accent-color: var(--accent); margin: 2px 0; }
+.co-boutons { display: flex; flex-wrap: wrap; gap: 10px; }
+.co-boutons .bouton { flex: 1 1 160px; white-space: nowrap; }

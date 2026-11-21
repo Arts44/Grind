@@ -1,0 +1,30 @@
+/* D376 (1.19) : la famille (EcranFamille.swift). Reprend les options du couple (couple.css) ; D388 : plus d'avatar. */
+.fa-page { gap: 18px; }
+.fa-entete { display: grid; gap: 12px; }
+.fa-rangee { display: flex; align-items: center; gap: 12px; }
+.fa-rangee > .fa-total { margin-left: auto; }
+.fa-section { margin: 0; }
+.fa-total { font-size: 17px; font-weight: 600; color: var(--texte); }
+.fa-note { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 13px; color: var(--texte2); }
+.fa-note svg { width: 16px; height: 16px; flex: none; }
+.fa-note.alerte, .fa-detail.alerte { color: var(--alerte); }
+.fa-ligne { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 16px; text-align: left; }
+.fa-corps { min-width: 0; flex: 1; display: grid; gap: 2px; }
+.fa-nom { font-size: 16px; font-weight: 600; color: var(--texte); }
+.fa-nom-petit { font-size: 15px; font-weight: 500; color: var(--texte); }
+.fa-titre { font-size: 19px; font-weight: 600; color: var(--texte); }
+.fa-detail { font-size: 12px; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fa-detail.t3 { color: var(--texte3); }
+.fa-decision { color: var(--equipe); }
+.fa-prix { font-size: 12px; font-weight: 500; color: var(--texte3); }
+.fa-filet { margin-left: 72px; }
+.fa-option { padding: 10px 16px; }
+.fa-option + .fa-option { border-top: 1px solid var(--filet); }
+.fa-souvenir { justify-content: space-between; font-size: 13px; color: var(--texte); }
+.fa-evenement { display: grid; gap: 10px; }
+.fa-evenement p { margin: 0; }
+.fa-choix { display: flex; justify-content: space-between; gap: 12px; }
+.fa-talents { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fa-talent { display: grid; gap: 6px; padding: 12px; }
+.fa-mini { font-size: 11px; }
+.fa-tete { gap: 16px; }

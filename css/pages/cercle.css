@@ -1,0 +1,20 @@
+/* D444 (1.20) : l'entourage (EcranCercle de l'iPhone). */
+.ce-ligne{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:8px 0;background:none;border:0;color:inherit}
+.ce-initiale{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--puce2,rgba(255,255,255,.08));font-weight:700;flex:none}
+.ce-corps{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.ce-corps .aide{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ce-point{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);vertical-align:middle}
+.ce-jauge{display:inline-block;width:36px;height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;flex:none}
+.ce-jauge i{display:block;height:100%;border-radius:99px}
+.ce-rdv{display:flex;justify-content:space-between;align-items:center;width:100%;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05);border:0;color:inherit}
+.ce-rdv .alerte{color:var(--alerte)}
+.ce-question{font-family:var(--serif,Georgia,serif);font-size:17px;font-weight:600}
+.ce-fil{display:flex;flex-direction:column;gap:6px}
+.ce-msg{max-width:80%;padding:8px 12px;border-radius:14px;background:rgba(255,255,255,.07);font-size:14px;align-self:flex-start;overflow-wrap:anywhere}
+.ce-msg.moi{align-self:flex-end;background:var(--or);color:var(--fond)}
+.ce-ecrire{display:block;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05)}
+.ce-ecrire input{width:100%;background:none;border:0;color:inherit;font:inherit;font-size:15px;outline:none}
+.ce-phrase{display:block;width:100%;text-align:left;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.05);border:0;color:inherit;font-size:14px}
+.ce-marque{font-size:11px;font-weight:600;color:var(--image);margin-left:4px}
+.ce-marque.alerte{color:var(--alerte)}
+.ce-preter{gap:10px}

@@ -1,0 +1,281 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Monde, villes, carte (lot D) : la légende des paliers, les boîtes des
+   joueurs sur les villes, les chantiers à 390 px, et le grand écran.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* LegendePaliers : en plein écran, dézoomé, quand on n'est pas en route. */
+.carte-legende {
+  position: absolute; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 500;
+  display: none; align-items: center; gap: var(--e3, 12px); padding: 10px 14px; border-radius: var(--r-pilule, 99px);
+  background: rgba(18, 19, 23, 0.78); border: 1px solid var(--filet2); white-space: nowrap;
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  font-size: 11px; font-weight: 500; color: var(--texte); pointer-events: none;
+}
+.carte-legende span { display: inline-flex; align-items: center; gap: 5px; }
+.carte-legende i { display: block; width: var(--t); height: var(--t); border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3); }
+.carte-slot.plein[data-zoom="villes"] .carte-legende { display: flex; }
+
+/* Une ville où d'autres joueurs ont une boîte : la petite vitrine sur son point. */
+.mk-ville { position: relative; }
+.mk-boites {
+  position: absolute; top: 1px; right: 0; width: 13px; height: 13px; border-radius: 50%; display: grid; place-items: center;
+  color: #fff; background: var(--vente); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); pointer-events: none;
+}
+.mk-boites svg { width: 7px; height: 7px; }
+
+/* Les chantiers : les pilules de montant ne se tassent plus (« 100 0… » à 390 px). */
+[data-chantier] .petit { flex: none; }
+
+
+/* RNT-210 : « Avec qui ? » de la feuille du voyage (FicheCompagnon) : seul, ou un joueur de ta ville. */
+.mo-compagnons {
+  position: relative; display: flex; gap: var(--e3); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  margin: 0 calc(-1 * var(--e5)); padding: 6px max(var(--e5), calc(50% - 150px));
+}
+.mo-compagnons::-webkit-scrollbar { display: none; }
+.mo-compagnon {
+  --c: #3a3d45;
+  position: relative; flex: none; width: min(300px, 78vw); min-height: 158px; scroll-snap-align: center;
+  display: flex; flex-direction: column; padding: var(--e4); border-radius: var(--r-carte); text-align: left; color: #fff;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--c) 95%, transparent), color-mix(in srgb, var(--c) 45%, transparent) 55%, #16171b);
+  outline: 1px solid rgba(255, 255, 255, 0.08); outline-offset: -1px; transform: scale(0.94); opacity: 0.7;
+  transition: transform var(--d-court) var(--courbe-graphite), opacity var(--d-court);
+}
+.mo-compagnon[aria-pressed="true"] { transform: none; opacity: 1; outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 2px; }
+.mo-compagnon:disabled { opacity: 0.45; }
+.mo-compagnon-tete { align-items: flex-start; }
+.mo-compagnon-genre {
+  font-size: var(--t-legende); font-weight: var(--g-libelle); color: rgba(255, 255, 255, 0.75);
+  padding: 4px 9px; border-radius: var(--r-pilule); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+.mo-compagnon-nom { margin-top: var(--e3); font-size: 24px; font-weight: var(--g-titre); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mo-compagnon-detail { margin-top: 6px; font-size: var(--t-legende); font-weight: var(--g-corps); color: rgba(255, 255, 255, 0.7); }
+.mo-crans { display: flex; align-items: center; gap: 3px; margin-top: 6px; }
+.mo-crans i { width: 10px; height: 4px; border-radius: var(--r-pilule); background: rgba(255, 255, 255, 0.18); }
+.mo-crans i.plein { background: #fff; }
+.mo-crans em { font-style: normal; margin-left: 4px; font-size: var(--t-micro); font-weight: var(--g-corps); color: rgba(255, 255, 255, 0.75); }
+.mo-compagnon-pied { margin-top: auto; padding-top: var(--e3); }
+.mo-compagnon-pied small { display: block; font-size: 10px; font-weight: var(--g-libelle); color: rgba(255, 255, 255, 0.6); }
+.mo-compagnon-pied b { font-size: 14px; font-weight: var(--g-libelle); letter-spacing: 0; }
+.mo-compagnon-pied .droite { text-align: right; }
+.mo-duo-note { display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center; font-size: var(--t-aide); }
+.mo-duo-note svg { width: 15px; height: 15px; flex: none; }
+
+/* Les feuilles du voyage et du trajet : l'en-tête, le palier de la ville, l'arrivée (RNT-210, sans style en ligne). */
+.mo-voyage-tete { text-align: center; margin-top: -8px; }
+.mo-voyage-palier { justify-content: center; gap: 6px; font-size: 12px; color: var(--texte2); }
+.mo-voyage-palier i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+.mo-voyage-enroute { text-align: center; padding: 12px 8px; }
+.mo-voyage-enroute > .or { display: grid; place-items: center; }
+.mo-voyage-arrivee { font-size: 17px; font-weight: 600; }
+.mo-voyage-legende { text-align: center; }
+#voyage-fiche { margin-top: 6px; }
+
+/* RNT-224 (D232) : la fiche d'un lieu d'une ville où l'on n'est pas, en lecture. */
+.mo-distant-tete { gap: 14px; margin: 4px 4px 0; }
+.mo-distant-pastille { width: 48px; height: 48px; border-radius: 13px; filter: saturate(0.6); }
+.mo-distant-pastille svg { width: 24px; height: 24px; }
+.mo-distant-titre { min-width: 0; }
+.mo-distant-bandeau { display: inline-flex; align-self: flex-start; align-items: center; gap: 7px; padding: 7px 12px; border-radius: var(--r-pilule); background: rgba(255, 255, 255, 0.05); font-size: 13px; font-weight: 600; color: var(--texte2); }
+.mo-distant-bandeau svg { flex: none; }
+.mo-distant-note { margin: 0 4px; }
+.mo-distant-section { margin: 6px 4px 8px; }
+.mo-distant-actions { opacity: 0.6; }
+.mo-distant-raison { margin: 8px 4px 0; }
+/* RNT-311 : la photo de ton véhicule sur un billet ; RNT-310 : les billets en liste compacte. */
+.mo-vig { display: block; flex: none; width: var(--l, 58px); height: var(--h, 38px); border-radius: 12px; overflow: hidden; position: relative; }
+.mo-vig-ico { display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, color-mix(in srgb, var(--c) var(--p, 85%), transparent), #16171B); }
+.mo-vig > .vitrine { width: 100%; height: 100%; border-radius: 12px; }
+.mo-ligne-billet { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 14px; text-align: left; min-width: 0; }
+.mo-ligne-billet + .mo-ligne-billet { border-top: 1px solid var(--filet); }
+.mo-ligne-billet:disabled { opacity: 1; cursor: default; }
+.mo-ligne-billet .tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.mo-ligne-billet .nom { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mo-ligne-billet:disabled .nom { color: var(--texte2); }
+.mo-ligne-billet .d { font-size: 12px; font-weight: 500; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mo-ligne-billet .d.alerte { color: var(--alerte); }
+.mo-ligne-billet .prix { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mo-ligne-billet:disabled .prix, .mo-ligne-billet:disabled .radio { opacity: .35; }
+/* RNT-309 : les filtres des lieux (la pilule sur la carte, les pastilles de la liste, la feuille). */
+.fl-pastilles { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -20px; padding: 0 20px; }
+.fl-pastille { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 13px; border-radius: 99px; border: 1px solid var(--filet2); font-size: 14px; font-weight: 600; color: var(--texte); white-space: nowrap; }
+.fl-pastille svg { width: 13px; height: 13px; }
+.fl-pastille[aria-pressed="true"] { background: var(--texte); color: var(--fond); border-color: transparent; }
+.fl-pastille .n { font-variant-numeric: tabular-nums; }
+.fl-compte { display: flex; justify-content: space-between; align-items: center; margin: 0 4px; font-size: 12px; font-weight: 500; color: var(--texte2); }
+.fl-compte button { font-size: 12px; font-weight: 600; color: var(--accent); }
+.fl-feuille { display: flex; flex-direction: column; gap: 22px; }
+.fl-feuille .fl-grille { display: flex; flex-wrap: wrap; gap: 8px; }
+.fl-feuille .fl-rang { display: flex; gap: 8px; flex-wrap: wrap; }
+.fl-titre { margin: 0 4px 10px; }
+.fl-aide { margin: 8px 4px 0; }
+/* D462 : « Toutes » ou « Au moins une » en tête d'un groupe de cases « tests ». */
+.fl-mode { margin: 4px 0 8px; }
+.fl-info { font-size: 13px; font-weight: 500; color: var(--texte2); }
+.fl-info.gain { color: var(--gain); } .fl-info.alerte { color: var(--alerte); }
+
+/* ── D348 (1.18.8) : chaque moyen son allure — js/pages/billets.js, Rente/Design/BilletsVoyage.swift.
+   Billet (avion de ligne, train, bus, ferry), carte de route (ton véhicule, le taxi), plan de vol (ton avion,
+   le jet loué). Surface presque noire, filets fins, la teinte du moyen (--c) en accent seulement. ── */
+.vo-carrousel { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -20px; padding: 6px max(20px, calc(50% - 150px)); }
+.vo-carrousel::-webkit-scrollbar { display: none; }
+.vo-fiche { --surface: #1c1d22; position: relative; flex: none; width: min(300px, 78vw); height: 186px; scroll-snap-align: center; text-align: left; color: var(--texte);
+  display: flex; flex-direction: column; padding: 14px 18px; border-radius: 20px; transform: scale(0.94); opacity: 0.7; transition: transform 0.3s var(--courbe-graphite), opacity 0.3s; }
+.vo-fiche[aria-pressed="true"] { transform: none; opacity: 1; }
+.vo-fiche > * { flex-shrink: 0; }
+.vo-fiche.vo-off { filter: saturate(0.2); }
+.vo-fiche .vo-tete { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.vo-fiche .vo-prix { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; text-align: right; white-space: nowrap; }
+.vo-fiche.vo-off .vo-prix { font-size: 13px; }
+.vo-fiche .vo-prix small { display: block; font-size: 10px; font-weight: 600; color: var(--texte2); letter-spacing: 0; }
+.vo-fiche .alerte { color: var(--alerte); }
+
+/* Le billet : deux entailles à la hauteur du talon (138 px), la perforation en pointillés. */
+.vo-billet { background:
+    radial-gradient(circle at 0 138px, transparent 9px, var(--surface) 9.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 138px, transparent 9px, var(--surface) 9.5px) right / 51% 100% no-repeat; }
+.vo-billet .vo-mode { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 12px; font-weight: 600; color: var(--texte2); }
+.vo-billet .vo-mode svg { color: var(--c); flex: none; }
+.vo-billet .vo-mode span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-codes { display: flex; align-items: center; gap: 8px; margin-top: auto; }
+.vo-bout { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.vo-bout.fin { align-items: flex-end; text-align: right; }
+.vo-bout .vo-code { font-size: 30px; font-weight: 500; line-height: 1.05; letter-spacing: 0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.vo-bout .vo-code.ville { font-size: 19px; font-weight: 600; }
+.vo-bout i { font-style: normal; font-size: 11px; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.vo-bout em { font-style: normal; font-size: 13px; font-weight: 600; }
+.vo-milieu { flex: none; min-width: 56px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.vo-milieu i { font-style: normal; font-size: 11px; color: var(--texte2); }
+.vo-fil { display: flex; align-items: center; gap: 4px; width: 100%; color: var(--c); }
+.vo-fil::before, .vo-fil::after { content: ""; flex: 1; height: 1px; background: color-mix(in srgb, var(--c) 60%, transparent); }
+.vo-seul { margin-top: auto; display: flex; flex-direction: column; gap: 2px; }
+.vo-seul b { font-size: 22px; font-weight: 600; }
+.vo-seul i { font-style: normal; font-size: 12px; color: var(--texte2); }
+.vo-talon { margin-top: 18px; padding-top: 10px; border-top: 1px dashed rgba(255, 255, 255, 0.18); display: flex; justify-content: space-between; align-items: baseline; gap: 10px; height: 34px; margin-left: -4px; margin-right: -4px; padding-left: 4px; padding-right: 4px; }
+.vo-talon b { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.vo-talon i { font-style: normal; font-size: 11px; font-weight: 500; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* La carte de route et le plan de vol : pas de billet. */
+.vo-route { background: var(--surface); box-shadow: inset 0 0 0 1px var(--filet2); }
+.vo-route .vo-ico { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--c); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
+.vo-route .vo-nom { margin-top: auto; font-size: 20px; line-height: 1.25; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-route .vo-sous { font-size: 12px; font-weight: 500; color: var(--texte2); }
+.vo-route .vo-note { font-size: 11px; font-weight: 500; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-stats { display: flex; justify-content: space-between; margin-top: 8px; }
+.vo-stats > span { display: flex; flex-direction: column; gap: 1px; }
+.vo-stats > .m { align-items: center; }
+.vo-stats > .f { align-items: flex-end; }
+.vo-stats i, .vo-champ i { font-style: normal; font-size: 10px; font-weight: 600; color: var(--texte2); }
+.vo-stats b, .vo-champ b { font-size: 14px; font-weight: 600; }
+.vo-trace { --c2: var(--c, var(--or)); display: block; position: relative; height: 12px; margin: 6px 0; }
+.vo-trace.arc { height: 18px; margin: 4px 0; }
+.vo-trace svg { position: absolute; inset: 0 4px; width: calc(100% - 8px); height: 100%; overflow: visible; }
+.vo-trace path { fill: none; stroke-width: 1.5; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.vo-trace .fond { stroke: rgba(255, 255, 255, 0.16); }
+.vo-trace.arc .fond { stroke-dasharray: 3 4; }
+.vo-trace .fait { stroke: var(--c2); stroke-linecap: butt; stroke-dasharray: var(--v, 0) 1000; transition: stroke-dasharray 1s linear; }
+.vo-trace::before, .vo-trace::after { content: ""; position: absolute; bottom: 3px; width: 6px; height: 6px; border-radius: 50%; }
+.vo-trace::before { left: 1px; background: var(--c2); }
+.vo-trace::after { right: 0; width: 5px; height: 5px; box-shadow: 0 0 0 1.5px var(--c2); }
+
+/* La classe. */
+.vo-classes { display: grid; gap: 8px; }
+.vo-classes-l { display: flex; gap: 6px; }
+.vo-classe, .vo-allure-p { flex: 1; min-height: 44px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  color: var(--texte); box-shadow: inset 0 0 0 1px var(--filet2); transition: background 0.2s, color 0.2s; }
+.vo-classe b, .vo-allure-p b { font-size: 13px; font-weight: 600; }
+.vo-classe i, .vo-allure-p i { font-style: normal; font-size: 11px; font-weight: 500; color: var(--texte2); }
+.vo-classe[aria-pressed="true"], .vo-allure-p[aria-pressed="true"] { background: var(--accent); color: var(--sur-accent); box-shadow: none; }
+.vo-classe[aria-pressed="true"] i, .vo-allure-p[aria-pressed="true"] i { color: color-mix(in srgb, var(--sur-accent) 75%, transparent); }
+
+/* En route : le vol, le billet électronique, la conduite. */
+.vo-vol, .vo-conduite { --c: var(--or); background: #0e0f12; border-radius: 20px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); }
+.vo-vol-haut { display: flex; align-items: flex-end; gap: 8px; padding: 16px; }
+.vo-vol-haut .vo-code { font-size: 28px; font-weight: 300; }
+.vo-vol-haut em { color: var(--texte2); }
+.vo-vol-arc { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.vo-vol-arc .vo-trace { width: 100%; height: 26px; margin: 0; }
+.vo-vol-arc i { font-style: normal; font-size: 11px; color: var(--texte2); }
+.vo-pied { display: flex; justify-content: space-between; gap: 8px; padding: 12px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.vo-pied.pointille { border-top-style: dashed; border-top-color: rgba(255, 255, 255, 0.18); padding: 12px 0 0; }
+.vo-champ { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.vo-champ b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-champ.fin { align-items: flex-end; text-align: right; }
+.vo-embarquement { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.vo-embarquement .pile { gap: 6px; }
+.vo-embarquement .pile > b { font-size: 12px; font-weight: 600; }
+.vo-qr { width: 64px; height: 64px; flex: none; fill: var(--texte); }
+.vo-ebillet { --c: var(--or); display: grid; gap: 12px; padding: 16px; border-radius: 20px; background: #1c1d22; }
+.vo-ebillet .vo-codes { margin: 0; align-items: flex-start; }
+.vo-ebillet .vo-code.ville { font-size: 18px; }
+.vo-avance { display: flex; align-items: center; gap: 8px; color: var(--or); }
+.vo-avance .vo-trace { flex: 1; height: 10px; margin: 0; }
+.vo-conduite { display: grid; gap: 14px; padding: 16px; }
+.vo-conduite-t { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 600; }
+.vo-conduite-t > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vo-conduite-t i { font-style: normal; color: var(--texte2); }
+.vo-jauges { display: flex; }
+.vo-jauge { flex: 1; display: grid; justify-items: center; gap: 6px; position: relative; --j: var(--or); }
+.vo-jauge.alerte { --j: var(--alerte); }
+.vo-jauge svg { width: 74px; height: 74px; overflow: visible; }
+.vo-jauge path { fill: none; stroke-width: 2; stroke-linecap: round; }
+.vo-jauge .fond { stroke: rgba(255, 255, 255, 0.1); }
+.vo-jauge .val { stroke: var(--j); stroke-dasharray: var(--v, 0) 1000; transition: stroke-dasharray 1s linear; }
+.vo-jauge .aiguille { fill: var(--j); transform: rotate(var(--a, -135deg)); transform-origin: 40px 40px; transition: transform 1s linear; }
+.vo-jauge-c { position: absolute; top: 0; width: 74px; height: 74px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.vo-jauge-c b { font-size: 22px; font-weight: 300; line-height: 1; }
+.vo-jauge-c i { font-style: normal; font-size: 9px; font-weight: 500; color: var(--texte2); }
+.vo-jauge-t { font-size: 11px; font-weight: 600; color: var(--texte2); }
+.vo-energie { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+.vo-energie > i { font-style: normal; font-weight: 600; color: var(--texte2); }
+/* D355 : l'allure au volant, la limite traversée, les points, le radar */
+.vo-allure-t { display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; }
+.vo-allure { display: flex; gap: 8px; align-items: baseline; font-size: 11px; font-weight: 500; }
+.vo-allure b { font-weight: 600; color: var(--texte2); }
+.vo-allure b.vo-presse { color: var(--or); }
+.vo-allure span:last-child { margin-left: auto; }
+.vo-flash { margin: 0; font-size: 11px; font-weight: 600; color: var(--or); }
+.vo-porte { margin: 0; font-size: 11px; font-weight: 500; color: var(--texte3); } /* D352 : la moyenne porte à porte, à part */
+.vo-fil-fin { flex: 1; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; }
+.vo-fil-fin > i { position: absolute; inset: 0; background: var(--or); transform: scaleX(calc(var(--v, 0) / 100)); transform-origin: left; transition: transform 1s linear; }
+@media (prefers-reduced-motion: reduce) { .vo-fiche, .vo-trace .fait, .vo-jauge .val, .vo-jauge .aiguille, .vo-fil-fin > i { transition: none; } }
+
+/* D351 : investir un montant libre dans un chantier (le champ, les raccourcis, le refus en direct). */
+.chv-saisie { display: grid; gap: 6px; }
+.chv-montants { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.chv-montants .petit { min-height: 30px; font-size: 13px; flex: none; }
+.chv-bouton { display: grid; }
+.chv-refus { margin: 0; color: var(--alerte); }
+
+/* ── D383 (1.19.5) : le plan de cabine en avion de ligne — js/pages/billets.js (planCabine), Rente/Design/BilletsVoyage.swift
+   (PlanCabineVue). Places colorées par genre, prises grisées, la choisie à l'accent ; le plan défile dans un cadre court. ── */
+.vo-cabine-b { display: grid; gap: 8px; }
+.vo-hasard { font: inherit; font-size: 13px; font-weight: 600; color: var(--texte2); background: none; border: 0; padding: 0; }
+.vo-cabine { --hublot: #7db8f0; --couloir: #8fd0b0; --rang: var(--or); --milieu: var(--texte2);
+  display: grid; gap: 6px; padding: 12px; background: #0e0f12; border-radius: 18px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.vo-cabine-rangs { display: grid; gap: 5px; padding: 2px 0; }
+.vo-cabine-rangs.long { max-height: 196px; overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+.vo-cabine-rangs::-webkit-scrollbar { display: none; }
+.vo-rang { display: flex; align-items: center; justify-content: center; }
+.vo-rang > i { flex: none; width: 22px; font-style: normal; font-size: 10px; font-weight: 500; color: var(--texte3); }
+.vo-allee { flex: none; width: 16px; }
+.vo-bloc { display: flex; gap: 4px; }
+.vo-bloc b { width: 26px; text-align: center; font-size: 10px; font-weight: 600; color: var(--texte3); }
+.vo-siege { --g: var(--milieu); width: 26px; height: 26px; flex: none; padding: 0; border: 0; border-radius: 6px; position: relative;
+  background: color-mix(in srgb, var(--g) 18%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--g) 55%, transparent);
+  transition: background 0.2s, box-shadow 0.2s; }
+.vo-siege.g-hublot, .vo-legende-sieges .g-hublot { --g: var(--hublot); }
+.vo-siege.g-couloir, .vo-legende-sieges .g-couloir { --g: var(--couloir); }
+.vo-siege.g-premierRang, .vo-siege.g-issue, .vo-legende-sieges .g-premierRang, .vo-legende-sieges .g-issue { --g: var(--rang); }
+.vo-siege:disabled { background: rgba(255, 255, 255, 0.06); box-shadow: none; cursor: default; }
+.vo-siege[aria-pressed="true"] { background: var(--accent); box-shadow: none; }
+.vo-siege[aria-pressed="true"]::after { content: ""; position: absolute; left: 9px; top: 6px; width: 6px; height: 10px; border: solid var(--sur-accent);
+  border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.vo-legende-sieges { --hublot: #7db8f0; --couloir: #8fd0b0; --rang: var(--or); --milieu: var(--texte2);
+  display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11px; font-weight: 500; color: var(--texte2); }
+.vo-legende-sieges span { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.vo-legende-sieges i { --g: var(--milieu); flex: none; width: 10px; height: 10px; border-radius: 3px; background: color-mix(in srgb, var(--g) 60%, transparent); }
+.vo-legende-sieges i.g-prise { background: rgba(255, 255, 255, 0.09); }
+
+/* D393 : la fiche « Solo » du compagnon de voyage (un joueur : son avatar, el-avatar d'enligne.css). */
+.mo-compagnon-avatar.seul { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, 0.12); }

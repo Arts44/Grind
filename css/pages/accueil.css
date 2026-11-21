@@ -1,0 +1,201 @@
+/* ══════════════════════════════════════════════════════════════════════
+   L'accueil (EcranAccueil.swift, ObjetsAccueil.swift) — lot C.
+   Jetons du lot A avec repli : var(--e4, 16px)…
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ac-page { container: accueil / inline-size; padding-top: var(--e3, 12px); }
+.ac-bloc + .ac-bloc, .ac-corps > div > .ac-bloc + .ac-bloc { margin-top: var(--e-section, 18px); }
+.ac-corps { display: grid; gap: var(--e-section, 18px); margin-top: var(--e-section, 18px); }
+.ac-corps > div { min-width: 0; }
+
+/* Les blocs montent de 14 px, décalés de 0,1 s (§7). */
+.ac-apparition { animation: ac-monte 0.55s var(--courbe-graphite, cubic-bezier(0.2, 0.9, 0.25, 1)) both; animation-delay: calc(var(--rang, 0) * 0.1s); }
+@keyframes ac-monte { from { opacity: 0; transform: translateY(14px); } }
+
+/* ── En-tête ───────────────────────────────────────────────────────── */
+.ac-entete { display: flex; align-items: center; justify-content: space-between; gap: var(--e3, 12px); padding-top: var(--e1, 4px); }
+.ac-marque { display: flex; align-items: center; gap: var(--e2, 8px); font-size: var(--t-libelle, 15px); font-weight: 600; letter-spacing: -0.01em; }
+.ac-embleme { filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.3)); }
+.ac-boutons { display: flex; align-items: center; gap: var(--e2, 8px); }
+.ac-amis { position: relative; }
+.ac-pastille {
+  position: absolute; top: -3px; right: -3px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 99px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0; display: grid; place-items: center; color: var(--fond); background: var(--or);
+}
+.ac-cloche {
+  display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px; border-radius: var(--r-pilule, 99px);
+  border: 1px solid var(--filet2); background: rgba(255, 255, 255, 0.03); font-size: var(--t-aide, 13px); font-weight: 500;
+}
+.ac-cloche .chiffres { letter-spacing: 0; font-weight: 500; }
+.ac-cloche.en-attente { color: var(--or); }
+.ac-avatar { display: grid; border-radius: 50%; } /* D393 : ton avatar (compte-local.js › avatarJoueur), de retour */
+
+/* ── Le patrimoine (D347) : le chiffre héros, la répartition détaillée, la courbe de la saison ── */
+.ac-heros { display: grid; gap: 14px; width: 100%; padding-top: var(--e1, 4px); text-align: left; }
+.ac-heros-tete { display: flex; align-items: center; justify-content: space-between; }
+.ac-detail { display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 0 2px 0 10px; font-size: var(--t-legende, 12px); font-weight: 600; color: var(--texte2); }
+.ac-detail svg { width: 12px; height: 12px; }
+.ac-heros-texte { min-width: 0; container-type: inline-size; display: grid; gap: 6px; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: 12px; }
+.ac-heros-texte:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.ac-jour { font-size: var(--t-legende, 12px); font-weight: 500; color: var(--texte2); }
+.ac-variation { display: flex; gap: 5px; font-size: var(--t-aide, 13px); font-weight: 500; white-space: nowrap; }
+.ac-variation .chiffres { letter-spacing: -0.02em; font-weight: 600; }
+.ac-repartition { display: grid; gap: 10px; }
+.ac-rep-barre { display: flex; gap: 3px; height: 12px; }
+.ac-rep-barre i { flex: var(--part) 1 0; min-width: 4px; border-radius: 3px; background: var(--c); }
+.ac-rep-legende { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+.ac-rep-part { display: grid; grid-template-columns: 8px 1fr auto; align-items: baseline; column-gap: 7px; font-size: 13px; min-width: 0; }
+.ac-rep-point { width: 8px; height: 8px; border-radius: 50%; background: var(--c); align-self: center; }
+.ac-rep-nom { color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-rep-part .ac-rep-point { grid-column: 1; grid-row: 1; }
+.ac-rep-part .ac-rep-nom { grid-column: 2; grid-row: 1; }
+.ac-rep-part .ac-rep-pct { grid-column: 3; grid-row: 1; color: var(--texte3); letter-spacing: 0; font-size: 13px; }
+.ac-rep-part .ac-rep-val { grid-column: 2 / 4; grid-row: 2; letter-spacing: 0; font-size: 13px; font-weight: 600; }
+.ac-courbe-saison { display: grid; gap: 6px; touch-action: pan-y; cursor: crosshair; user-select: none; }
+.ac-lecture { display: flex; align-items: baseline; gap: 8px; min-height: 20px; font-size: 13px; color: var(--texte2); }
+.ac-lecture b { font-size: 15px; letter-spacing: 0; color: var(--texte); }
+.ac-lecture b.gain { color: var(--gain); } .ac-lecture b.perte { color: var(--perte); }
+.ac-lecture .chiffres { letter-spacing: 0; }
+.ac-courbe-saison .ac-courbe { position: relative; height: 90px; }
+.ac-repere { position: absolute; width: 11px; height: 11px; margin: 0 0 -5.5px -5.5px; border-radius: 50%; background: var(--texte); box-shadow: 0 0 0 3px var(--fond); pointer-events: none; }
+.ac-bornes { display: flex; justify-content: space-between; font-size: var(--t-micro, 11px); color: var(--texte3); }
+
+/* Le chiffre héros (ChiffreHeros) : 60 + 26 au plus, réduit pour tenir dans sa colonne. */
+.ch-heros {
+  display: flex; align-items: baseline; white-space: nowrap; line-height: 1.02;
+  font-variant-numeric: tabular-nums; font-weight: 600; letter-spacing: -0.05em;
+  font-size: min(var(--t-heros, 60px), calc(100cqi / (var(--n, 6) * 0.6 + 1.6)));
+}
+/* Les chiffres roulent (chiffreAnime) : le dégradé est peint par colonne (composants.css, .heros-chiffre .roule) ;
+   les centimes restent gris. */
+.ch-heros .roule { line-height: 1.1; }
+.ch-heros .ch-euros .roule .rc::before, .ch-heros .ch-euros .roule .rs { background-image: linear-gradient(#fff 40%, var(--heros-bas)); }
+.ch-suite { font-size: calc(1em * 26 / 60); color: var(--texte2); letter-spacing: -0.03em; }
+.ch-heros .ch-suite .roule { color: var(--texte2); }
+.ch-heros .ch-suite .roule .rc::before, .ch-heros .ch-suite .roule .rs { background: none; -webkit-text-fill-color: currentColor; }
+
+.ac-courbe { height: 70px; margin-top: 2px; display: grid; align-items: end; }
+.ac-attente { display: grid; gap: 10px; align-content: center; height: 100%; text-align: center; font-size: var(--t-aide, 13px); color: var(--texte3); }
+.ac-attente-ligne { display: flex; align-items: center; padding: 0 8px; }
+.ac-attente-ligne i { flex: 1; border-top: 1px dashed color-mix(in srgb, var(--texte3) 60%, transparent); }
+.ac-attente-ligne b { width: 7px; height: 7px; border-radius: 50%; background: var(--courbe); }
+
+/* ── Fin de saison ─────────────────────────────────────────────────── */
+.ac-rebours { display: flex; align-items: center; gap: var(--e3, 12px); padding: var(--e4, 16px); }
+.ac-rebours > span { width: 26px; flex: none; display: grid; place-items: center; }
+
+/* ── Raccourcis (RaccourcisAccueil) ────────────────────────────────── */
+.ac-raccourcis {
+  display: flex; gap: var(--e2, 8px); overflow-x: auto; scrollbar-width: none;
+  margin: 0 calc(-1 * var(--e-page, 20px)); padding: 2px var(--e-page, 20px);
+}
+.ac-raccourcis::-webkit-scrollbar { display: none; }
+.ac-raccourci {
+  flex: none; display: flex; align-items: center; gap: var(--e2, 8px); min-height: 44px; padding: 0 14px 0 6px;
+  border-radius: var(--r-pilule, 99px); border: 1px solid var(--filet2);
+  background: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 0.2s var(--courbe-graphite, ease);
+}
+.ac-raccourci:active { transform: scale(0.97); }
+.ac-raccourci .pastille { width: 26px; height: 26px; border-radius: 50%; }
+.ac-raccourci .pastille svg { width: 14px; height: 14px; }
+.ac-raccourci > span:last-child { display: grid; text-align: left; }
+.ac-r-titre { font-size: 14px; font-weight: 600; white-space: nowrap; }
+.ac-r-detail { font-size: 11px; font-weight: 500; color: var(--texte2); }
+
+/* ── Les tuiles (TuileObjet) ───────────────────────────────────────── */
+.ac-tuiles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e3, 12px); }
+.ac-tuiles .ac-large { grid-column: 1 / -1; }
+.ac-tuiles .tuile-faim, .ac-tuiles .tuile-vie, .ac-tuiles .carte-revenus { margin-top: 0; }
+/* D353 : à plat, comme une carte (le voile et le filet) : plus de dégradé teinté ni de liseré de couleur. */
+.ac-tuile {
+  position: relative; display: flex; flex-direction: column; align-items: stretch; gap: 0; min-height: 148px; padding: var(--e4, 16px);
+  text-align: left; border-radius: var(--r-carte, 22px); overflow: hidden;
+  background: var(--surface-carte); border: 1px solid var(--bord-carte); transition: transform 0.2s var(--courbe-graphite, ease);
+}
+.ac-tuile:active { transform: scale(0.97); }
+@media (hover: hover) { .ac-tuile:hover { border-color: var(--filet2); background: var(--surface-survol); } }
+.ac-objet { flex: 1; display: flex; align-items: flex-start; min-height: 66px; }
+.ac-t { font-size: var(--t-aide, 13px); color: var(--texte2); }
+.ac-v { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* L'anneau du plaisir : la jauge à la couleur de l'app, l'or n'est pas l'accent. */
+.ac-anneau { position: relative; width: 62px; height: 62px; display: grid; place-items: center; color: var(--accent); }
+.ac-anneau > svg { position: absolute; inset: 0; overflow: visible; }
+.ac-anneau-jauge { stroke: var(--accent); transition: stroke-dashoffset 0.6s var(--courbe-graphite, ease); }
+.ac-anneau.burnout, .ac-anneau.burnout .ac-anneau-jauge { color: var(--c-danger, #e5534b); stroke: var(--c-danger, #e5534b); }
+.ac-coeur { display: grid; --icj: 21px; }
+
+
+/* D353 : le groupe « ta vie » : une carte, une ligne par tuile, un filet entre elles. */
+.ac-groupe { border-radius: var(--r-carte); background: var(--surface-carte); border: 1px solid var(--bord-carte); overflow: hidden; }
+.ac-groupe > .carte, .ac-groupe > .tuile { margin: 0; border: 0; border-radius: 0; background: none; box-shadow: none; width: 100%; }
+.ac-groupe > .tuile { flex-direction: row; min-height: 0; }
+.ac-groupe > .tuile:active, .ac-groupe > .carte:active { transform: none; background: var(--surface-appui); }
+.ac-groupe > * + * { border-top: 1px solid var(--filet) !important; }
+
+.ac-emplacement {
+  width: 74px; height: 52px; border-radius: 12px; border: 1.4px dashed var(--filet2); display: grid; place-items: center; color: var(--texte2);
+}
+/* D353 : l'icône des combines, seule, en haut à gauche (pas un emplacement vide). */
+.ac-emplacement.ac-icone { --icj: 26px; width: auto; height: auto; border: 0; place-items: start; }
+
+
+/* Le dernier mouvement. */
+.ac-mouvement { display: grid; gap: 10px; }
+.ac-mouvement-rond { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, 0.06); }
+.ac-mouvement-rond svg { width: 19px; height: 19px; }
+.ac-mouvement-titre { font-size: var(--t-aide, 13px); font-weight: 500; color: var(--texte); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* La tuile de l'objectif : la photo (ici la silhouette) occupe la tuile. */
+.ac-objectif { padding: 0; min-height: 164px; justify-content: flex-end; background: linear-gradient(#2c3038, #15171b); }
+.ac-objectif-fond { position: absolute; inset: 0; display: grid; place-items: center; }
+.ac-objectif-fond.vehicule { background: radial-gradient(120% 90% at 30% 10%, color-mix(in srgb, var(--c) 70%, #fff 10%), var(--c) 45%, color-mix(in srgb, var(--c) 40%, #000)); }
+.ac-silhouette { width: 82%; margin-bottom: 40px; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.45)); }
+.ac-objectif-symbole { width: 34px; color: rgba(255, 255, 255, 0.3); margin-bottom: 44px; display: grid; }
+.ac-objectif::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.85)); pointer-events: none; }
+.ac-objectif-texte { position: relative; z-index: 1; display: grid; gap: 4px; padding: 14px; }
+.ac-objectif-texte .ac-t { color: rgba(255, 255, 255, 0.7); }
+.ac-objectif-nom { font-size: var(--t-libelle, 15px); font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-objectif-rail { display: flex; align-items: center; gap: 8px; }
+.ac-objectif-rail .rail { flex: 1; height: 4px; background: rgba(255, 255, 255, 0.2); }
+.ac-objectif-rail b { font-size: var(--t-legende, 12px); letter-spacing: 0; color: #fff; }
+.ac-secondaire { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.75); }
+.ac-secondaire i { width: 5px; height: 5px; border-radius: 50%; flex: none; background: var(--or); }
+.ac-secondaire i.atteint { background: var(--gain); }
+.ac-secondaire span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-secondaire b { font-weight: 500; letter-spacing: 0; }
+
+/* D353 : le plan et la bande du monde (retirés en D351) n'ont plus de styles ici. */
+
+.ac-sans-saison { padding-top: 160px; display: grid; gap: 6px; justify-items: center; }
+.ac-sans-saison .aide { margin-bottom: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-apparition { animation: none; }
+}
+
+/* ── Grand écran ───────────────────────────────────────────────────────
+   L'accueil a toute la largeur au palier moyen et large (renduLarge : .page.ample,
+   1 120 px au plus, lot A), puis deux colonnes par requête de conteneur. */
+
+@container accueil (min-width: 660px) {
+  .ac-corps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: 28px; align-items: start; }
+  /* Le plan et les combines passent sous le coffre : les deux colonnes s'équilibrent. */
+  .ac-gauche { grid-column: 1; grid-row: 1; }
+  .ac-bande { grid-column: 1; grid-row: 2; }
+  .ac-droite { grid-column: 2; grid-row: 1 / span 2; }
+  .ac-courbe { height: 120px; }
+  .ac-raccourcis { margin: 0; padding: 2px 0; flex-wrap: wrap; overflow: visible; }
+}
+@container accueil (min-width: 980px) {
+  .ac-corps { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: 32px; }
+  .ac-tuiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ac-tuiles .ac-vie { grid-column: 1 / -1; }
+  .ac-courbe { height: 160px; }
+}
+
+/* D351 : la barre détaillée est un bouton : elle ouvre le détail de la répartition. */
+button.ac-repartition { display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: 12px; }
+button.ac-repartition:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+button.ac-repartition:active { opacity: .85; }

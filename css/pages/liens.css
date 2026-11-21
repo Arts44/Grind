@@ -1,0 +1,51 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Entre joueurs (RNT-399, D349) : la page des liens, la tuile de
+   l'accueil. Des cartes sobres ; l'accent pour ce qui attend ta réponse.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.lj-page { gap: 18px; padding-top: 10px; }
+.lj-centre { text-align: center; max-width: 360px; margin: 0 auto; }
+.lj-section { margin-top: 0; }
+.lj-vide { padding: 24px 16px; text-align: center; display: grid; gap: 6px; }
+.lj-vide-t { font-size: 17px; font-weight: 650; color: var(--texte); }
+
+.lj-carte { padding: 16px; display: grid; gap: 8px; }
+.lj-carte + .lj-carte { border-top: 1px solid var(--filet); }
+.lj-tete { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.lj-sorte { font-size: 12px; font-weight: 650; letter-spacing: .02em; text-transform: uppercase; color: var(--texte3); }
+.lj-statut { font-size: 12px; font-weight: 600; color: var(--texte2); padding: 2px 8px; border-radius: var(--r-pilule); background: var(--puce); }
+.lj-statut.lj-a-repondre { color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.lj-titre { font-size: 16px; font-weight: 650; color: var(--texte); }
+.lj-detail { font-size: 13px; color: var(--texte2); line-height: 1.4; }
+
+.lj-progression { width: 100%; height: 6px; border: 0; border-radius: var(--r-pilule); overflow: hidden; background: var(--puce2); appearance: none; }
+.lj-progression::-webkit-progress-bar { background: var(--puce2); border-radius: var(--r-pilule); }
+.lj-progression::-webkit-progress-value { background: var(--accent); border-radius: var(--r-pilule); }
+.lj-progression::-moz-progress-bar { background: var(--accent); border-radius: var(--r-pilule); }
+
+.lj-lignes { margin: 0; display: grid; gap: 6px; }
+.lj-ligne { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.lj-ligne dt { color: var(--texte2); }
+.lj-ligne dd { margin: 0; color: var(--texte); text-align: right; font-variant-numeric: tabular-nums; }
+.lj-aide .lj-ligne { display: grid; gap: 2px; padding: 4px 0; }
+.lj-aide .lj-ligne dt { font-weight: 650; color: var(--texte); }
+.lj-aide .lj-ligne dd { text-align: left; color: var(--texte2); line-height: 1.4; }
+.lj-aide { padding: 12px 16px; }
+
+.lj-gestes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.lj-cible { padding: 14px; }
+.lj-geste { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: var(--r-pilule); font-size: 14px; font-weight: 600;
+  background: var(--puce); color: var(--texte); border: 1px solid transparent; transition: background .15s, border-color .15s, transform .1s; }
+.lj-geste:hover:not([disabled]) { border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+.lj-geste:active:not([disabled]) { transform: translateY(1px); }
+.lj-geste[disabled] { opacity: .5; cursor: not-allowed; }
+.lj-geste .chiffres { color: var(--texte2); font-weight: 500; }
+.lj-geste.lj-danger { color: var(--c-danger); }
+.lj-raison { flex-basis: 100%; font-size: 12px; color: var(--texte3); margin-top: -4px; }
+
+.tuile-liens { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 16px; text-align: left; }
+.lj-tuile-corps { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.lj-tuile-l { font-size: 15px; font-weight: 650; color: var(--texte); }
+.lj-tuile-d { font-size: 13px; color: var(--texte2); }
+
+@media (prefers-reduced-motion: reduce) { .lj-geste { transition: none; } }

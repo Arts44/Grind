@@ -1,0 +1,76 @@
+/* D358 (1.18.16) : les pages derrière les tuiles de l'accueil (Patrimoine, Plaisir, Répartition, Activité, Événements). */
+
+/* D358 (1.18.16) : les styles en ligne de vie.js sortis en classes (tailles en jetons --t-*). */
+.vi-x1 { padding: 80px 40px 0; font-size: var(--t-libelle); }
+.vi-x2 { width: 100%; height: 100%; display: block; }
+.vi-x3 { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--texte3); }
+.vi-x4 { display: none; position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: var(--fond); place-items: center; }
+.vi-x5 { width: 12px; height: 12px; border-radius: 50%; background: var(--texte); box-shadow: 0 0 0 3px var(--fond); }
+.vi-x6 { flex: 1; min-width: 0; }
+.vi-x7 { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vi-x8 { position: relative; width: 230px; height: 230px; margin: 0 auto; }
+.vi-x9 { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+.vi-x10 { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 2px; }
+.vi-x11 { font-size: 64px; line-height: 1; }
+.vi-x12 { font-size: var(--t-libelle); font-weight: 600; }
+.vi-x13 { flex: 1; background: var(--puce2); }
+.vi-x14 { position: absolute; left: 50%; bottom: 26px; width: 72%; transform: translateX(-50%); filter: drop-shadow(0 10px 14px rgba(0,0,0,.45)); }
+.vi-x15 { position: absolute; left: 0; right: 0; bottom: 0; height: 40%; background: linear-gradient(transparent,rgba(0,0,0,.35)); }
+.vi-x16 { gap: 4px; }
+.vi-x17 { font-size: var(--t-legende); font-weight: 500; letter-spacing: 0; color: var(--texte2); }
+.vi-x18 { gap: 14px; flex-wrap: wrap; padding: 4px 0 6px; }
+.vi-x19 { height: 6px; }
+.vi-x20 { gap: 12px; padding: 9px 0; }
+.vi-x21 { width: 16px; height: 16px; display: grid; }
+.vi-x22 { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vi-x23 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vi-x24 { gap: 6px; flex-wrap: wrap; }
+.vi-x25 { font-size: 14px; letter-spacing: 0; }
+.vi-x26 { font-size: var(--t-aide); font-weight: 600; }
+.vi-x27 { gap: 5px; font-size: var(--t-aide); font-weight: 600; }
+.vi-x28 { width: 15px; display: grid; }
+.vi-x29 { display: grid; gap: 8px; }
+.vi-x30 { width: 100%; justify-content: space-between; }
+.vi-x31 { letter-spacing: 0; }
+.vi-x32 { align-items: flex-start; gap: 12px; }
+.vi-x33 { width: 18px; height: 18px; display: grid; }
+.vi-x34 { align-items: baseline; gap: 8px; }
+.vi-x35 { font-size: var(--t-legende); color: var(--texte2); flex: none; }
+.vi-x36 { margin-top: 3px; }
+.vi-x37 { gap: 5px; margin-top: 4px; font-size: var(--t-legende); font-weight: 600; }
+.vi-x38 { width: 14px; display: grid; }
+.vi-x39 { margin-top: 10px; }
+.vi-x40 { padding-top: 6px; }
+.vi-x41 { font-size: var(--t-libelle); color: var(--texte2); }
+.vi-x42 { margin-top: 6px; }
+.vi-x43 { gap: 5px; margin-top: 6px; font-size: var(--t-libelle); font-weight: 600; }
+.vi-x44 { margin: 14px -6px 0; }
+.vi-x45 { justify-content: center; gap: 6px; margin: 12px 0 18px; }
+.vi-x46 { align-items: flex-start; gap: 8px; }
+.vi-x47 { gap: 18px; padding-top: 10px; align-items: stretch; }
+.vi-x48 { font-size: 14px; color: var(--texte2); text-align: center; line-height: 1.55; max-width: 300px; margin: 0 auto; }
+.vi-x49 { font-size: var(--t-legende); color: var(--texte3); }
+.vi-x50 { font-size: var(--t-libelle); letter-spacing: 0; }
+.vi-x51 { padding: 12px 16px; }
+.vi-x52 { gap: 18px; padding-top: 6px; }
+.vi-x53 { font-size: 40px; line-height: 1.1; }
+.vi-x54 { gap: 12px; padding: 13px 16px; }
+.vi-x55 { flex: 1; }
+.vi-x56 { font-size: 16px; }
+.vi-x57 { width: 10px; height: 10px; border-radius: 50%; flex: none; border: 1.5px solid var(--texte2); }
+.vi-x58 { align-items: baseline; padding-top: 18px; }
+.vi-x59 { font-size: var(--t-aide); font-weight: 700; color: var(--texte2); }
+.vi-x60 { font-size: var(--t-aide); letter-spacing: 0; }
+.vi-x61 { gap: 14px; padding-top: 12px; }
+.vi-rep { padding: var(--e4); }
+
+/* D403 (RNT-339) : la page Patrimoine, chaque famille et la saison passée. */
+.vi-familles { justify-content: center; margin: 10px 16px 0; }
+.vi-passee { display: flex; align-items: center; gap: 10px; width: calc(100% - 32px); margin: 10px 16px 0; padding: 8px 0; background: none; border: 0;
+  color: var(--texte2); font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+.vi-passee span:nth-of-type(1) { flex: 1; }
+.vi-tirets { width: 18px; border-top: 1.5px dashed var(--texte2); }
+.vi-interrupteur { width: 40px; height: 24px; border-radius: 12px; background: var(--puce2); position: relative; transition: background .2s; }
+.vi-interrupteur::after { content: ""; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: var(--texte); transition: transform .2s; }
+.vi-passee.actif .vi-interrupteur { background: var(--courbe); }
+.vi-passee.actif .vi-interrupteur::after { transform: translateX(16px); }

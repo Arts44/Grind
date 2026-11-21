@@ -1,0 +1,74 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Collection (RNT-374, D380) — EcranSeriesCollection de l'iPhone :
+   le résumé (séries complètes, prime, titres), les séries complètes et
+   en cours (une jauge ronde), « Toutes les séries » et « Ma vitrine »
+   repliées ; la vitrine-musée d'un joueur sur sa fiche (.sc-musee).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.sc-page { display: flex; flex-direction: column; gap: var(--e5); }
+.sc-section { display: flex; flex-direction: column; gap: var(--e2); }
+.sc-titre-section { margin: 0; padding-left: var(--e1); font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); }
+.sc-sous { margin: var(--e2) 0 0; font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); }
+
+.sc-resume, .sc-musee { display: flex; flex-direction: column; gap: var(--e2); padding: var(--e4); }
+.sc-resume .aide { margin: 0; }
+.sc-resume-t { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e3); }
+.sc-resume-t b { font-size: var(--t-libelle); font-weight: var(--g-titre); }
+.sc-resume-t .chiffres { font-size: 20px; }
+.sc-resume-t .chiffres.gain, .sc-avance.gain, .sc-tuile .gain { color: var(--gain); }
+.sc-resume-t .chiffres.t3 { color: var(--texte3); }
+
+.sc-titres { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.sc-titres::-webkit-scrollbar { display: none; }
+.sc-puce { flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: var(--r-pilule);
+  font-size: var(--t-legende); font-weight: var(--g-libelle); color: var(--or); background: color-mix(in srgb, var(--or) 12%, transparent); }
+.sc-puce svg, .sc-titre svg, .sc-serie-f svg { width: 13px; height: 13px; flex: none; }
+
+.sc-ligne { display: flex; align-items: flex-start; gap: var(--e3); padding: 11px 14px; min-width: 0; }
+.sc-pastille { flex: none; width: 36px; height: 36px; border-radius: var(--r-pastille); display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, var(--c), color-mix(in srgb, var(--c) 72%, transparent)); }
+.sc-pastille svg { width: 18px; height: 18px; }
+.sc-pastille.vente { --c: var(--vente); } .sc-pastille.grandir { --c: var(--grandir); } .sc-pastille.controles { --c: var(--controles); }
+.sc-pastille.equipe { --c: var(--equipe); } .sc-pastille.image { --c: var(--image); }
+.sc-corps { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; text-align: left; }
+.sc-nom { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.sc-nom b { font-size: var(--t-libelle); font-weight: var(--g-libelle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc-titre { display: inline-flex; align-items: center; gap: 3px; font-size: var(--t-legende); font-weight: var(--g-libelle); color: var(--or); white-space: nowrap; }
+.sc-avance { font-size: var(--t-aide); color: var(--texte2); font-variant-numeric: tabular-nums; }
+.sc-manque { font-size: var(--t-legende); color: var(--texte2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sc-jauge { flex: none; width: 26px; height: 26px; transform: rotate(-90deg); fill: none; stroke-width: 4; }
+.sc-jauge circle { stroke: color-mix(in srgb, var(--texte) 8%, transparent); }
+.sc-jauge .sc-arc { stroke: var(--accent); stroke-linecap: round; }
+.sc-jauge.pleine .sc-arc { stroke: var(--gain); }
+.sc-plus { width: 100%; min-height: 44px; font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--accent); }
+
+.sc-repli { padding: 14px; }
+.sc-repli-t { display: flex; align-items: center; gap: var(--e3); cursor: pointer; list-style: none; }
+.sc-repli-t::-webkit-details-marker { display: none; }
+.sc-repli-t::after { content: "›"; margin-left: auto; color: var(--texte3); font-size: 18px; transition: transform var(--d-court, 0.2s); }
+.sc-repli[open] > .sc-repli-t::after { transform: rotate(90deg); }
+.sc-repli-t b { font-size: var(--t-libelle); font-weight: var(--g-libelle); }
+.sc-repli-c { display: flex; flex-direction: column; gap: var(--e3); padding-top: var(--e3); }
+.sc-repli-c .aide { margin: 0; }
+
+.sc-choix { border-radius: 14px; background: color-mix(in srgb, var(--texte) 3%, transparent); overflow: hidden; }
+.sc-coche { display: flex; align-items: center; gap: var(--e3); width: 100%; min-height: 48px; padding: 0 12px; text-align: left; }
+.sc-coche:active { background: var(--surface-appui); }
+.sc-rond { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--texte3); }
+.sc-coche.choisie .sc-rond { border-color: var(--accent); background: radial-gradient(circle, var(--accent) 45%, transparent 50%); }
+.sc-ico { flex: none; display: grid; width: 18px; color: var(--texte2); }
+.sc-ico svg { width: 16px; height: 16px; }
+.sc-coche .sc-corps b { font-size: 14px; font-weight: var(--g-libelle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc-coche .sc-avance { font-size: var(--t-legende); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc-valeur { flex: none; font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); font-variant-numeric: tabular-nums; }
+.sc-boutons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.sc-musee-t { display: inline-flex; align-items: center; gap: 6px; }
+.sc-musee-t svg { width: 17px; height: 17px; }
+.sc-grille { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sc-tuile { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 10px; border-radius: 12px; background: color-mix(in srgb, var(--texte) 4%, transparent); }
+.sc-tuile b { font-size: 13px; font-weight: var(--g-libelle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sc-tuile .chiffres { font-size: var(--t-legende); }
+.sc-serie-f { display: flex; align-items: center; gap: 8px; min-width: 0; color: var(--or); }
+.sc-serie-f b { color: var(--texte); font-size: 14px; font-weight: var(--g-libelle); }
+.sc-serie-f .sc-avance { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

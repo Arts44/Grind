@@ -1,0 +1,110 @@
+/* RNT-370, RNT-371 (D311) : se protéger, riposter, le détective (web/js/pages/combines.js). */
+.pr-entete { padding: 16px; display: flex; flex-direction: column; gap: 3px; }
+.pr-semaine { font-size: 12px; font-weight: 600; }
+.pr-bloc { gap: 8px; padding: 16px; }
+.pr-titre { font-size: 15px; font-weight: 600; }
+.pr-refus { font-size: 12px; font-weight: 600; }
+.pr-choix { align-items: flex-start; gap: 12px; }
+.pr-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pr-nom { font-size: 14px; font-weight: 600; }
+.pr-effet, .pr-actif { font-size: 12px; font-weight: 600; }
+.pr-bouton { flex: none; }
+.pr-detective { margin-top: 3px; }
+.vengeance { flex: none; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.echec { font-size: 12px; font-weight: 600; }
+
+/* D358 (1.18.16, Arthur 15/11 00:26) : la page en deux écrans : un résumé, des sections repliées, le « ? ». */
+.cb-page { gap: var(--e3); }
+.cb-section > summary { list-style: none; }
+.cb-section > summary::-webkit-details-marker { display: none; }
+.cb-sommaire { display: flex; align-items: center; gap: var(--e2); min-height: 52px; padding: 0 var(--e4); cursor: pointer; }
+.cb-s-titre { flex: 1; font-size: var(--t-libelle); font-weight: 600; }
+.cb-s-meta { font-size: var(--t-aide); color: var(--texte2); font-variant-numeric: tabular-nums; }
+.cb-chevron { display: grid; color: var(--texte2); transition: transform var(--d-court); }
+.cb-chevron svg { width: 16px; height: 16px; }
+.cb-section[open] .cb-chevron { transform: rotate(90deg); }
+.cb-corps { border-top: 1px solid var(--filet); }
+.cb-sous { padding: var(--e3) var(--e4) var(--e2); }
+.cb-bloc { gap: var(--e2); padding: var(--e3) var(--e4); }
+.cb-entete { display: flex; align-items: center; justify-content: space-between; gap: var(--e2); }
+.cb-titre-ic { gap: var(--e2); }
+.cb-ic { display: grid; flex: none; }
+.cb-ic svg { width: 1em; height: 1em; }
+.cb-q { font-size: var(--t-aide); }
+.cb-q > summary { list-style: none; cursor: pointer; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: var(--r-pilule);
+  border: 1px solid var(--filet2); color: var(--texte2); font-size: var(--t-micro); font-weight: 700; }
+.cb-q > summary::-webkit-details-marker { display: none; }
+.cb-q[open] > summary { color: var(--texte); background: var(--puce2); }
+.cb-q > p { margin-top: var(--e1); }
+.cb-delit .cb-q, .cb-delit-texte .cb-q { align-self: flex-start; }
+
+/* Le résumé */
+.cb-resume { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e3) var(--e4); }
+.cb-r-soupcon { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; }
+.cb-r-texte { font-size: var(--t-aide); font-weight: 600; line-height: 1.35; }
+.cb-r-case { display: flex; align-items: center; gap: var(--e2); min-width: 0; }
+.cb-r-chiffre { font-size: var(--t-titre); }
+.cb-r-pastille { width: 34px; height: 34px; }
+.cb-r-statut { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 6px; font-size: var(--t-aide); font-weight: 600; }
+.cb-r-statut .cb-ic { margin-top: 1px; }
+.cb-liasse { width: 40px; height: 36px; flex: none; overflow: visible; }
+.cb-billet { fill: #4f6f47; stroke: rgba(0, 0, 0, 0.25); stroke-width: 0.5; }
+.cb-bague { fill: #d9c991; }
+
+/* Le risque en jauge fine */
+.cb-risque { gap: var(--e2); }
+.cb-risque .jauge-fine { flex: 1; }
+.cb-pct { width: 38px; text-align: right; font-size: var(--t-legende); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Les lignes */
+.cb-delit { align-items: flex-start; gap: var(--e3); padding: var(--e3) var(--e4); }
+.cb-delit.terne, .cb-possibilite.terne { opacity: 0.55; }
+.cb-delit-tete { align-items: flex-start; gap: var(--e3); }
+.cb-delit-texte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.cb-nom-ligne { gap: 6px; flex-wrap: wrap; }
+.cb-nom { font-size: var(--t-libelle); font-weight: 600; }
+.cb-bouton { flex: none; }
+.cb-pastille { width: 36px; height: 36px; }
+.cb-gain { gap: 5px; font-size: var(--t-legende); font-weight: 600; align-items: flex-start; }
+.cb-grave { font-size: var(--t-micro); font-weight: 700; color: var(--danger); padding: 1px 6px; border-radius: var(--r-pilule); border: 1px solid color-mix(in srgb, var(--danger) 60%, transparent); white-space: nowrap; }
+.cb-note { font-size: var(--t-aide); font-weight: 600; }
+.cb-corps-texte { font-size: var(--t-aide); }
+.cb-ligne-forte { gap: var(--e2); font-size: 14px; font-weight: 600; }
+.cb-tuyau-texte { font: 600 15px/1.4 var(--serif, Georgia, serif); }
+.cb-niveau { font-size: var(--t-titre); }
+.cb-a-toi { gap: 4px; font-size: var(--t-legende); font-weight: 600; }
+.cb-cible { gap: var(--e3); padding: var(--e3) var(--e4); }
+.cb-noir { gap: var(--e3); padding: 10px var(--e4); }
+.cb-noir-texte { flex: 1; font-size: 14px; font-weight: 500; }
+.cb-compte { font-size: var(--t-aide); padding: 2px 8px; border-radius: var(--r-pilule); background: color-mix(in srgb, var(--alerte) 15%, transparent); }
+.cb-feuille { gap: 14px; }
+.cb-possibilite { gap: var(--e2); }
+.facteurs { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; }
+.cb-facteur { gap: 6px; font-size: var(--t-legende); }
+.cb-f-nom { font-weight: 600; color: var(--texte2); }
+.cb-f-detail { flex: 1; min-width: 0; color: var(--texte2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cb-f-effet { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* L'extrait de casier : le papier gardé, plus petit, grain léger, une seule ombre douce, pas de feuille de dessous. */
+.cb-papier {
+  --encre: #1d1c1a; --encre2: #6b675f; --papier: #efebe3; --filet-papier: rgba(29, 28, 26, 0.1); --rouge: #9a2e2a; --vert: #2f6b4e;
+  margin: var(--e3) var(--e4) var(--e2); padding: 14px; border-radius: 10px; color: var(--encre);
+  background: radial-gradient(rgba(29, 28, 26, 0.035) 0.6px, transparent 0.7px) 0 0 / 4px 4px, var(--papier);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); display: flex; flex-direction: column; gap: 10px;
+}
+.cb-p-entete { display: flex; align-items: flex-start; justify-content: space-between; }
+.cb-p-titre { font: 600 16px var(--serif, Georgia, serif); }
+.cb-p-detail { font-size: var(--t-legende); color: var(--encre2); }
+.cb-p-detail.rouge { color: var(--rouge); }
+.cb-p-ic { display: grid; color: var(--encre2); }
+.cb-p-points { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.cb-case { width: 20px; height: 20px; border-radius: 3px; display: grid; place-items: center; border: 1px solid rgba(29, 28, 26, 0.35); color: var(--encre2); }
+.cb-case.pleine { background: var(--rouge); border-color: var(--rouge); color: var(--papier); }
+.cb-cadenas { display: grid; }
+.cb-p-total { margin-left: auto; font-size: var(--t-aide); font-weight: 600; font-variant-numeric: tabular-nums; }
+.cb-p-ligne { display: flex; flex-direction: column; gap: 2px; padding-top: var(--e2); border-top: 1px solid var(--filet-papier); }
+.cb-p-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.cb-p-motif { font: 600 14px var(--serif, Georgia, serif); }
+.cb-p-amende { font-size: var(--t-aide); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--rouge); white-space: nowrap; }
+.cb-p-neant { display: flex; align-items: center; justify-content: space-between; padding-top: var(--e2); border-top: 1px solid var(--filet-papier); font: italic 15px var(--serif, Georgia, serif); color: var(--encre2); }
+.cb-tampon { font: 700 15px var(--serif, Georgia, serif); font-style: normal; letter-spacing: 2px; color: var(--vert); padding: 3px 9px; border: 1.5px solid var(--vert); border-radius: 4px; transform: rotate(-6deg); opacity: 0.8; }

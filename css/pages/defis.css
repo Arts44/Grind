@@ -1,0 +1,117 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Les défis (D381) : la page Défis (semaine, succès, coffres) et la tuile
+   de l'accueil. Le même dessin que EcranDefis.swift : des cartes givrées,
+   l'or pour ce qui rapporte, l'accent pour ce qui avance.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.df-page { gap: 18px; padding-top: 10px; }
+.df-rangee { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.df-titre { font-size: 20px; font-weight: 600; color: var(--texte); }
+.df-tete { display: grid; gap: 4px; }
+.df-bonus { color: var(--or); font-weight: 600; font-size: 13px; margin: 4px 0 0; }
+
+/* La tuile de l'accueil */
+.tuile-defis { flex-direction: row; align-items: center; gap: 14px; min-height: 0; padding: 14px 16px; background: var(--surface-carte); }
+.tuile-defis .df-pastille { width: 46px; height: 46px; border-radius: 13px; }
+.tuile-defis .df-pastille svg { width: 22px; height: 22px; }
+.df-tuile-corps { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.df-tuile-l { font-size: 17px; font-weight: 600; color: var(--texte); }
+.df-tuile-d { font-size: 12px; color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.df-compte { font-size: 12px; font-weight: 700; color: #000; padding: 2px 7px; border-radius: var(--r-pilule); background: var(--or); }
+
+/* Un défi */
+.df-defi { display: grid; gap: 8px; }
+.df-genre { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texte3); }
+.df-difficulte { font-size: 12px; font-weight: 600; color: var(--texte2); padding: 2px 8px; border-radius: var(--r-pilule); background: var(--puce); }
+.df-difficulte[data-d="2"] { color: var(--or); }
+.df-nom { font-size: 16px; font-weight: 600; color: var(--texte); }
+.df-coche { color: var(--gain); font-weight: 700; }
+.df-detail { font-size: 13px; color: var(--texte2); line-height: 1.4; }
+.df-barre { inline-size: 100%; block-size: 5px; accent-color: var(--c1, var(--accent)); }
+.df-defi.fait .df-barre { accent-color: var(--gain); }
+.df-avancement { font-size: 13px; color: var(--texte); }
+.df-recompense { font-size: 12px; color: var(--texte2); text-align: right; }
+
+/* Les trois */
+.df-trois { display: flex; align-items: center; gap: 14px; }
+.df-trois-piece { inline-size: 72px; flex: none; }
+.df-trois-corps { display: grid; gap: 3px; min-width: 0; }
+.df-trois-corps b { font-size: 15px; color: var(--texte); }
+.df-trois-p { display: flex; gap: 6px; align-items: baseline; font-size: 13px; color: var(--texte2); }
+
+/* Le classement */
+.df-classement { list-style: none; margin: 0; padding: 0; display: grid; }
+.df-classement li { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; }
+.df-classement li + li { border-top: 1px solid var(--filet); }
+.df-classement li.moi .df-pseudo { font-weight: 700; }
+.df-rang { inline-size: 22px; font-weight: 700; font-size: 13px; color: var(--texte2); }
+.df-rang.or { color: var(--or); }
+.df-pseudo { flex: 1; font-size: 15px; color: var(--texte); }
+.df-l-detail { font-size: 12px; color: var(--texte2); }
+.df-plus { margin-top: 4px; font-size: 13px; font-weight: 600; }
+
+/* Les duels */
+.df-duels { gap: 10px; }
+.df-duel { display: grid; gap: 6px; }
+.df-statut { font-size: 12px; font-weight: 600; color: var(--texte2); }
+.df-statut.a-repondre { color: var(--accent); }
+.df-lignes { margin: 0; display: grid; gap: 4px; }
+.df-lignes div { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+.df-lignes dt { color: var(--texte2); }
+.df-lignes dd { margin: 0; color: var(--texte); }
+.df-geste { min-block-size: 40px; border-radius: var(--r-pilule); background: var(--puce); font-weight: 600; font-size: 14px; color: var(--texte); }
+.df-geste:disabled { opacity: 0.5; }
+
+/* Les succès */
+.df-prestige b { display: block; font-size: 30px; font-weight: 300; color: var(--or); }
+.df-prestige .df-droite { text-align: right; }
+.df-prestige .df-droite b { font-size: 20px; font-weight: 600; color: var(--texte); }
+.df-categorie > summary, .df-famille > summary { cursor: pointer; list-style: none; }
+.df-categorie > summary::-webkit-details-marker, .df-famille > summary::-webkit-details-marker { display: none; }
+.df-categorie > summary b { font-size: 16px; color: var(--texte); }
+.df-familles { gap: 10px; margin-top: 10px; }
+.df-famille > summary { display: grid; gap: 4px; }
+.df-famille > summary b { font-size: 14px; color: var(--texte); }
+.df-prochain { font-size: 11px; color: var(--texte3); }
+.df-liste { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
+.df-succes { display: flex; align-items: center; gap: 10px; }
+.df-point { inline-size: 12px; block-size: 12px; border-radius: 50%; flex: none; background: var(--puce); }
+.df-succes.obtenu .df-point { background: var(--c1); }
+.df-s-corps { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.df-s-corps b { font-size: 13px; font-weight: 400; color: var(--texte2); }
+.df-succes.obtenu .df-s-corps b { font-weight: 600; color: var(--texte); }
+.df-s-corps small { font-size: 11px; color: var(--texte3); }
+.df-palier { font-size: 11px; font-weight: 600; color: var(--c1); }
+
+/* Les coffres */
+.df-coffre { display: flex; align-items: center; gap: 14px; }
+.df-coffre-i { inline-size: 44px; display: grid; place-items: center; }
+.df-coffre-i svg { inline-size: 28px; block-size: 28px; }
+.df-c-commun { --coffre: #C9CDD3; }
+.df-c-rare { --coffre: #7FB2EC; }
+.df-c-epique { --coffre: #B4A6FF; }
+.df-coffre-i { color: var(--coffre); }
+.df-ouvrir { padding: 7px 14px; border-radius: var(--r-pilule); font-weight: 600; font-size: 14px; color: #000; background: var(--coffre); }
+.df-ouvert-p { inline-size: 50px; flex: none; }
+
+/* Ce qu'un coffre a donné */
+.df-revele { justify-items: center; text-align: center; gap: 12px; padding: 8px 0 12px; }
+.df-revele-t { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--texte3); }
+.df-revele-p { display: block; inline-size: min(220px, 70vw); margin-inline: auto; animation: cz-entree 0.6s var(--courbe-graphite, ease-out) both; }
+.df-revele-n { font-size: 24px; font-weight: 600; color: var(--texte); }
+.df-revele-prestige { font-size: 48px; font-weight: 300; color: var(--or); }
+@media (prefers-reduced-motion: reduce) { .df-revele-p { animation: none; } }
+
+/* D403 (1.19.21) : la page Objectifs, un seul tableau de buts (épinglés, semaine, succès proches). */
+.df-epingler { margin-top: 4px; }
+.df-centre { text-align: center; }
+.ob-succes { display: grid; gap: 8px; }
+.ob-succes .df-barre { accent-color: var(--c1); }
+.ob-aussi { margin-top: 4px; }
+.ob-note { margin-top: 18px; }
+.ob-vide { display: grid; justify-items: center; gap: 12px; text-align: center; padding: 24px 12px 0; }
+.ob-vide-pin { width: 64px; height: 64px; border-radius: 50%; border: 1.5px dashed var(--filet2); display: grid; place-items: center; color: var(--texte2); }
+.ob-vide-pin svg { width: 22px; }
+.ob-vide-titre { font-size: 22px; font-weight: 700; }
+.ob-vide-texte { font-size: 15px; color: var(--texte2); line-height: 1.5; }
+.ob-vide-boutons { margin-top: 12px; width: 100%; max-width: 320px; display: grid; gap: 10px; }

@@ -1,0 +1,167 @@
+/* La Banque (lot A, l'exemple du grand écran ; docs/web-design.md). */
+/* Au palier moyen et large, la pile de cartes garde une taille de carte : elle ne s'étire pas à toute la colonne. */
+.page.ample .pile-cartes, #panneau .pile-cartes { max-width: 460px; }
+.page.ample .banque .bouton.secondaire { max-width: 460px; }
+
+/* RNT-273 (D247) : Banque › Prélèvements (EcranPrelevements). Même ordre que les abonnements : le total,
+   les filtres, la liste par rubrique ; « Sélectionner » coche, la barre du bas change la carte du lot. */
+.bouton-texte { min-height: 44px; padding: 0 var(--e1); font-size: 15px; font-weight: var(--g-libelle); color: var(--accent); white-space: nowrap; }
+.bouton-texte:disabled { opacity: 0.4; }
+.entete-groupe-pv .bouton-texte, .barre-pv .bouton-texte { min-height: 32px; padding: 0; font-size: 13px; text-align: left; }
+.resume-pv .pastille-pv { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--puce); color: var(--texte2); }
+.resume-pv .pastille-pv svg { width: 17px; height: 17px; }
+.resume-pv .pastille-pv.risque { color: var(--alerte); }
+.page-pv { gap: 18px; padding-top: 10px; }
+.heros-pv { display: grid; gap: 4px; text-align: center; }
+.heros-pv .total-pv { font-size: 40px; line-height: 1.1; }
+.heros-pv .sous-pv { font-size: 14px; color: var(--texte2); }
+.heros-pv .risque-pv { font-size: 13px; font-weight: var(--g-libelle); }
+.filtres-pv { display: grid; gap: var(--e2); }
+.separateur-pv { flex: none; align-self: center; width: 1px; height: 20px; margin: 0 2px; background: var(--filet2); }
+.tri-pv { align-items: center; gap: var(--e3); }
+.tri-pv .segment { flex: 0 1 230px; }
+.tri-pv .segment button { min-height: 34px; }
+.groupe-pv { display: grid; gap: var(--e2); }
+.entete-groupe-pv { align-items: baseline; padding: 0 4px; }
+.entete-groupe-pv .sous-total-pv { font-size: 13px; letter-spacing: 0; }
+.page-pv .prelevement .carte-pv { display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 12px; font-weight: var(--g-libelle); color: var(--texte2); }
+.page-pv .prelevement .carte-pv svg { width: 12px; height: 12px; flex: none; }
+.page-pv .prelevement .carte-pv.alerte { color: var(--alerte); }
+.page-pv .montant-pv { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; }
+.page-pv .montant-pv .chiffres { font-size: 15px; letter-spacing: 0; }
+.badge-risque { font-size: 11px; font-weight: var(--g-libelle); color: var(--alerte); padding: 1px 7px; border-radius: var(--r-pilule); background: color-mix(in srgb, var(--alerte) 14%, transparent); }
+.case-pv { width: 22px; height: 22px; flex: none; border-radius: 50%; border: 1.5px solid var(--texte3); display: grid; place-items: center; color: var(--sur-accent); transition: background var(--d-court), border-color var(--d-court); }
+.case-pv svg { width: 13px; height: 13px; }
+.prelevement.coche .case-pv { background: var(--accent); border-color: var(--accent); }
+.vide-pv { text-align: center; padding: var(--e6) 0; }
+.note-pv { text-align: center; max-width: 320px; margin: 0 auto; }
+.barre-pv { display: flex; align-items: center; gap: var(--e3); padding: 12px 16px; border-radius: var(--r-carte); background: var(--surface-verre); border: 1px solid var(--filet); backdrop-filter: var(--flou-verre); -webkit-backdrop-filter: var(--flou-verre); box-shadow: var(--ombre-flottant); }
+.barre-pv .corps-ligne { display: grid; gap: 2px; }
+.barre-pv .titre { font-size: 15px; font-weight: var(--g-libelle); }
+.barre-pv .bouton { flex: none; width: auto; min-height: 44px; padding: 0 18px; font-size: 15px; }
+
+/* D347 : sous la carte sortie, quatre gestes ronds (Bloquer, Détails, Plafond, Style). */
+.gestes-carte { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--e2); }
+.geste-carte { display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 44px; color: var(--texte); }
+.geste-carte .rond { width: 48px; height: 48px; pointer-events: none; transition: background var(--d-court), color var(--d-court), box-shadow var(--d-court); }
+.geste-carte .rond svg { width: 20px; height: 20px; }
+.geste-carte .gc-nom { font-size: var(--t-legende); font-weight: var(--g-libelle); color: var(--texte2); }
+.geste-carte.actif .rond { background: var(--accent-doux); color: var(--accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
+.geste-carte.actif .gc-nom { color: var(--texte); }
+.geste-carte:disabled { opacity: 0.38; }
+.geste-carte:active:not(:disabled) .rond { transform: translateY(1px); }
+
+/* La carte bloquée : moins de contraste, un cadenas à la place de « Débit ». */
+.carte-bancaire.bloquee { filter: saturate(0.35) brightness(0.8); }
+.carte-bancaire .genre svg { width: 11px; height: 11px; vertical-align: -1px; margin-right: 4px; }
+
+/* Le verso : la bande magnétique, la signature et le cryptogramme, le numéro de décor. */
+.carte-bancaire.verso { justify-content: flex-start; gap: 14px; padding: 18px 0 16px; }
+.carte-bancaire .cb-bande { height: 17%; background: rgba(0, 0, 0, 0.72); }
+.carte-bancaire .cb-signature { display: flex; align-items: center; gap: 10px; margin: 0 18px; }
+.carte-bancaire .cb-signature span { flex: 1; height: 26px; border-radius: 4px; background: repeating-linear-gradient(-45deg, rgba(255,255,255,.82) 0 6px, rgba(255,255,255,.7) 6px 12px); }
+.carte-bancaire .cb-signature b { font: 600 14px var(--police-code); padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,.88); color: #1d1c1a; }
+.carte-bancaire .cb-v-bas { margin: auto 18px 0; display: grid; gap: 8px; }
+.carte-bancaire .cb-v-num { font: 500 15px var(--police-code); letter-spacing: 0.06em; opacity: .9; white-space: nowrap; }
+.carte-bancaire .cb-v-champs { display: flex; gap: 22px; }
+.carte-bancaire .cb-v-champs small { display: block; font-size: 10px; font-weight: 600; opacity: .6; text-transform: uppercase; letter-spacing: .05em; }
+.carte-bancaire .cb-v-champs b { font: 600 13px var(--police-code); }
+
+.depense-carte { display: grid; gap: var(--e2); padding: 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); }
+.depense-carte .chiffres { font-size: 15px; letter-spacing: 0; }
+
+/* « Dépensé ce mois » : le total, une barre segmentée par poste, la légende en pourcentages. */
+.depenses-mois { display: grid; gap: var(--e3); }
+.depenses-mois .dm-total { font-size: 30px; line-height: 1.1; }
+.dm-barre { display: flex; gap: 3px; height: 10px; }
+.dm-barre i { flex: var(--part) 1 0; min-width: 4px; border-radius: 3px; background: var(--c); }
+.dm-legende { display: grid; gap: 6px; }
+.dm-ligne { display: grid; grid-template-columns: 10px 1fr auto 44px; align-items: center; gap: var(--e2); font-size: 14px; }
+.dm-ligne .dm-point { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.dm-ligne .dm-nom { color: var(--texte2); }
+.dm-ligne .chiffres { letter-spacing: 0; font-size: 14px; }
+.dm-ligne .dm-pct { text-align: right; color: var(--texte3); }
+.dm-plafond { display: grid; gap: 6px; padding-top: var(--e2); border-top: 1px solid var(--filet); font-size: 13px; }
+.dm-plafond .chiffres { letter-spacing: 0; }
+
+/* L'envoi rapide : les joueurs en pilules (D388 : plus d'avatars), le fil des reçus et envoyés. */
+.envoi-rapide { display: grid; gap: var(--e3); }
+.er-pilules { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -4px; padding: 2px 4px; }
+.er-pilules::-webkit-scrollbar { display: none; }
+.er-pilule { flex: none; max-width: 140px; height: 40px; padding: 0 14px; border-radius: var(--r-pilule, 999px); font-size: 14px; font-weight: 600; color: var(--texte);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: var(--puce2); box-shadow: inset 0 0 0 1px var(--filet2); transition: transform var(--d-court) var(--courbe-graphite); }
+.er-pilule.meme { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 55%, transparent); }
+.er-pilule:disabled { opacity: 0.4; }
+.er-pilule:active:not(:disabled) { transform: scale(0.96); }
+.er-entete { display: grid; justify-items: center; gap: var(--e2); text-align: center; }
+.er-fil { display: grid; border-top: 1px solid var(--filet); }
+.er-ligne { display: flex; align-items: center; gap: var(--e3); padding: 10px 0; border-bottom: 1px solid var(--filet); }
+.er-ligne:last-child { border-bottom: 0; }
+.er-sens { width: 30px; height: 30px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--puce); color: var(--texte2); }
+.er-sens svg { width: 15px; height: 15px; }
+.er-sens.recu { color: var(--gain); }
+.er-tx { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.er-tx b { font-size: 14px; font-weight: var(--g-libelle); }
+.er-tx small { font-size: var(--t-legende); color: var(--texte2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.er-ligne .chiffres { font-size: 15px; letter-spacing: 0; }
+
+/* D358 (1.18.16) : les styles en ligne de banque.js sortis en classes (tailles en jetons --t-*). */
+.bq-x1 { align-items: flex-start; }
+.bq-x2 { font-size: var(--t-legende); margin-top: 5px; }
+.bq-x3 { align-items: flex-end; }
+.bq-x4 { align-items: center; gap: 8px; }
+.bq-x5 { font-size: var(--t-legende); }
+.bq-x6 { font-size: var(--t-micro); margin-top: 3px; }
+.bq-x7 { gap: 14px; }
+.bq-x8 { align-items: center; }
+.bq-x9 { font-size: var(--t-titre); }
+.bq-x10 { gap: 8px; }
+.bq-x11 { color: var(--alerte, #E8833A); }
+.bq-x12 { width: 22px; flex: none; }
+.bq-x13 { flex: 1; }
+.bq-x14 { padding: 0; }
+.bq-x15 { color: var(--perte); }
+.bq-x16 { font-size: var(--t-libelle); }
+.bq-x17 { width: 18px; flex: none; }
+.bq-x18 { align-items: baseline; }
+.bq-x19 { font-size: var(--t-aide); font-weight: 600; color: var(--texte2); }
+.bq-x20 { font-size: var(--t-legende); color: var(--texte3); }
+.bq-x21 { width: 14px; }
+.bq-x22 { font-size: var(--t-libelle); letter-spacing: 0; }
+.bq-x23 { text-align: center; }
+.bq-x24 { width: 16px; flex: none; }
+.bq-x25 { font-size: var(--t-aide); font-weight: 600; color: var(--perte); }
+.bq-x26 { margin-bottom: 8px; }
+.bq-x27 { flex: 1; font-weight: 500; color: var(--texte2); }
+.bq-x28 { align-items: flex-start; gap: 6px; }
+.bq-x29 { gap: 4px; }
+.bq-x30 { flex: 1; min-width: 0; }
+.bq-x31 { align-items: center; text-align: center; }
+.bq-x32 { width: 120px; }
+.bq-x33 { gap: 10px; }
+.bq-x34 { gap: 16px; }
+.bq-x35 { font-size: 50px; }
+.bq-x36 { gap: 12px; }
+.bq-x37 { font-family: Georgia,serif; font-size: var(--t-aide); }
+.bq-x38 { gap: 18px; padding-top: 12px; }
+.bq-x39 { padding-bottom: 6px; }
+.bq-x40 { text-align: right; }
+.bq-x41 { font-size: 14px; }
+.bq-x42 { width: 12px; flex: none; }
+.bq-x43 { align-items: baseline; margin-bottom: 4px; }
+.bq-x44 { font-size: var(--t-aide); font-weight: 500; }
+.bq-x45 { font-size: 14px; font-weight: 600; }
+.bq-x46 { gap: 10px; flex-wrap: wrap; font-size: var(--t-aide); }
+.bq-x47 { text-align: right; flex: none; }
+.bq-x48 { margin-top: 8px; }
+.bq-x49 { opacity: .55; }
+.bq-x50 { flex: 1; font-size: 14px; }
+.bq-x51 { gap: 18px; }
+.bq-x52 { padding-top: 8px; }
+.bq-x53 { font-size: 40px; margin: 2px 0 4px; }
+.bq-x54 { font-size: var(--t-micro); color: var(--encre2,#6b6355); margin: -4px 0 8px; }
+.bq-x55 { font-size: var(--t-micro); }
+.bq-x56 { width: 20px; flex: none; }
+.bq-x57 { gap: 6px; }
+.bq-x58 { font-size: var(--t-legende); font-weight: 600; }
+.bq-versement { display: flex; align-items: center; gap: var(--e2); flex: none; }

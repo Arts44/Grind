@@ -1,0 +1,43 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Les notifications de Grind (RNT-211) : ce qui attend ta réponse, en
+   tête de la page Événements (la cloche), et l'historique.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.nt-attente { display: grid; gap: var(--e3); }
+.nt-demande { padding: 0; overflow: hidden; position: relative; }
+.nt-demande::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--c); opacity: 0.85;
+}
+.nt-corps {
+  display: flex; align-items: flex-start; gap: var(--e3); width: 100%; padding: var(--e4) var(--e4) var(--e2); text-align: left;
+}
+.nt-corps:active { background: var(--surface-appui); }
+.nt-icone {
+  flex: none; width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+}
+.nt-icone svg { width: 18px; height: 18px; }
+.nt-icone.petite { width: 30px; height: 30px; border-radius: 50%; }
+.nt-icone.petite svg { width: 15px; height: 15px; }
+.nt-texte { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.nt-titre { font-size: var(--t-libelle); font-weight: var(--g-libelle); line-height: 1.3; }
+.nt-detail { font-size: var(--t-aide); color: var(--texte2); line-height: 1.4; }
+.nt-expire {
+  flex: none; padding: 3px 8px; border-radius: var(--r-pilule); font-size: var(--t-legende); font-weight: var(--g-libelle);
+  color: var(--alerte); background: color-mix(in srgb, var(--alerte) 12%, transparent); letter-spacing: 0;
+}
+.nt-gestes { display: flex; align-items: center; gap: var(--e2); padding: var(--e1) var(--e4) var(--e4) calc(var(--e4) + 38px + var(--e3)); }
+.nt-voir { font-size: var(--t-aide); font-weight: var(--g-libelle); color: var(--texte2); padding: var(--e2) 0; }
+.nt-voir:hover { color: var(--texte); }
+
+.nt-historique .section { margin-top: var(--e2); }
+.nt-ligne { display: flex; align-items: center; gap: var(--e3); width: 100%; padding: var(--e3) var(--e4); text-align: left; }
+.nt-ligne:not(:disabled):active { background: var(--surface-appui); }
+.nt-ligne:disabled { cursor: default; }
+.nt-ligne .nt-titre { font-weight: var(--g-corps); }
+.nt-ligne.non-lu .nt-titre { font-weight: var(--g-libelle); }
+.nt-point { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+@media (hover: hover) {
+  .nt-corps:hover, .nt-ligne:not(:disabled):hover { background: var(--surface-survol); }
+}
